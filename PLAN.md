@@ -568,7 +568,7 @@ Use tokens throughout — `context.spacing.spacingXl`, never `16.0`.
 | 6 | **Rosco UI** ✅ | Wheel, timer ring, status tokens, cross-fade transitions; 11 geometry tests, and all five letter states verified on device. Mic button moved to 7 |
 | 7 | **Speech wired in** ✅ | `MicController` + mic button; one session held across the round, utterances settled by the caller, keyboard fallback one tap away. 24 mic tests against a fake recogniser, and on device **12 letters answered by voice on a single microphone session** |
 | 8 | **Result + persistence** ✅ | Result screen at `/rosco/:level/result`, the score carried in the query string and written there; play-again and back-to-picker both verified on device, with the best score surviving to the level card |
-| 9 | **Polish** — built, device check pending | `feedback` core module (generated sounds + haptics, mutable), semantics across every control, text-scale fixes; 12 feedback tests, 13 packages green. **Outstanding: sound, haptics and a large font scale on hardware** |
+| 9 | **Polish** ✅ | `feedback` core module (generated sounds + haptics, mutable), semantics across every control, and the text scaler unpinned. Verified on a Samsung S25 Ultra: `SoundPool` registered by the app, haptics firing `constant=3` on each correct answer and `constant=4` on each timeout, the accessibility tree reading the wheel aloud, and 1.5× text with no overflow on any screen |
 
 **Milestone 5 lands before 6 and 7 deliberately.** The pool arithmetic, the
 pass queue and the lap logic are where the bugs will be, and all of it is
@@ -643,6 +643,37 @@ hint that it does anything. Now:
   A fixed box clips its own text somewhere above a 1.3 font scale, and the two
   worst offenders were both mine. A long clue scrolls rather than truncating —
   a truncated clue is an unanswerable letter.
+
+---
+
+## 11c. What testing on hardware found
+
+Every one of these was invisible in tests and on a first glance at the app, and
+each was found by doing the boring thing on a device.
+
+- **The app ignored the system font size.** `app/lib/app.dart` passed the same
+  value as `minScaleFactor` and `maxScaleFactor`, which pins the text scaler:
+  at Android's largest font setting the app rendered exactly as at the
+  smallest. Inherited from the template, and it made every other accessibility
+  fix here unreachable. Now bounded at 1.5× rather than pinned — **worth a
+  second opinion**, since it changes text size on every screen and the pin may
+  have been a deliberate fidelity choice.
+- **A denied microphone could never be reported as denied.** `initialize()`
+  declared a `failure` variable, never assigned it, and then read it — so every
+  failure said "this device has no speech recognition", including a player
+  tapping *Don't allow*. Dead code from milestone 2, reachable only by actually
+  denying the permission.
+- **The give-up state contradicted itself.** When the restart budget ran out
+  the microphone set `status: idle` but left `enabled: true`. The button is
+  drawn from the status, so it read as off; its tap handler read `enabled`, so
+  the tap switched off a microphone that had already stopped. Two taps to
+  recover, the first appearing to do nothing. `enabled` and `status` now move
+  together, and a new letter revives a microphone that gave up — while one the
+  *player* switched off stays off.
+- **The mute preference was stored correctly and displayed wrongly.**
+  `initialize()` read the preference and then awaited three audio decodes
+  before returning, so the toggle came up showing "on" for a player who had
+  muted the game. Decoding is a warm-up and no longer blocks the answer.
 
 ---
 

@@ -403,6 +403,17 @@ schema itself.
   nothing ends the round except an empty pool or an all-terminal board — not a
   wrong answer, not a lap with no answers. See
   [PLAN.md](PLAN.md#nothing-ends-the-round-early).
+- **`enabled` and `status` on the microphone move together.** They disagreed
+  once — the give-up path set `status: idle` and left `enabled: true` — and the
+  result was a button that read as off whose tap turned it *further* off. Any
+  state a control is drawn from must be the state its tap handler reads.
+- **Distinguish "the player turned it off" from "it gave up."** A microphone
+  that gave up is revived at the next letter; one the player switched off stays
+  off. Without `_playerOff` there is no way to do the first without undoing the
+  second.
+- **The text scaler is bounded, not pinned.** `app/lib/app.dart` once passed
+  the same value as both min and max, which silently discards the system font
+  size. If you touch that clamp, keep the max above the min.
 - **Feedback must never throw at its caller.** `GameFeedbackImpl` swallows
   everything on purpose: a cue comments on something that already happened, so
   a missing codec or absent vibrator must not take the round down with it.

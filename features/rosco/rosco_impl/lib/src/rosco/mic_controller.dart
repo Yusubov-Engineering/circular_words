@@ -187,6 +187,14 @@ final class MicController
   int _sessionsForPrompt = 0;
   bool _disposed = false;
 
+  /// Whether the microphone is off because the *player* turned it off.
+  ///
+  /// The difference matters more than it looks. A microphone the player
+  /// switched off must stay off; a microphone that gave up on its own must
+  /// not, or a single bad patch retires it for the rest of the round and the
+  /// only way back is a tap the player has no reason to expect.
+  bool _playerOff = false;
+
   /// The last thing the open session heard, held so it can be settled when
   /// that session ends.
   SpeechResult? _lastHeard;
@@ -231,6 +239,8 @@ final class MicController
     final availability = await _recognizer.initialize();
     if (_disposed) return;
 
+    _playerOff = false;
+
     switch (availability) {
       case SpeechUnavailable(:final reason):
         // Not an error. The text field below is a complete way to play.
@@ -249,6 +259,7 @@ final class MicController
   }
 
   Future<void> _disable() async {
+    _playerOff = true;
     _generation++;
     _restart?.cancel();
     _restart = null;
@@ -269,11 +280,23 @@ final class MicController
     _stale = state.heard.isEmpty ? null : state.heard;
     emit(state.copyWith(heard: ''));
 
-    if (!state.enabled || _disposed) return;
+    if (_disposed) return;
 
-    // **The session is deliberately left alone.** Restarting on every letter
-    // meant at least twenty-six teardowns a round — each one an audible beep
-    // from the platform and a gap with no microphone, and that gap falls
+    // A new letter is the natural moment to give up on having given up. A
+    // microphone that stopped on its own — the restart budget spent on a bad
+    // patch — comes back here, which is what stops a player being stranded
+    // with a dead button and no idea they are expected to press it.
+    if (!state.enabled) {
+      // Except when the player switched it off, or the device genuinely
+      // cannot do this: neither is going to change because a letter did.
+      if (_playerOff || state.status == MicStatus.unavailable) return;
+      await _enable();
+      return;
+    }
+
+    // **An open session is deliberately left alone.** Restarting on every
+    // letter meant at least twenty-six teardowns a round — each one an audible
+    // beep from the platform and a gap with no microphone, and that gap falls
     // exactly where a player speaks: just after reading a new clue. A session
     // that is working survives the letter changing; only one that has already
     // ended is replaced.
@@ -360,7 +383,13 @@ final class MicController
 
     // The letter is still live — see the class doc. Open another session.
     if (_sessionsForPrompt >= _maxSessionsPerPrompt) {
-      emit(state.copyWith(status: MicStatus.idle));
+      // `enabled` goes false with the status, and the two must move together.
+      // Leaving it true while the status said idle put the button and its own
+      // tap handler into disagreement: the button read as off, so a player
+      // tapped it, and the tap — reading `enabled` — switched off a
+      // microphone that had already stopped. It took two taps to get a
+      // microphone back, and the first one appeared to do nothing.
+      emit(state.copyWith(enabled: false, status: MicStatus.idle));
       return;
     }
 

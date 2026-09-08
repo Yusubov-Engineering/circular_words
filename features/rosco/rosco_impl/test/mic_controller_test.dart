@@ -293,6 +293,70 @@ void main() {
       expect(recognizer.sessions, hasLength(4));
     });
 
+    // The bug this pins, reported from play: after a bad patch the microphone
+    // stopped and would not come back. The button read as off — so a player
+    // tapped it — but `enabled` was still true underneath, so that tap turned
+    // *off* a microphone that had already stopped, and it took a second tap
+    // to get one back.
+    test('giving up turns it off properly, not halfway', () async {
+      await controller.dispatch(const MicRequested());
+
+      for (var i = 0; i < 12; i++) {
+        await recognizer.session.end();
+        await settle();
+      }
+
+      expect(controller.state.status, MicStatus.idle);
+      // The state the button is drawn from and the state its tap reads must
+      // agree, or one tap does the opposite of what the button says.
+      expect(controller.state.enabled, isFalse);
+    });
+
+    // The other half of the same report: having given up, it stayed given up.
+    test('a new letter revives a microphone that gave up', () async {
+      await controller.dispatch(const MicRequested());
+      for (var i = 0; i < 12; i++) {
+        await recognizer.session.end();
+        await settle();
+      }
+      expect(controller.state.enabled, isFalse);
+
+      await controller.dispatch(const MicPromptChanged());
+      await settle();
+
+      // No tap required: a new letter is a new chance.
+      expect(controller.state.enabled, isTrue);
+      expect(controller.state.status, MicStatus.listening);
+    });
+
+    test('but a microphone the player switched off stays off', () async {
+      await controller.dispatch(const MicRequested());
+      await controller.dispatch(const MicDismissed());
+
+      await controller.dispatch(const MicPromptChanged());
+      await settle();
+
+      // The distinction that matters: giving up is recoverable, a decision
+      // is not.
+      expect(controller.state.enabled, isFalse);
+      expect(recognizer.sessions, hasLength(1));
+    });
+
+    test('and one the device cannot provide is not retried', () async {
+      await controller.dispatch(const MicRequested());
+      recognizer.session.fail(
+        const SpeechUnavailable(reason: SpeechUnavailableReason.noRecognizer),
+      );
+      await settle();
+
+      await controller.dispatch(const MicPromptChanged());
+      await settle();
+
+      // A letter changing does not install a speech recogniser.
+      expect(controller.state.status, MicStatus.unavailable);
+      expect(recognizer.sessions, hasLength(1));
+    });
+
     test(
       'but not forever — a platform closing every session gives up',
       () async {
@@ -306,7 +370,6 @@ void main() {
         // Bounded, and stopped in a state the next letter can recover from.
         expect(recognizer.sessions.length, lessThanOrEqualTo(6));
         expect(controller.state.status, MicStatus.idle);
-        expect(controller.state.enabled, isTrue);
       },
     );
 

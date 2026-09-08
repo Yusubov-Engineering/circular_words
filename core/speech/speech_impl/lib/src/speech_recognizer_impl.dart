@@ -226,8 +226,14 @@ final class SpeechRecognizerImpl implements SpeechRecognizerApi {
           localeId: localeId,
         ),
       );
-    } on Object catch (error, stackTrace) {
-      _fail(session, error, stackTrace);
+    } on Object {
+      // Failing to *start* is not the microphone being gone. By far the most
+      // common cause is the platform still letting go of the session before
+      // this one — a collision this app provokes by design, every time it
+      // re-listens. Ending the stream quietly lets the caller try again;
+      // failing it would retire speech for the rest of the round over a
+      // handover that would have succeeded a second later.
+      await _end(session, cancelPlatform: true);
       return;
     }
 

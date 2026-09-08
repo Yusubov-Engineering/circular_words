@@ -1,0 +1,73 @@
+name: verify
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  # Pinned deliberately, and separate from the root pubspec's `flutter:`
+  # constraint. That constraint is a range (`>=3.47.0`) so the app stays
+  # usable on later releases, but setup-flutter cannot resolve a range — it
+  # needs one exact version to download. This is the floor of that range.
+  FLUTTER_VERSION: 3.47.0
+  # The CLI (github.com/Yusubov-Engineering/modular_cli) is released and
+  # versioned independently of this template — bump this alongside the
+  # `ref:`/`--git-ref` used everywhere else it's installed.
+  MODULAR_CLI_REF: v1.0.0
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: ${{ env.FLUTTER_VERSION }}
+          channel: stable
+          cache: true
+
+      # Core modules (network, router, logger, ...) plus modular_cli itself
+      # live in their own private repos and are pulled in as
+      # `https://github.com/...` git dependencies / git-activated packages.
+      # The runner has no credential helper, so anonymous HTTPS gets rejected
+      # the same way SSH does without a deployed key — inject a PAT here and
+      # every `pub get`/`pub global activate` below picks it up transparently.
+      - name: Authenticate git for private module repos
+        run: |
+          git config --global url."https://x-access-token:${{ secrets.MODULES_PAT }}@github.com/".insteadOf "https://github.com/"
+
+      # `dart format` picks its line-splitting style from each package's
+      # language version, which it reads out of .dart_tool/package_config.json.
+      # Without a resolve first, CI formats differently than a local machine.
+      # One resolution at the root covers every workspace package.
+      - name: Resolve workspace
+        run: flutter pub get
+
+      - name: Check formatting
+        run: dart format --output=none --set-exit-if-changed .
+
+      - name: Analyze
+        run: flutter analyze
+
+      # `flutter test` at the workspace root finds nothing; melos runs it in
+      # each package that actually has a test directory.
+      - name: Test
+        run: dart run melos test
+
+      # The CLI is a separate repo/package now (modular_cli), installed the
+      # same way a consumer would install it rather than run from source.
+      - name: Install the modular CLI
+        run: |
+          dart pub global activate --source git https://github.com/Yusubov-Engineering/modular_cli.git --git-ref ${{ env.MODULAR_CLI_REF }}
+          echo "$HOME/.pub-cache/bin" >> "$GITHUB_PATH"
+
+      # Rules the analyzer cannot see: unregistered modules, _impl→_impl
+      # edges, packages missing from the workspace list.
+      - name: Architecture rules
+        run: modular doctor

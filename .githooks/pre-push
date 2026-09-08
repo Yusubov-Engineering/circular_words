@@ -1,0 +1,46 @@
+#!/usr/bin/env bash
+#
+# Mirrors the GitLab `verify` stage: whole-repo format check plus flutter
+# analyze. Catches what pre-commit's staged-only check cannot, before the
+# pipeline does.
+#
+# Enable:  git config core.hooksPath .githooks
+# Skip:    git push --no-verify       (or SKIP_HOOKS=1 git push ...)
+
+set -uo pipefail
+
+[ "${SKIP_HOOKS:-0}" = "1" ] && exit 0
+
+if ! command -v flutter >/dev/null 2>&1; then
+  echo "pre-push: 'flutter' is not on PATH — skipping local verification."
+  echo "          The GitLab pipeline will still run these checks."
+  exit 0
+fi
+
+repo_root="$(git rev-parse --show-toplevel)"
+cd "$repo_root" || exit 1
+
+status=0
+
+echo "pre-push: dart format ..."
+if ! dart format --output=none --set-exit-if-changed .; then
+  echo "  → run 'dart format .' and commit the result"
+  status=1
+fi
+
+# Deliberately runs even if formatting failed, so one push surfaces every problem.
+echo "pre-push: flutter analyze ..."
+if ! flutter analyze; then
+  status=1
+fi
+
+if [ "$status" -ne 0 ]; then
+  echo
+  echo "✖ pre-push: the GitLab pipeline would fail on this. Push blocked."
+  echo "  Override with: git push --no-verify"
+  echo
+else
+  echo "✔ pre-push: format and analyze clean."
+fi
+
+exit "$status"

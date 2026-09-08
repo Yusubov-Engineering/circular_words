@@ -1,0 +1,17 @@
+name: design_system
+description: "Design system: tokens, theming, and a small set of example components"
+version: 1.0.0
+publish_to: none
+
+resolution: workspace
+
+environment:
+  sdk: ^3.13.0
+  flutter: ">=1.17.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  vector_graphics: ^1.2.3
+  material_ui: ^1.0.0
+  assets:

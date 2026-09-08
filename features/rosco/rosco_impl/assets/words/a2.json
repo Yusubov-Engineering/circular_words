@@ -1,0 +1,348 @@
+{
+  "level": "a2",
+  "sets": [
+    {
+      "id": "a2-1",
+      "entries": [
+        {
+          "letter": "A",
+          "word": "airport",
+          "definition": "The place where planes take off and land.",
+          "synonyms": []
+        },
+        {
+          "letter": "B",
+          "word": "beach",
+          "definition": "Land covered in sand at the edge of the sea.",
+          "synonyms": []
+        },
+        {
+          "letter": "C",
+          "word": "cousin",
+          "definition": "The child of your aunt or uncle.",
+          "synonyms": []
+        },
+        {
+          "letter": "D",
+          "word": "dictionary",
+          "definition": "A book that explains what words mean.",
+          "synonyms": []
+        },
+        {
+          "letter": "E",
+          "word": "expensive",
+          "definition": "Costing a lot of money.",
+          "synonyms": [
+            "costly"
+          ]
+        },
+        {
+          "letter": "F",
+          "word": "forget",
+          "definition": "To fail to remember something.",
+          "synonyms": []
+        },
+        {
+          "letter": "G",
+          "word": "guest",
+          "definition": "A person you invite to your home or who stays at a hotel.",
+          "synonyms": []
+        },
+        {
+          "letter": "H",
+          "word": "holiday",
+          "definition": "A period when you do not work and often travel.",
+          "synonyms": [
+            "vacation"
+          ]
+        },
+        {
+          "letter": "I",
+          "word": "invite",
+          "definition": "To ask someone to come to an event.",
+          "synonyms": []
+        },
+        {
+          "letter": "J",
+          "word": "jacket",
+          "definition": "A short coat you wear outdoors.",
+          "synonyms": []
+        },
+        {
+          "letter": "K",
+          "word": "knife",
+          "definition": "A tool with a blade for cutting food.",
+          "synonyms": []
+        },
+        {
+          "letter": "L",
+          "word": "library",
+          "definition": "A building where you borrow books.",
+          "synonyms": []
+        },
+        {
+          "letter": "M",
+          "word": "market",
+          "definition": "A place where people buy and sell food and goods.",
+          "synonyms": []
+        },
+        {
+          "letter": "N",
+          "word": "neighbour",
+          "definition": "A person who lives next to you.",
+          "synonyms": [
+            "neighbor"
+          ]
+        },
+        {
+          "letter": "O",
+          "word": "often",
+          "definition": "Many times; frequently.",
+          "synonyms": []
+        },
+        {
+          "letter": "P",
+          "word": "passport",
+          "definition": "The document you need to travel to another country.",
+          "synonyms": []
+        },
+        {
+          "letter": "Q",
+          "word": "quiet",
+          "definition": "Making little or no noise.",
+          "synonyms": []
+        },
+        {
+          "letter": "R",
+          "word": "receipt",
+          "definition": "The paper a shop gives you to prove you paid.",
+          "synonyms": []
+        },
+        {
+          "letter": "S",
+          "word": "souvenir",
+          "definition": "A small object you buy to remember a trip.",
+          "synonyms": []
+        },
+        {
+          "letter": "T",
+          "word": "ticket",
+          "definition": "The paper that lets you enter a cinema or board a train.",
+          "synonyms": []
+        },
+        {
+          "letter": "U",
+          "word": "uniform",
+          "definition": "The special clothes worn by everyone at a school or job.",
+          "synonyms": []
+        },
+        {
+          "letter": "V",
+          "word": "vegetable",
+          "definition": "A plant such as a carrot or potato that people eat.",
+          "synonyms": []
+        },
+        {
+          "letter": "W",
+          "word": "weather",
+          "definition": "The conditions outside: sun, rain, wind or snow.",
+          "synonyms": []
+        },
+        {
+          "letter": "X",
+          "word": "xylophone",
+          "definition": "A musical instrument with wooden bars you hit with sticks.",
+          "synonyms": []
+        },
+        {
+          "letter": "Y",
+          "word": "yesterday",
+          "definition": "The day before today.",
+          "synonyms": []
+        },
+        {
+          "letter": "Z",
+          "word": "zebra",
+          "definition": "An African animal like a horse with black and white stripes.",
+          "synonyms": []
+        }
+      ]
+    },
+    {
+      "id": "a2-2",
+      "entries": [
+        {
+          "letter": "A",
+          "word": "address",
+          "definition": "The details that say where someone lives.",
+          "synonyms": []
+        },
+        {
+          "letter": "B",
+          "word": "bridge",
+          "definition": "A structure built over a river or road so people can cross.",
+          "synonyms": []
+        },
+        {
+          "letter": "C",
+          "word": "crowd",
+          "definition": "A large number of people gathered in one place.",
+          "synonyms": []
+        },
+        {
+          "letter": "D",
+          "word": "delicious",
+          "definition": "Tasting very good.",
+          "synonyms": [
+            "tasty"
+          ]
+        },
+        {
+          "letter": "E",
+          "word": "envelope",
+          "definition": "The paper cover you put a letter in before posting it.",
+          "synonyms": []
+        },
+        {
+          "letter": "F",
+          "word": "furniture",
+          "definition": "Tables, chairs and beds in a home.",
+          "synonyms": []
+        },
+        {
+          "letter": "G",
+          "word": "guitar",
+          "definition": "A musical instrument with six strings played with the fingers.",
+          "synonyms": []
+        },
+        {
+          "letter": "H",
+          "word": "hospital",
+          "definition": "The place where doctors treat people who are ill.",
+          "synonyms": []
+        },
+        {
+          "letter": "I",
+          "word": "interesting",
+          "definition": "Making you want to know more.",
+          "synonyms": []
+        },
+        {
+          "letter": "J",
+          "word": "jump",
+          "definition": "To push yourself off the ground with your legs.",
+          "synonyms": []
+        },
+        {
+          "letter": "K",
+          "word": "kind",
+          "definition": "Caring and friendly towards other people.",
+          "synonyms": []
+        },
+        {
+          "letter": "L",
+          "word": "luggage",
+          "definition": "The bags you take with you when you travel.",
+          "synonyms": [
+            "baggage"
+          ]
+        },
+        {
+          "letter": "M",
+          "word": "mountain",
+          "definition": "A very high area of land with steep sides.",
+          "synonyms": []
+        },
+        {
+          "letter": "N",
+          "word": "noisy",
+          "definition": "Making a lot of loud sound.",
+          "synonyms": []
+        },
+        {
+          "letter": "O",
+          "word": "office",
+          "definition": "The room or building where people work at desks.",
+          "synonyms": []
+        },
+        {
+          "letter": "P",
+          "word": "photograph",
+          "definition": "A picture made with a camera.",
+          "synonyms": [
+            "photo"
+          ]
+        },
+        {
+          "letter": "Q",
+          "word": "queue",
+          "definition": "A line of people waiting for their turn.",
+          "synonyms": [
+            "line"
+          ]
+        },
+        {
+          "letter": "R",
+          "word": "restaurant",
+          "definition": "A place where you pay to sit and eat a meal.",
+          "synonyms": []
+        },
+        {
+          "letter": "S",
+          "word": "stamp",
+          "definition": "The small paper you stick on a letter before posting it.",
+          "synonyms": []
+        },
+        {
+          "letter": "T",
+          "word": "traffic",
+          "definition": "The cars and buses moving along a road.",
+          "synonyms": []
+        },
+        {
+          "letter": "U",
+          "word": "upstairs",
+          "definition": "On or to a higher floor of a building.",
+          "synonyms": []
+        },
+        {
+          "letter": "V",
+          "word": "visit",
+          "definition": "To go and spend time with a person or at a place.",
+          "synonyms": []
+        },
+        {
+          "letter": "W",
+          "word": "wallet",
+          "definition": "A small folding case for money and cards.",
+          "synonyms": []
+        },
+        {
+          "letter": "X",
+          "word": "x-ray",
+          "definition": "A picture that shows the bones inside a body.",
+          "synonyms": [
+            "xray",
+            "ex ray"
+          ]
+        },
+        {
+          "letter": "Y",
+          "word": "yoghurt",
+          "definition": "A thick food made from milk, often eaten with fruit.",
+          "synonyms": [
+            "yogurt"
+          ]
+        },
+        {
+          "letter": "Z",
+          "word": "zip",
+          "definition": "A fastener with two rows of teeth that join together.",
+          "synonyms": [
+            "zipper"
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,19 @@
+name: app_network_contract
+description: "The application's own response and error contract for the network module"
+version: 1.0.0
+publish_to: none
+
+resolution: workspace
+
+environment:
+  sdk: ^3.13.0
+
+dependencies:
+  network_api:
+    git:
+      url: https://github.com/Yusubov-Engineering/network.git
+      path: network_api
+      ref: v1.0.0
+
+dev_dependencies:
+  test: ^1.25.0

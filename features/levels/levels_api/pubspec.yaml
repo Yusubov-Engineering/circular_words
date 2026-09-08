@@ -1,0 +1,18 @@
+name: levels_api
+description: "Api protocols of the Levels feature"
+version: 1.0.0
+publish_to: none
+
+resolution: workspace
+
+environment:
+  sdk: ^3.13.0
+
+dependencies:
+  flutter:
+    sdk: flutter
+  router_api:
+    git:
+      url: https://github.com/Yusubov-Engineering/router.git
+      path: router_api
+      ref: v1.0.0

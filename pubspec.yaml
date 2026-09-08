@@ -1,0 +1,52 @@
+name: circular_words
+publish_to: none
+
+environment:
+  sdk: '^3.13.0'
+  # A range, not an exact pin: an exact `flutter:` version makes the template
+  # unresolvable for anyone not on that exact release.
+  flutter: '>=3.47.0'
+
+workspace:
+  - app
+
+  # core modules
+  # network, router, logger, biometric_auth, storage and dependency_injection
+  # each moved to their own repo (see README) and are now git dependencies,
+  # not workspace members.
+  - core/design_system
+  - core/design_system/assets
+  - core/feedback/feedback_api
+  - core/feedback/feedback_impl
+  - core/speech/speech_api
+  - core/speech/speech_impl
+
+  # base modules
+  - base/app_localization
+  - base/app_network_contract
+
+  # feature modules
+  - features/levels/*
+  - features/rosco/*
+  # <generated:feature-packages>
+
+dev_dependencies:
+  melos: ^8.3.0
+  # Extracted alongside the core modules above; the ruleset itself now lives
+  # at github.com/Yusubov-Engineering/app_linter.
+  app_linter:
+    git:
+      url: https://github.com/Yusubov-Engineering/app_linter.git
+      path: .
+      ref: v1.0.0
+
+# Melos 8 reads its config from here, not from a melos.yaml. `analyze`,
+# `format` and `test` are built-in commands, so only `verify` needs defining.
+melos:
+  scripts:
+    verify:
+      description: Everything CI runs.
+      run: |
+        dart run melos format --set-exit-if-changed && \
+        dart run melos analyze --fatal-infos && \
+        dart run melos test

@@ -1,0 +1,29 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "App (Dev)",
+            "request": "launch",
+            "type": "dart",
+            "program": "${workspaceFolder}/app/lib/main.dart",
+            "args": [
+                "--flavor",
+                "dev",
+                "--dart-define-from-file",
+                "${workspaceFolder}/config/dev.json"
+            ]
+        },
+        {
+            "name": "App (Prod)",
+            "request": "launch",
+            "type": "dart",
+            "program": "${workspaceFolder}/app/lib/main.dart",
+            "args": [
+                "--flavor",
+                "prod",
+                "--dart-define-from-file",
+                "${workspaceFolder}/config/prod.json"
+            ]
+        }
+    ]
+}

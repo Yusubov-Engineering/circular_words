@@ -1,0 +1,116 @@
+{
+    "@@locale": "en",
+    "appTitle": "Circular Words",
+    "toggleTheme": "Toggle theme",
+    "toggleLanguage": "Toggle language",
+    "retry": "Retry",
+    "back": "Back",
+    "loading": "Loading…",
+    "errorOffline": "You appear to be offline.",
+    "errorServer": "The server could not be reached.",
+    "errorUnknown": "Something went wrong.",
+    "scoreSummary": "{correct} of {total} correct",
+    "@scoreSummary": {
+        "description": "Score line on the result screen. Carries two placeholders.",
+        "placeholders": {
+            "correct": {
+                "type": "int"
+            },
+            "total": {
+                "type": "int"
+            }
+        }
+    },
+    "levelsTitle": "Circular Words",
+    "levelsSubtitle": "Pick a level to start a round.",
+    "levelA1": "Beginner",
+    "levelA2": "Elementary",
+    "levelB1": "Intermediate",
+    "levelB2": "Upper intermediate",
+    "levelC1": "Advanced",
+    "levelC2": "Proficient",
+    "levelBest": "Best {correct}/{total}",
+    "@levelBest": {
+        "description": "Best recorded result for a level, shown on its card.",
+        "placeholders": {
+            "correct": {
+                "type": "int"
+            },
+            "total": {
+                "type": "int"
+            }
+        }
+    },
+    "levelNotPlayed": "Not played yet",
+    "levelsPlay": "Play",
+    "roscoLevelUnavailable": "This level has no words yet. Try A1 or B1.",
+    "roscoWordBankBroken": "The words for this level could not be read.",
+    "answer": "Answer",
+    "pass": "Pass",
+    "lap": "lap {lap}",
+    "@lap": {
+        "description": "Lap counter on the round header.",
+        "placeholders": {
+            "lap": {
+                "type": "int"
+            }
+        }
+    },
+    "micListening": "Listening…",
+    "micIdle": "Tap to speak",
+    "micDenied": "Microphone access is off. Type your answer instead.",
+    "micNoRecognizer": "This device has no speech recognition. Type your answer instead.",
+    "micRestricted": "Speech recognition is blocked on this device. Type your answer instead.",
+    "micUnavailable": "Speech recognition is unavailable. Type your answer instead.",
+    "typeInstead": "Type instead",
+    "useMic": "Use the microphone",
+    "resultTitle": "Round over",
+    "resultNewBest": "New best!",
+    "resultPlayAgain": "Play again",
+    "resultChooseLevel": "Choose a level",
+    "resultBest": "Best {correct} of {total}",
+    "@resultBest": {
+        "description": "Best-ever score on the result screen.",
+        "placeholders": {
+            "correct": {
+                "type": "int"
+            },
+            "total": {
+                "type": "int"
+            }
+        }
+    },
+    "resultTimeLeft": "{seconds}s left on the clock",
+    "@resultTimeLeft": {
+        "description": "Seconds left in the pool when the round ended.",
+        "placeholders": {
+            "seconds": {
+                "type": "int"
+            }
+        }
+    },
+    "soundOn": "Sound on",
+    "soundOff": "Sound off",
+    "roscoWheelSemantics": "Letter {letter}, {seconds} seconds left, {correct} of {total} correct",
+    "@roscoWheelSemantics": {
+        "description": "Screen-reader summary of the rosco wheel, which is painted and otherwise invisible to assistive technology.",
+        "placeholders": {
+            "letter": {
+                "type": "String"
+            },
+            "seconds": {
+                "type": "int"
+            },
+            "correct": {
+                "type": "int"
+            },
+            "total": {
+                "type": "int"
+            }
+        }
+    },
+    "microphone": "Microphone",
+    "@microphone": {
+        "description": "Accessibility label for the microphone toggle. The on/off state is announced separately from the button's toggled semantics, so this names the control only."
+    }
+}

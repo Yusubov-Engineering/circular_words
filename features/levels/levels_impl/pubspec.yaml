@@ -1,0 +1,37 @@
+name: levels_impl
+description: "Implementation details of the Levels feature"
+version: 1.0.0
+publish_to: none
+
+resolution: workspace
+
+environment:
+  sdk: ^3.13.0
+
+dependencies:
+  flutter:
+    sdk: flutter
+  levels_api:
+  dependency_injection_api:
+    git:
+      url: https://github.com/Yusubov-Engineering/dependency_injection.git
+      path: dependency_injection_api
+      ref: v1.0.0
+  router_api:
+    git:
+      url: https://github.com/Yusubov-Engineering/router.git
+      path: router_api
+      ref: v1.0.0
+  design_system:
+  feedback_api:
+  state_manager:
+    git:
+      url: https://github.com/Yusubov-Engineering/state_manager.git
+      path: .
+      ref: v1.0.0
+  app_localization:
+  rosco_api:
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter

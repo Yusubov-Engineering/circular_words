@@ -1,0 +1,13 @@
+.dart_tool/
+.idea/
+pubspec.lock
+.metadata
+app.iml
+# Widget Preview related
+.widget_preview/
+.DS_Store
+melos_*.iml
+build
+devtool_options.yaml
+# Localization codegen output; rebuilt by `flutter pub get`.
+base/app_localization/lib/src/generated/

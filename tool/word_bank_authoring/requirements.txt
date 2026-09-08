@@ -1,0 +1,5 @@
+# `messages.parse(output_format=...)` — the structured-output helper this tool
+# relies on — is present from 0.125.0 and is the current 1.x API, so the pin
+# spans both rather than forcing a major upgrade on whoever runs it.
+anthropic>=0.125.0
+pydantic>=2.0

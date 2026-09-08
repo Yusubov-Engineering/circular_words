@@ -1,0 +1,30 @@
+name: app_localization
+description: "Module which stores the translations and delegates"
+version: 1.0.0
+publish_to: none
+
+resolution: workspace
+
+environment:
+  sdk: ^3.13.0
+  flutter: ">=1.17.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  dependency_injection_api:
+    git:
+      url: https://github.com/Yusubov-Engineering/dependency_injection.git
+      path: dependency_injection_api
+      ref: v1.0.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  # Test-only: the app supplies these delegates at runtime, but the RTL check
+  # has to build a WidgetsApp of its own.
+  flutter_localizations:
+    sdk: flutter
+
+flutter:
+  generate: true

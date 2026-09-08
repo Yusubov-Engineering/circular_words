@@ -1,0 +1,11 @@
+analyzer:
+  exclude:
+    - build/**
+    - tool/**
+    - android/**
+    - ios/**
+    - web/**
+    - windows/**
+    - macos/**
+    - linux/**
+include: package:app_linter/analysis_options.yaml

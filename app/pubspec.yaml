@@ -1,0 +1,82 @@
+name: app
+description: "Composition root: wires every module together"
+publish_to: 'none'
+version: 1.0.0+1
+
+resolution: workspace
+
+environment:
+  sdk: ^3.13.0
+
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_localizations:
+    sdk: flutter
+
+  ### CORE MODULES
+  network_api:
+    git:
+      url: https://github.com/Yusubov-Engineering/network.git
+      path: network_api
+      ref: v1.0.0
+  network_impl:
+    git:
+      url: https://github.com/Yusubov-Engineering/network.git
+      path: network_impl
+      ref: v1.0.0
+  router_api:
+    git:
+      url: https://github.com/Yusubov-Engineering/router.git
+      path: router_api
+      ref: v1.0.0
+  router_impl:
+    git:
+      url: https://github.com/Yusubov-Engineering/router.git
+      path: router_impl
+      ref: v1.0.0
+  logger_api:
+    git:
+      url: https://github.com/Yusubov-Engineering/logger.git
+      path: logger_api
+      ref: v1.0.0
+  logger_impl:
+    git:
+      url: https://github.com/Yusubov-Engineering/logger.git
+      path: logger_impl
+      ref: v1.0.0
+  biometric_auth_impl:
+    git:
+      url: https://github.com/Yusubov-Engineering/biometric_auth.git
+      path: biometric_auth_impl
+      ref: v1.0.0
+  storage_impl:
+    git:
+      url: https://github.com/Yusubov-Engineering/storage.git
+      path: storage_impl
+      ref: v1.0.0
+  dependency_injection_api:
+    git:
+      url: https://github.com/Yusubov-Engineering/dependency_injection.git
+      path: dependency_injection_api
+      ref: v1.0.0
+  dependency_injection_impl:
+    git:
+      url: https://github.com/Yusubov-Engineering/dependency_injection.git
+      path: dependency_injection_impl
+      ref: v1.0.0
+  design_system:
+  speech_api:
+  feedback_impl:
+  speech_impl:
+
+  ### BASE MODULES
+  app_localization:
+  app_network_contract:
+
+  ### FEATURE MODULES
+  levels_impl:
+  rosco_impl:
+
+  ### EXTERNAL PACKAGES
+  material_ui: ^1.0.0

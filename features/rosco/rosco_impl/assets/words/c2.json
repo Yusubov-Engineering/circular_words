@@ -1,0 +1,329 @@
+{
+  "level": "c2",
+  "sets": [
+    {
+      "id": "c2-1",
+      "entries": [
+        {
+          "letter": "A",
+          "word": "abstruse",
+          "definition": "Difficult to understand because of obscure subject matter.",
+          "synonyms": []
+        },
+        {
+          "letter": "B",
+          "word": "bellicose",
+          "definition": "Eager to fight or start a quarrel.",
+          "synonyms": []
+        },
+        {
+          "letter": "C",
+          "word": "cacophony",
+          "definition": "A harsh, unpleasant mixture of sounds.",
+          "synonyms": []
+        },
+        {
+          "letter": "D",
+          "word": "desultory",
+          "definition": "Moving from one thing to another without purpose.",
+          "synonyms": []
+        },
+        {
+          "letter": "E",
+          "word": "ebullient",
+          "definition": "Overflowing with cheerful energy.",
+          "synonyms": []
+        },
+        {
+          "letter": "F",
+          "word": "fatuous",
+          "definition": "Silly and pointless in a self-satisfied way.",
+          "synonyms": []
+        },
+        {
+          "letter": "G",
+          "word": "grandiloquent",
+          "definition": "Using pompous language to impress.",
+          "synonyms": []
+        },
+        {
+          "letter": "H",
+          "word": "hegemony",
+          "definition": "Dominance of one state or group over others.",
+          "synonyms": []
+        },
+        {
+          "letter": "I",
+          "word": "ineffable",
+          "definition": "Too great to be described in words.",
+          "synonyms": []
+        },
+        {
+          "letter": "J",
+          "word": "jejune",
+          "definition": "Naive and lacking intellectual substance.",
+          "synonyms": []
+        },
+        {
+          "letter": "K",
+          "word": "kismet",
+          "definition": "Fate; the power thought to decide events.",
+          "synonyms": []
+        },
+        {
+          "letter": "L",
+          "word": "lugubrious",
+          "definition": "Looking or sounding sad and gloomy.",
+          "synonyms": []
+        },
+        {
+          "letter": "M",
+          "word": "mendacious",
+          "definition": "Given to telling lies.",
+          "synonyms": []
+        },
+        {
+          "letter": "N",
+          "word": "nadir",
+          "definition": "The lowest point in someone's fortunes.",
+          "synonyms": []
+        },
+        {
+          "letter": "O",
+          "word": "obfuscate",
+          "definition": "To deliberately make something unclear.",
+          "synonyms": []
+        },
+        {
+          "letter": "P",
+          "word": "perfunctory",
+          "definition": "Done without care, merely as a duty.",
+          "synonyms": []
+        },
+        {
+          "letter": "Q",
+          "word": "quiescent",
+          "definition": "In a state of inactivity or rest.",
+          "synonyms": []
+        },
+        {
+          "letter": "R",
+          "word": "recalcitrant",
+          "definition": "Stubbornly refusing to obey authority.",
+          "synonyms": []
+        },
+        {
+          "letter": "S",
+          "word": "sycophant",
+          "definition": "A person who flatters the powerful to gain advantage.",
+          "synonyms": []
+        },
+        {
+          "letter": "T",
+          "word": "truculent",
+          "definition": "Aggressively defiant and quick to argue.",
+          "synonyms": []
+        },
+        {
+          "letter": "U",
+          "word": "umbrage",
+          "definition": "Offence or annoyance taken at a remark.",
+          "synonyms": []
+        },
+        {
+          "letter": "V",
+          "word": "vicissitude",
+          "definition": "A change of circumstance, usually for the worse.",
+          "synonyms": []
+        },
+        {
+          "letter": "W",
+          "word": "winsome",
+          "definition": "Attractive in a charming, innocent way.",
+          "synonyms": []
+        },
+        {
+          "letter": "X",
+          "word": "xylem",
+          "definition": "The tissue in a plant that carries water upward.",
+          "synonyms": []
+        },
+        {
+          "letter": "Y",
+          "word": "yen",
+          "definition": "A strong desire or craving.",
+          "synonyms": []
+        },
+        {
+          "letter": "Z",
+          "word": "zephyr",
+          "definition": "A soft, gentle breeze.",
+          "synonyms": []
+        }
+      ]
+    },
+    {
+      "id": "c2-2",
+      "entries": [
+        {
+          "letter": "A",
+          "word": "anodyne",
+          "definition": "Deliberately inoffensive and unlikely to cause disagreement.",
+          "synonyms": []
+        },
+        {
+          "letter": "B",
+          "word": "bowdlerise",
+          "definition": "To remove parts of a text considered improper.",
+          "synonyms": [
+            "bowdlerize"
+          ]
+        },
+        {
+          "letter": "C",
+          "word": "chicanery",
+          "definition": "The use of clever but deceptive talk to trick people.",
+          "synonyms": []
+        },
+        {
+          "letter": "D",
+          "word": "diaphanous",
+          "definition": "So light and delicate that it is almost transparent.",
+          "synonyms": []
+        },
+        {
+          "letter": "E",
+          "word": "ersatz",
+          "definition": "An inferior substitute for the real thing.",
+          "synonyms": []
+        },
+        {
+          "letter": "F",
+          "word": "fulminate",
+          "definition": "To protest loudly and angrily.",
+          "synonyms": []
+        },
+        {
+          "letter": "G",
+          "word": "gossamer",
+          "definition": "Extremely fine and delicate material.",
+          "synonyms": []
+        },
+        {
+          "letter": "H",
+          "word": "halcyon",
+          "definition": "Peaceful and happy, said of a remembered time.",
+          "synonyms": []
+        },
+        {
+          "letter": "I",
+          "word": "inchoate",
+          "definition": "Just begun and not yet fully formed.",
+          "synonyms": []
+        },
+        {
+          "letter": "J",
+          "word": "junket",
+          "definition": "A trip taken by an official at someone else's expense.",
+          "synonyms": []
+        },
+        {
+          "letter": "K",
+          "word": "kowtow",
+          "definition": "To behave in an excessively servile way.",
+          "synonyms": []
+        },
+        {
+          "letter": "L",
+          "word": "languid",
+          "definition": "Slow and relaxed, lacking energy.",
+          "synonyms": []
+        },
+        {
+          "letter": "M",
+          "word": "mellifluous",
+          "definition": "Pleasingly smooth and musical to hear.",
+          "synonyms": []
+        },
+        {
+          "letter": "N",
+          "word": "nugatory",
+          "definition": "Of no value or importance.",
+          "synonyms": []
+        },
+        {
+          "letter": "O",
+          "word": "obstreperous",
+          "definition": "Noisy and difficult to control.",
+          "synonyms": []
+        },
+        {
+          "letter": "P",
+          "word": "pusillanimous",
+          "definition": "Showing a lack of courage.",
+          "synonyms": []
+        },
+        {
+          "letter": "Q",
+          "word": "quotidian",
+          "definition": "Occurring every day; utterly ordinary.",
+          "synonyms": []
+        },
+        {
+          "letter": "R",
+          "word": "recondite",
+          "definition": "Known or understood by very few people.",
+          "synonyms": []
+        },
+        {
+          "letter": "S",
+          "word": "soporific",
+          "definition": "Tending to cause sleep.",
+          "synonyms": []
+        },
+        {
+          "letter": "T",
+          "word": "tautology",
+          "definition": "Saying the same thing twice in different words.",
+          "synonyms": []
+        },
+        {
+          "letter": "U",
+          "word": "untenable",
+          "definition": "Impossible to defend against objection.",
+          "synonyms": []
+        },
+        {
+          "letter": "V",
+          "word": "vituperative",
+          "definition": "Bitter and abusive in language.",
+          "synonyms": []
+        },
+        {
+          "letter": "W",
+          "word": "winnow",
+          "definition": "To separate what is valuable from what is not.",
+          "synonyms": []
+        },
+        {
+          "letter": "X",
+          "word": "xenophile",
+          "definition": "A person attracted to foreign cultures.",
+          "synonyms": []
+        },
+        {
+          "letter": "Y",
+          "word": "yearling",
+          "definition": "An animal in its second year of life.",
+          "synonyms": []
+        },
+        {
+          "letter": "Z",
+          "word": "zeitgeist",
+          "definition": "The defining spirit or mood of a period in history.",
+          "synonyms": []
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,341 @@
+{
+  "level": "c1",
+  "sets": [
+    {
+      "id": "c1-1",
+      "entries": [
+        {
+          "letter": "A",
+          "word": "astute",
+          "definition": "Showing sharp judgement and quick understanding.",
+          "synonyms": [
+            "shrewd"
+          ]
+        },
+        {
+          "letter": "B",
+          "word": "benevolent",
+          "definition": "Kind and wishing to do good for others.",
+          "synonyms": []
+        },
+        {
+          "letter": "C",
+          "word": "candid",
+          "definition": "Honest and direct, even when it is uncomfortable.",
+          "synonyms": [
+            "frank"
+          ]
+        },
+        {
+          "letter": "D",
+          "word": "dearth",
+          "definition": "A serious lack of something needed.",
+          "synonyms": [
+            "scarcity"
+          ]
+        },
+        {
+          "letter": "E",
+          "word": "ephemeral",
+          "definition": "Lasting for a very short time.",
+          "synonyms": [
+            "fleeting"
+          ]
+        },
+        {
+          "letter": "F",
+          "word": "fastidious",
+          "definition": "Giving great attention to detail and hard to please.",
+          "synonyms": []
+        },
+        {
+          "letter": "G",
+          "word": "garrulous",
+          "definition": "Talking too much about unimportant things.",
+          "synonyms": []
+        },
+        {
+          "letter": "H",
+          "word": "hapless",
+          "definition": "Unlucky and deserving of pity.",
+          "synonyms": []
+        },
+        {
+          "letter": "I",
+          "word": "innocuous",
+          "definition": "Harmless and unlikely to offend.",
+          "synonyms": []
+        },
+        {
+          "letter": "J",
+          "word": "juxtapose",
+          "definition": "To place two things side by side for contrast.",
+          "synonyms": []
+        },
+        {
+          "letter": "K",
+          "word": "kudos",
+          "definition": "Praise and admiration for an achievement.",
+          "synonyms": []
+        },
+        {
+          "letter": "L",
+          "word": "lucid",
+          "definition": "Clearly expressed and easy to understand.",
+          "synonyms": []
+        },
+        {
+          "letter": "M",
+          "word": "meticulous",
+          "definition": "Extremely careful about small details.",
+          "synonyms": []
+        },
+        {
+          "letter": "N",
+          "word": "nebulous",
+          "definition": "Vague and without clear form.",
+          "synonyms": []
+        },
+        {
+          "letter": "O",
+          "word": "opaque",
+          "definition": "Impossible to see through, or very hard to understand.",
+          "synonyms": []
+        },
+        {
+          "letter": "P",
+          "word": "prudent",
+          "definition": "Acting with care and thought for the future.",
+          "synonyms": []
+        },
+        {
+          "letter": "Q",
+          "word": "quell",
+          "definition": "To put an end to a rebellion or a strong feeling.",
+          "synonyms": []
+        },
+        {
+          "letter": "R",
+          "word": "reticent",
+          "definition": "Unwilling to say much about your thoughts.",
+          "synonyms": []
+        },
+        {
+          "letter": "S",
+          "word": "scrupulous",
+          "definition": "Careful to do what is right and honest.",
+          "synonyms": []
+        },
+        {
+          "letter": "T",
+          "word": "tenacious",
+          "definition": "Holding on firmly and refusing to give up.",
+          "synonyms": []
+        },
+        {
+          "letter": "U",
+          "word": "ubiquitous",
+          "definition": "Found everywhere at the same time.",
+          "synonyms": []
+        },
+        {
+          "letter": "V",
+          "word": "vindicate",
+          "definition": "To prove that someone was right after doubt.",
+          "synonyms": []
+        },
+        {
+          "letter": "W",
+          "word": "wane",
+          "definition": "To become gradually weaker or smaller.",
+          "synonyms": []
+        },
+        {
+          "letter": "X",
+          "word": "xenon",
+          "definition": "A colourless gas used in bright lamps.",
+          "synonyms": []
+        },
+        {
+          "letter": "Y",
+          "word": "yoke",
+          "definition": "A wooden frame joining two animals, or a heavy burden.",
+          "synonyms": []
+        },
+        {
+          "letter": "Z",
+          "word": "zenith",
+          "definition": "The highest point of success or power.",
+          "synonyms": [
+            "peak"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "c1-2",
+      "entries": [
+        {
+          "letter": "A",
+          "word": "austere",
+          "definition": "Plain and severe, without comfort or decoration.",
+          "synonyms": []
+        },
+        {
+          "letter": "B",
+          "word": "brevity",
+          "definition": "The quality of using very few words.",
+          "synonyms": []
+        },
+        {
+          "letter": "C",
+          "word": "cogent",
+          "definition": "Clear and convincing as an argument.",
+          "synonyms": []
+        },
+        {
+          "letter": "D",
+          "word": "didactic",
+          "definition": "Intended to teach, often in a heavy-handed way.",
+          "synonyms": []
+        },
+        {
+          "letter": "E",
+          "word": "eloquent",
+          "definition": "Speaking or writing in a fluent and persuasive way.",
+          "synonyms": []
+        },
+        {
+          "letter": "F",
+          "word": "fickle",
+          "definition": "Changing loyalty or affection often and without reason.",
+          "synonyms": []
+        },
+        {
+          "letter": "G",
+          "word": "gregarious",
+          "definition": "Enjoying the company of other people.",
+          "synonyms": [
+            "sociable"
+          ]
+        },
+        {
+          "letter": "H",
+          "word": "hubris",
+          "definition": "Excessive pride that leads to downfall.",
+          "synonyms": []
+        },
+        {
+          "letter": "I",
+          "word": "impetus",
+          "definition": "A force that makes something happen or move faster.",
+          "synonyms": []
+        },
+        {
+          "letter": "J",
+          "word": "jubilant",
+          "definition": "Feeling and showing great happiness after a success.",
+          "synonyms": []
+        },
+        {
+          "letter": "K",
+          "word": "knack",
+          "definition": "A natural skill for doing something well.",
+          "synonyms": []
+        },
+        {
+          "letter": "L",
+          "word": "laconic",
+          "definition": "Using very few words, sometimes to the point of rudeness.",
+          "synonyms": []
+        },
+        {
+          "letter": "M",
+          "word": "myriad",
+          "definition": "A very great number of things.",
+          "synonyms": []
+        },
+        {
+          "letter": "N",
+          "word": "nostalgia",
+          "definition": "A sentimental longing for the past.",
+          "synonyms": []
+        },
+        {
+          "letter": "O",
+          "word": "ostensible",
+          "definition": "Appearing to be true, though probably not.",
+          "synonyms": []
+        },
+        {
+          "letter": "P",
+          "word": "prolific",
+          "definition": "Producing a great deal of work or offspring.",
+          "synonyms": []
+        },
+        {
+          "letter": "Q",
+          "word": "quixotic",
+          "definition": "Idealistic and unrealistic in a charming way.",
+          "synonyms": []
+        },
+        {
+          "letter": "R",
+          "word": "rescind",
+          "definition": "To officially cancel a decision or law.",
+          "synonyms": [
+            "revoke"
+          ]
+        },
+        {
+          "letter": "S",
+          "word": "staunch",
+          "definition": "Very loyal and committed in attitude.",
+          "synonyms": []
+        },
+        {
+          "letter": "T",
+          "word": "transient",
+          "definition": "Passing quickly and not staying long.",
+          "synonyms": []
+        },
+        {
+          "letter": "U",
+          "word": "unwieldy",
+          "definition": "Difficult to move or manage because of size or complexity.",
+          "synonyms": []
+        },
+        {
+          "letter": "V",
+          "word": "verbose",
+          "definition": "Using more words than are needed.",
+          "synonyms": []
+        },
+        {
+          "letter": "W",
+          "word": "whimsical",
+          "definition": "Playfully odd and unpredictable.",
+          "synonyms": []
+        },
+        {
+          "letter": "X",
+          "word": "x-axis",
+          "definition": "The horizontal line on a graph.",
+          "synonyms": []
+        },
+        {
+          "letter": "Y",
+          "word": "yardstick",
+          "definition": "A standard used to judge how good something is.",
+          "synonyms": []
+        },
+        {
+          "letter": "Z",
+          "word": "zealot",
+          "definition": "A person with extreme and uncompromising beliefs.",
+          "synonyms": []
+        }
+      ]
+    }
+  ]
+}

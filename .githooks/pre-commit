@@ -1,0 +1,44 @@
+#!/usr/bin/env bash
+#
+# Checks that staged Dart files are formatted. Fast — it only looks at what you
+# are about to commit. The heavier `flutter analyze` runs in pre-push.
+#
+# Enable:  git config core.hooksPath .githooks
+# Skip:    git commit --no-verify     (or SKIP_HOOKS=1 git commit ...)
+
+set -uo pipefail
+
+[ "${SKIP_HOOKS:-0}" = "1" ] && exit 0
+
+if ! command -v dart >/dev/null 2>&1; then
+  echo "pre-commit: 'dart' is not on PATH — skipping the format check."
+  echo "            Install Flutter, or run with SKIP_HOOKS=1 to silence this."
+  exit 0
+fi
+
+# Staged Dart files that still exist (added/copied/modified/renamed).
+files=()
+while IFS= read -r -d '' file; do
+  files+=("$file")
+done < <(git diff --cached --name-only --diff-filter=ACMR -z -- '*.dart')
+
+[ ${#files[@]} -eq 0 ] && exit 0
+
+# Formatted in place, at their real paths — `dart format` picks its line-splitting
+# style from each package's language version in .dart_tool/package_config.json,
+# so checking a copy elsewhere would apply the wrong style.
+if ! dart format --output=none --set-exit-if-changed "${files[@]}" >/dev/null 2>&1; then
+  echo
+  echo "✖ pre-commit: staged Dart files are not formatted:"
+  echo
+  dart format --output=none --set-exit-if-changed "${files[@]}" 2>&1 \
+    | sed -n 's/^Changed /    /p'
+  echo
+  echo "  Fix:   dart format ."
+  echo "         git add -u"
+  echo "  Skip:  git commit --no-verify"
+  echo
+  exit 1
+fi
+
+exit 0

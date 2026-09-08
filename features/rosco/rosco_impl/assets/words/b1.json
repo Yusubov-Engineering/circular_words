@@ -1,0 +1,362 @@
+{
+  "level": "b1",
+  "sets": [
+    {
+      "id": "b1-1",
+      "entries": [
+        {
+          "letter": "A",
+          "word": "abundant",
+          "definition": "Existing in large quantities; more than enough.",
+          "synonyms": [
+            "plentiful"
+          ]
+        },
+        {
+          "letter": "B",
+          "word": "borrow",
+          "definition": "To take something from someone and give it back later.",
+          "synonyms": []
+        },
+        {
+          "letter": "C",
+          "word": "crowded",
+          "definition": "Full of too many people.",
+          "synonyms": []
+        },
+        {
+          "letter": "D",
+          "word": "deadline",
+          "definition": "The time by which something must be finished.",
+          "synonyms": []
+        },
+        {
+          "letter": "E",
+          "word": "embarrassed",
+          "definition": "Feeling shy or ashamed in front of other people.",
+          "synonyms": []
+        },
+        {
+          "letter": "F",
+          "word": "forecast",
+          "definition": "A statement about what the weather will be like.",
+          "synonyms": []
+        },
+        {
+          "letter": "G",
+          "word": "generous",
+          "definition": "Willing to give money, help or time freely.",
+          "synonyms": []
+        },
+        {
+          "letter": "H",
+          "word": "honest",
+          "definition": "Always telling the truth.",
+          "synonyms": [
+            "truthful"
+          ]
+        },
+        {
+          "letter": "I",
+          "word": "improve",
+          "definition": "To make something better, or to become better.",
+          "synonyms": []
+        },
+        {
+          "letter": "J",
+          "word": "journey",
+          "definition": "The act of travelling from one place to another.",
+          "synonyms": [
+            "trip"
+          ]
+        },
+        {
+          "letter": "K",
+          "word": "keen",
+          "definition": "Very interested or eager to do something.",
+          "synonyms": [
+            "eager"
+          ]
+        },
+        {
+          "letter": "L",
+          "word": "lend",
+          "definition": "To give something to someone for a short time.",
+          "synonyms": []
+        },
+        {
+          "letter": "M",
+          "word": "mention",
+          "definition": "To speak or write about something briefly.",
+          "synonyms": []
+        },
+        {
+          "letter": "N",
+          "word": "nervous",
+          "definition": "Worried or slightly frightened about something.",
+          "synonyms": []
+        },
+        {
+          "letter": "O",
+          "word": "opportunity",
+          "definition": "A chance to do something.",
+          "synonyms": [
+            "chance"
+          ]
+        },
+        {
+          "letter": "P",
+          "word": "persuade",
+          "definition": "To make someone agree by giving them reasons.",
+          "synonyms": [
+            "convince"
+          ]
+        },
+        {
+          "letter": "Q",
+          "word": "quality",
+          "definition": "How good or bad something is.",
+          "synonyms": []
+        },
+        {
+          "letter": "R",
+          "word": "reliable",
+          "definition": "Able to be trusted to do what is expected.",
+          "synonyms": [
+            "dependable"
+          ]
+        },
+        {
+          "letter": "S",
+          "word": "suggest",
+          "definition": "To offer an idea or plan for someone to consider.",
+          "synonyms": []
+        },
+        {
+          "letter": "T",
+          "word": "talented",
+          "definition": "Having a natural ability to do something well.",
+          "synonyms": [
+            "gifted"
+          ]
+        },
+        {
+          "letter": "U",
+          "word": "unusual",
+          "definition": "Not common; different from what is normal.",
+          "synonyms": [
+            "uncommon"
+          ]
+        },
+        {
+          "letter": "V",
+          "word": "valuable",
+          "definition": "Worth a lot of money, or very useful.",
+          "synonyms": []
+        },
+        {
+          "letter": "W",
+          "word": "waste",
+          "definition": "To use more of something than you need.",
+          "synonyms": []
+        },
+        {
+          "letter": "X",
+          "word": "xylophone",
+          "definition": "A musical instrument with wooden bars hit with small hammers.",
+          "synonyms": []
+        },
+        {
+          "letter": "Y",
+          "word": "youth",
+          "definition": "The period of your life when you are young.",
+          "synonyms": []
+        },
+        {
+          "letter": "Z",
+          "word": "zone",
+          "definition": "An area that is different from the areas around it.",
+          "synonyms": [
+            "area"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "b1-2",
+      "entries": [
+        {
+          "letter": "A",
+          "word": "achieve",
+          "definition": "To succeed in doing something after trying hard.",
+          "synonyms": [
+            "accomplish"
+          ]
+        },
+        {
+          "letter": "B",
+          "word": "benefit",
+          "definition": "An advantage or good effect that something has.",
+          "synonyms": [
+            "advantage"
+          ]
+        },
+        {
+          "letter": "C",
+          "word": "confident",
+          "definition": "Sure that you can do things well.",
+          "synonyms": []
+        },
+        {
+          "letter": "D",
+          "word": "disappointed",
+          "definition": "Sad because something was not as good as you hoped.",
+          "synonyms": []
+        },
+        {
+          "letter": "E",
+          "word": "encourage",
+          "definition": "To give someone hope or confidence to do something.",
+          "synonyms": []
+        },
+        {
+          "letter": "F",
+          "word": "familiar",
+          "definition": "Well known to you because you have seen it often.",
+          "synonyms": []
+        },
+        {
+          "letter": "G",
+          "word": "guarantee",
+          "definition": "A promise that something will be done or will work.",
+          "synonyms": []
+        },
+        {
+          "letter": "H",
+          "word": "hesitate",
+          "definition": "To pause before doing something because you are unsure.",
+          "synonyms": []
+        },
+        {
+          "letter": "I",
+          "word": "increase",
+          "definition": "To become larger in number or amount.",
+          "synonyms": [
+            "rise"
+          ]
+        },
+        {
+          "letter": "J",
+          "word": "justify",
+          "definition": "To give a good reason for something.",
+          "synonyms": []
+        },
+        {
+          "letter": "K",
+          "word": "knowledge",
+          "definition": "The information and understanding you have about something.",
+          "synonyms": []
+        },
+        {
+          "letter": "L",
+          "word": "leisure",
+          "definition": "Time when you are free to do what you enjoy.",
+          "synonyms": []
+        },
+        {
+          "letter": "M",
+          "word": "manage",
+          "definition": "To succeed in doing something difficult.",
+          "synonyms": []
+        },
+        {
+          "letter": "N",
+          "word": "negotiate",
+          "definition": "To discuss something in order to reach an agreement.",
+          "synonyms": []
+        },
+        {
+          "letter": "O",
+          "word": "obvious",
+          "definition": "Easy to see or understand.",
+          "synonyms": [
+            "clear"
+          ]
+        },
+        {
+          "letter": "P",
+          "word": "prevent",
+          "definition": "To stop something from happening.",
+          "synonyms": [
+            "stop"
+          ]
+        },
+        {
+          "letter": "Q",
+          "word": "quit",
+          "definition": "To stop doing something, or to leave a job.",
+          "synonyms": []
+        },
+        {
+          "letter": "R",
+          "word": "recommend",
+          "definition": "To say that something is good and worth choosing.",
+          "synonyms": []
+        },
+        {
+          "letter": "S",
+          "word": "struggle",
+          "definition": "To try very hard to do something difficult.",
+          "synonyms": []
+        },
+        {
+          "letter": "T",
+          "word": "temporary",
+          "definition": "Lasting for only a short time.",
+          "synonyms": []
+        },
+        {
+          "letter": "U",
+          "word": "urgent",
+          "definition": "Needing to be dealt with immediately.",
+          "synonyms": []
+        },
+        {
+          "letter": "V",
+          "word": "vary",
+          "definition": "To be different in different situations.",
+          "synonyms": []
+        },
+        {
+          "letter": "W",
+          "word": "witness",
+          "definition": "A person who saw something happen.",
+          "synonyms": []
+        },
+        {
+          "letter": "X",
+          "word": "x-ray",
+          "definition": "A picture of the inside of the body made with radiation.",
+          "synonyms": [
+            "xray",
+            "ex ray"
+          ]
+        },
+        {
+          "letter": "Y",
+          "word": "yell",
+          "definition": "To shout loudly.",
+          "synonyms": [
+            "shout"
+          ]
+        },
+        {
+          "letter": "Z",
+          "word": "zoom",
+          "definition": "To move very quickly.",
+          "synonyms": []
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,346 @@
+{
+  "level": "b2",
+  "sets": [
+    {
+      "id": "b2-1",
+      "entries": [
+        {
+          "letter": "A",
+          "word": "ambiguous",
+          "definition": "Having more than one possible meaning.",
+          "synonyms": []
+        },
+        {
+          "letter": "B",
+          "word": "bias",
+          "definition": "An unfair preference for one person or group.",
+          "synonyms": []
+        },
+        {
+          "letter": "C",
+          "word": "consequence",
+          "definition": "Something that happens as a result of an earlier action.",
+          "synonyms": []
+        },
+        {
+          "letter": "D",
+          "word": "deteriorate",
+          "definition": "To become gradually worse.",
+          "synonyms": [
+            "worsen"
+          ]
+        },
+        {
+          "letter": "E",
+          "word": "elaborate",
+          "definition": "To add more detail to what you have said.",
+          "synonyms": []
+        },
+        {
+          "letter": "F",
+          "word": "feasible",
+          "definition": "Able to be done without great difficulty.",
+          "synonyms": [
+            "workable"
+          ]
+        },
+        {
+          "letter": "G",
+          "word": "grievance",
+          "definition": "A complaint about unfair treatment.",
+          "synonyms": []
+        },
+        {
+          "letter": "H",
+          "word": "hindsight",
+          "definition": "Understanding of an event only after it has happened.",
+          "synonyms": []
+        },
+        {
+          "letter": "I",
+          "word": "inevitable",
+          "definition": "Certain to happen and impossible to avoid.",
+          "synonyms": []
+        },
+        {
+          "letter": "J",
+          "word": "jeopardise",
+          "definition": "To put something valuable at risk.",
+          "synonyms": [
+            "jeopardize",
+            "endanger"
+          ]
+        },
+        {
+          "letter": "K",
+          "word": "kindle",
+          "definition": "To start a fire, or to awaken a strong feeling.",
+          "synonyms": []
+        },
+        {
+          "letter": "L",
+          "word": "lucrative",
+          "definition": "Producing a great deal of profit.",
+          "synonyms": [
+            "profitable"
+          ]
+        },
+        {
+          "letter": "M",
+          "word": "mitigate",
+          "definition": "To make something harmful less severe.",
+          "synonyms": []
+        },
+        {
+          "letter": "N",
+          "word": "notorious",
+          "definition": "Famous for a bad reason.",
+          "synonyms": []
+        },
+        {
+          "letter": "O",
+          "word": "obsolete",
+          "definition": "No longer used because something better exists.",
+          "synonyms": [
+            "outdated"
+          ]
+        },
+        {
+          "letter": "P",
+          "word": "plausible",
+          "definition": "Seeming reasonable and likely to be true.",
+          "synonyms": []
+        },
+        {
+          "letter": "Q",
+          "word": "quantify",
+          "definition": "To measure something and express it as a number.",
+          "synonyms": []
+        },
+        {
+          "letter": "R",
+          "word": "resilient",
+          "definition": "Able to recover quickly from difficulty.",
+          "synonyms": []
+        },
+        {
+          "letter": "S",
+          "word": "scrutinise",
+          "definition": "To examine something very carefully.",
+          "synonyms": [
+            "scrutinize"
+          ]
+        },
+        {
+          "letter": "T",
+          "word": "tentative",
+          "definition": "Not certain or fixed; done as a first attempt.",
+          "synonyms": []
+        },
+        {
+          "letter": "U",
+          "word": "undermine",
+          "definition": "To gradually weaken someone's position or confidence.",
+          "synonyms": []
+        },
+        {
+          "letter": "V",
+          "word": "viable",
+          "definition": "Capable of working successfully.",
+          "synonyms": []
+        },
+        {
+          "letter": "W",
+          "word": "warrant",
+          "definition": "To make an action seem necessary or justified.",
+          "synonyms": []
+        },
+        {
+          "letter": "X",
+          "word": "xenophobia",
+          "definition": "A strong dislike of people from other countries.",
+          "synonyms": []
+        },
+        {
+          "letter": "Y",
+          "word": "yearn",
+          "definition": "To feel a strong longing for something.",
+          "synonyms": [
+            "long"
+          ]
+        },
+        {
+          "letter": "Z",
+          "word": "zeal",
+          "definition": "Great energy and enthusiasm for a cause.",
+          "synonyms": []
+        }
+      ]
+    },
+    {
+      "id": "b2-2",
+      "entries": [
+        {
+          "letter": "A",
+          "word": "accountable",
+          "definition": "Required to explain your actions and accept responsibility.",
+          "synonyms": []
+        },
+        {
+          "letter": "B",
+          "word": "burden",
+          "definition": "A heavy load or a difficult responsibility.",
+          "synonyms": []
+        },
+        {
+          "letter": "C",
+          "word": "coherent",
+          "definition": "Clear, logical and well organised.",
+          "synonyms": []
+        },
+        {
+          "letter": "D",
+          "word": "discrepancy",
+          "definition": "A difference between two things that should match.",
+          "synonyms": []
+        },
+        {
+          "letter": "E",
+          "word": "exacerbate",
+          "definition": "To make a bad situation worse.",
+          "synonyms": []
+        },
+        {
+          "letter": "F",
+          "word": "fluctuate",
+          "definition": "To rise and fall irregularly.",
+          "synonyms": []
+        },
+        {
+          "letter": "G",
+          "word": "gauge",
+          "definition": "To judge or measure the size or degree of something.",
+          "synonyms": []
+        },
+        {
+          "letter": "H",
+          "word": "hierarchy",
+          "definition": "A system in which people are ranked one above another.",
+          "synonyms": []
+        },
+        {
+          "letter": "I",
+          "word": "incentive",
+          "definition": "Something that encourages you to act.",
+          "synonyms": []
+        },
+        {
+          "letter": "J",
+          "word": "jargon",
+          "definition": "Special words used by one profession that others find hard to follow.",
+          "synonyms": []
+        },
+        {
+          "letter": "K",
+          "word": "keystone",
+          "definition": "The central part on which everything else depends.",
+          "synonyms": []
+        },
+        {
+          "letter": "L",
+          "word": "leverage",
+          "definition": "The power to influence a situation to your advantage.",
+          "synonyms": []
+        },
+        {
+          "letter": "M",
+          "word": "momentum",
+          "definition": "The force that keeps a moving object going, or growing support.",
+          "synonyms": []
+        },
+        {
+          "letter": "N",
+          "word": "nuance",
+          "definition": "A very small difference in meaning or feeling.",
+          "synonyms": []
+        },
+        {
+          "letter": "O",
+          "word": "overhaul",
+          "definition": "To examine and repair something thoroughly.",
+          "synonyms": []
+        },
+        {
+          "letter": "P",
+          "word": "prevalent",
+          "definition": "Widespread and common in a particular place or time.",
+          "synonyms": []
+        },
+        {
+          "letter": "Q",
+          "word": "quota",
+          "definition": "A fixed share or maximum number allowed.",
+          "synonyms": []
+        },
+        {
+          "letter": "R",
+          "word": "rebuttal",
+          "definition": "An argument given to prove a claim wrong.",
+          "synonyms": []
+        },
+        {
+          "letter": "S",
+          "word": "subsidy",
+          "definition": "Money paid by a government to lower the cost of something.",
+          "synonyms": []
+        },
+        {
+          "letter": "T",
+          "word": "threshold",
+          "definition": "The level at which something starts to happen.",
+          "synonyms": []
+        },
+        {
+          "letter": "U",
+          "word": "unanimous",
+          "definition": "Agreed by everyone involved.",
+          "synonyms": []
+        },
+        {
+          "letter": "V",
+          "word": "volatile",
+          "definition": "Likely to change suddenly and unpredictably.",
+          "synonyms": []
+        },
+        {
+          "letter": "W",
+          "word": "wary",
+          "definition": "Careful because of possible danger.",
+          "synonyms": [
+            "cautious"
+          ]
+        },
+        {
+          "letter": "X",
+          "word": "xerox",
+          "definition": "To copy a document on a machine.",
+          "synonyms": [
+            "photocopy"
+          ]
+        },
+        {
+          "letter": "Y",
+          "word": "yield",
+          "definition": "To produce a result, or to give way under pressure.",
+          "synonyms": []
+        },
+        {
+          "letter": "Z",
+          "word": "zigzag",
+          "definition": "To move in a line with sharp turns left and right.",
+          "synonyms": []
+        }
+      ]
+    }
+  ]
+}

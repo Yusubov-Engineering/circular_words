@@ -1,0 +1,339 @@
+{
+  "level": "a1",
+  "sets": [
+    {
+      "id": "a1-1",
+      "entries": [
+        {
+          "letter": "A",
+          "word": "apple",
+          "definition": "A round fruit with red or green skin that grows on a tree.",
+          "synonyms": []
+        },
+        {
+          "letter": "B",
+          "word": "book",
+          "definition": "A set of printed pages held together in a cover, for reading.",
+          "synonyms": []
+        },
+        {
+          "letter": "C",
+          "word": "cat",
+          "definition": "A small furry animal kept as a pet that says meow.",
+          "synonyms": []
+        },
+        {
+          "letter": "D",
+          "word": "dog",
+          "definition": "An animal with four legs kept as a pet that barks.",
+          "synonyms": []
+        },
+        {
+          "letter": "E",
+          "word": "egg",
+          "definition": "An oval object laid by a bird, often eaten for breakfast.",
+          "synonyms": []
+        },
+        {
+          "letter": "F",
+          "word": "friend",
+          "definition": "A person you like and enjoy spending time with.",
+          "synonyms": []
+        },
+        {
+          "letter": "G",
+          "word": "green",
+          "definition": "The colour of grass and most leaves.",
+          "synonyms": []
+        },
+        {
+          "letter": "H",
+          "word": "house",
+          "definition": "A building where a person or family lives.",
+          "synonyms": [
+            "home"
+          ]
+        },
+        {
+          "letter": "I",
+          "word": "ice",
+          "definition": "Water that has become hard because it is very cold.",
+          "synonyms": []
+        },
+        {
+          "letter": "J",
+          "word": "juice",
+          "definition": "A drink made from fruit.",
+          "synonyms": []
+        },
+        {
+          "letter": "K",
+          "word": "key",
+          "definition": "A small metal object used to open or lock a door.",
+          "synonyms": []
+        },
+        {
+          "letter": "L",
+          "word": "lemon",
+          "definition": "A yellow fruit with a very sour taste.",
+          "synonyms": []
+        },
+        {
+          "letter": "M",
+          "word": "milk",
+          "definition": "A white drink that comes from cows.",
+          "synonyms": []
+        },
+        {
+          "letter": "N",
+          "word": "night",
+          "definition": "The time when it is dark and most people sleep.",
+          "synonyms": []
+        },
+        {
+          "letter": "O",
+          "word": "orange",
+          "definition": "A round citrus fruit with a thick skin.",
+          "synonyms": []
+        },
+        {
+          "letter": "P",
+          "word": "pen",
+          "definition": "A thin object filled with ink, used for writing.",
+          "synonyms": []
+        },
+        {
+          "letter": "Q",
+          "word": "queen",
+          "definition": "A woman who rules a country, or the wife of a king.",
+          "synonyms": []
+        },
+        {
+          "letter": "R",
+          "word": "rain",
+          "definition": "Water that falls from the clouds.",
+          "synonyms": []
+        },
+        {
+          "letter": "S",
+          "word": "sun",
+          "definition": "The bright star in the sky that gives us light and heat.",
+          "synonyms": []
+        },
+        {
+          "letter": "T",
+          "word": "table",
+          "definition": "A piece of furniture with a flat top and legs.",
+          "synonyms": []
+        },
+        {
+          "letter": "U",
+          "word": "umbrella",
+          "definition": "Something you hold over your head to stay dry.",
+          "synonyms": []
+        },
+        {
+          "letter": "V",
+          "word": "village",
+          "definition": "A very small town in the countryside.",
+          "synonyms": []
+        },
+        {
+          "letter": "W",
+          "word": "water",
+          "definition": "The clear liquid people drink and that fills rivers and seas.",
+          "synonyms": []
+        },
+        {
+          "letter": "X",
+          "word": "x-ray",
+          "definition": "A photograph that shows the bones inside your body.",
+          "synonyms": [
+            "xray",
+            "ex ray"
+          ]
+        },
+        {
+          "letter": "Y",
+          "word": "yellow",
+          "definition": "The colour of a lemon or of the sun.",
+          "synonyms": []
+        },
+        {
+          "letter": "Z",
+          "word": "zoo",
+          "definition": "A place where wild animals are kept for people to see.",
+          "synonyms": []
+        }
+      ]
+    },
+    {
+      "id": "a1-2",
+      "entries": [
+        {
+          "letter": "A",
+          "word": "arm",
+          "definition": "The part of your body between your shoulder and your hand.",
+          "synonyms": []
+        },
+        {
+          "letter": "B",
+          "word": "bread",
+          "definition": "A basic food made from flour and baked in an oven.",
+          "synonyms": []
+        },
+        {
+          "letter": "C",
+          "word": "chair",
+          "definition": "A piece of furniture for one person to sit on.",
+          "synonyms": []
+        },
+        {
+          "letter": "D",
+          "word": "door",
+          "definition": "The part of a building you open to go in or out.",
+          "synonyms": []
+        },
+        {
+          "letter": "E",
+          "word": "eye",
+          "definition": "The part of your body that you see with.",
+          "synonyms": []
+        },
+        {
+          "letter": "F",
+          "word": "fish",
+          "definition": "An animal that lives in water and swims.",
+          "synonyms": []
+        },
+        {
+          "letter": "G",
+          "word": "garden",
+          "definition": "The land next to a house where plants grow.",
+          "synonyms": []
+        },
+        {
+          "letter": "H",
+          "word": "hand",
+          "definition": "The part of your body at the end of your arm, with five fingers.",
+          "synonyms": []
+        },
+        {
+          "letter": "I",
+          "word": "island",
+          "definition": "A piece of land with water all around it.",
+          "synonyms": []
+        },
+        {
+          "letter": "J",
+          "word": "job",
+          "definition": "The work a person does to earn money.",
+          "synonyms": [
+            "work"
+          ]
+        },
+        {
+          "letter": "K",
+          "word": "kitchen",
+          "definition": "The room in a house where you cook food.",
+          "synonyms": []
+        },
+        {
+          "letter": "L",
+          "word": "lamp",
+          "definition": "An object that gives light in a room.",
+          "synonyms": [
+            "light"
+          ]
+        },
+        {
+          "letter": "M",
+          "word": "moon",
+          "definition": "The bright round object seen in the sky at night.",
+          "synonyms": []
+        },
+        {
+          "letter": "N",
+          "word": "name",
+          "definition": "The word you call a person or thing.",
+          "synonyms": []
+        },
+        {
+          "letter": "O",
+          "word": "open",
+          "definition": "Not closed.",
+          "synonyms": []
+        },
+        {
+          "letter": "P",
+          "word": "paper",
+          "definition": "The thin material you write on.",
+          "synonyms": []
+        },
+        {
+          "letter": "Q",
+          "word": "question",
+          "definition": "Something you ask when you want to know something.",
+          "synonyms": []
+        },
+        {
+          "letter": "R",
+          "word": "red",
+          "definition": "The colour of blood or a tomato.",
+          "synonyms": []
+        },
+        {
+          "letter": "S",
+          "word": "school",
+          "definition": "A place where children go to learn.",
+          "synonyms": []
+        },
+        {
+          "letter": "T",
+          "word": "tree",
+          "definition": "A tall plant with a trunk, branches and leaves.",
+          "synonyms": []
+        },
+        {
+          "letter": "U",
+          "word": "uncle",
+          "definition": "The brother of your mother or father.",
+          "synonyms": []
+        },
+        {
+          "letter": "V",
+          "word": "voice",
+          "definition": "The sound you make when you speak or sing.",
+          "synonyms": []
+        },
+        {
+          "letter": "W",
+          "word": "window",
+          "definition": "An opening in a wall with glass that lets light in.",
+          "synonyms": []
+        },
+        {
+          "letter": "X",
+          "word": "x-ray",
+          "definition": "An image doctors use to look inside the body.",
+          "synonyms": [
+            "xray",
+            "ex ray"
+          ]
+        },
+        {
+          "letter": "Y",
+          "word": "young",
+          "definition": "Not old; having lived only a short time.",
+          "synonyms": []
+        },
+        {
+          "letter": "Z",
+          "word": "zero",
+          "definition": "The number 0; nothing.",
+          "synonyms": []
+        }
+      ]
+    }
+  ]
+}

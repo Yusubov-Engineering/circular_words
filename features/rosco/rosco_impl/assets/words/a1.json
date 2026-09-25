@@ -261,7 +261,7 @@
         {
           "letter": "O",
           "word": "open",
-          "definition": "Not closed.",
+          "definition": "Not shut, so that things can go in or out.",
           "synonyms": []
         },
         {
@@ -314,12 +314,9 @@
         },
         {
           "letter": "X",
-          "word": "x-ray",
-          "definition": "An image doctors use to look inside the body.",
-          "synonyms": [
-            "xray",
-            "ex ray"
-          ]
+          "word": "xylitol",
+          "definition": "A sweet powder used instead of sugar in chewing gum.",
+          "synonyms": []
         },
         {
           "letter": "Y",
@@ -331,6 +328,491 @@
           "letter": "Z",
           "word": "zero",
           "definition": "The number 0; nothing.",
+          "synonyms": []
+        }
+      ]
+    },
+    {
+      "id": "a1-3",
+      "entries": [
+        {
+          "letter": "A",
+          "word": "ant",
+          "definition": "A very small insect that lives in large groups under the ground.",
+          "synonyms": []
+        },
+        {
+          "letter": "B",
+          "word": "bed",
+          "definition": "The piece of furniture you sleep on at night.",
+          "synonyms": []
+        },
+        {
+          "letter": "C",
+          "word": "cake",
+          "definition": "A sweet food you often eat on a birthday.",
+          "synonyms": []
+        },
+        {
+          "letter": "D",
+          "word": "doctor",
+          "definition": "A person whose job is to help sick people get better.",
+          "synonyms": []
+        },
+        {
+          "letter": "E",
+          "word": "elephant",
+          "definition": "A very big grey animal with a long nose.",
+          "synonyms": []
+        },
+        {
+          "letter": "F",
+          "word": "flower",
+          "definition": "The colourful part of a plant that often smells nice.",
+          "synonyms": []
+        },
+        {
+          "letter": "G",
+          "word": "girl",
+          "definition": "A young female child.",
+          "synonyms": []
+        },
+        {
+          "letter": "H",
+          "word": "hat",
+          "definition": "Something you wear on your head to keep warm or dry.",
+          "synonyms": []
+        },
+        {
+          "letter": "I",
+          "word": "idea",
+          "definition": "A thought or plan that comes into your mind.",
+          "synonyms": []
+        },
+        {
+          "letter": "J",
+          "word": "jacket",
+          "definition": "A short coat that you wear over your clothes.",
+          "synonyms": []
+        },
+        {
+          "letter": "K",
+          "word": "king",
+          "definition": "A man who rules a country and wears a crown.",
+          "synonyms": []
+        },
+        {
+          "letter": "L",
+          "word": "leg",
+          "definition": "One of the two long parts of your body that you walk on.",
+          "synonyms": []
+        },
+        {
+          "letter": "M",
+          "word": "mother",
+          "definition": "Your female parent.",
+          "synonyms": []
+        },
+        {
+          "letter": "N",
+          "word": "nose",
+          "definition": "The part of your face that you smell with.",
+          "synonyms": []
+        },
+        {
+          "letter": "O",
+          "word": "old",
+          "definition": "Having lived for many years; not young.",
+          "synonyms": []
+        },
+        {
+          "letter": "P",
+          "word": "park",
+          "definition": "A public place with grass and trees where people walk and play.",
+          "synonyms": []
+        },
+        {
+          "letter": "Q",
+          "word": "quiet",
+          "definition": "Making very little noise.",
+          "synonyms": []
+        },
+        {
+          "letter": "R",
+          "word": "river",
+          "definition": "A long line of water that flows to the sea.",
+          "synonyms": []
+        },
+        {
+          "letter": "S",
+          "word": "shoe",
+          "definition": "Something you wear on your foot when you go outside.",
+          "synonyms": []
+        },
+        {
+          "letter": "T",
+          "word": "teacher",
+          "definition": "A person who helps students learn at school.",
+          "synonyms": []
+        },
+        {
+          "letter": "U",
+          "word": "ugly",
+          "definition": "Not nice to look at; not beautiful.",
+          "synonyms": []
+        },
+        {
+          "letter": "V",
+          "word": "van",
+          "definition": "A vehicle bigger than a car, used to carry things.",
+          "synonyms": []
+        },
+        {
+          "letter": "W",
+          "word": "winter",
+          "definition": "The coldest season of the year.",
+          "synonyms": []
+        },
+        {
+          "letter": "X",
+          "word": "xylophone",
+          "definition": "A musical instrument with wooden bars that you hit.",
+          "synonyms": []
+        },
+        {
+          "letter": "Y",
+          "word": "yes",
+          "definition": "The word you say when you agree.",
+          "synonyms": []
+        },
+        {
+          "letter": "Z",
+          "word": "zebra",
+          "definition": "An African animal like a horse with black and white stripes.",
+          "synonyms": []
+        }
+      ]
+    },
+    {
+      "id": "a1-4",
+      "entries": [
+        {
+          "letter": "A",
+          "word": "aunt",
+          "definition": "The sister of your mother or father.",
+          "synonyms": []
+        },
+        {
+          "letter": "B",
+          "word": "bird",
+          "definition": "An animal with feathers and wings that can usually fly.",
+          "synonyms": []
+        },
+        {
+          "letter": "C",
+          "word": "car",
+          "definition": "A vehicle with four wheels that people drive.",
+          "synonyms": []
+        },
+        {
+          "letter": "D",
+          "word": "dance",
+          "definition": "To move your body to music.",
+          "synonyms": []
+        },
+        {
+          "letter": "E",
+          "word": "evening",
+          "definition": "The part of the day after the afternoon and before night.",
+          "synonyms": []
+        },
+        {
+          "letter": "F",
+          "word": "farm",
+          "definition": "Land where people grow food and keep animals.",
+          "synonyms": []
+        },
+        {
+          "letter": "G",
+          "word": "glass",
+          "definition": "A cup made of something clear that you drink from.",
+          "synonyms": []
+        },
+        {
+          "letter": "H",
+          "word": "happy",
+          "definition": "Feeling good and pleased.",
+          "synonyms": []
+        },
+        {
+          "letter": "I",
+          "word": "ink",
+          "definition": "The coloured liquid inside a pen.",
+          "synonyms": []
+        },
+        {
+          "letter": "J",
+          "word": "jam",
+          "definition": "A sweet food made from fruit that you put on bread.",
+          "synonyms": []
+        },
+        {
+          "letter": "K",
+          "word": "kite",
+          "definition": "A light toy that flies in the wind on a long string.",
+          "synonyms": []
+        },
+        {
+          "letter": "L",
+          "word": "letter",
+          "definition": "A written message that you send in an envelope.",
+          "synonyms": []
+        },
+        {
+          "letter": "M",
+          "word": "money",
+          "definition": "Coins and paper notes that you use to buy things.",
+          "synonyms": []
+        },
+        {
+          "letter": "N",
+          "word": "nurse",
+          "definition": "A person who takes care of sick people in a hospital.",
+          "synonyms": []
+        },
+        {
+          "letter": "O",
+          "word": "ocean",
+          "definition": "A very large area of salt water.",
+          "synonyms": []
+        },
+        {
+          "letter": "P",
+          "word": "pizza",
+          "definition": "A flat round bread with cheese and tomato on top.",
+          "synonyms": []
+        },
+        {
+          "letter": "Q",
+          "word": "quick",
+          "definition": "Fast; doing something in a short time.",
+          "synonyms": []
+        },
+        {
+          "letter": "R",
+          "word": "rice",
+          "definition": "Small white or brown grains that people cook and eat.",
+          "synonyms": []
+        },
+        {
+          "letter": "S",
+          "word": "shirt",
+          "definition": "A piece of clothing for the top of your body, with buttons.",
+          "synonyms": []
+        },
+        {
+          "letter": "T",
+          "word": "tooth",
+          "definition": "One of the hard white things in your mouth that you bite with.",
+          "synonyms": []
+        },
+        {
+          "letter": "U",
+          "word": "under",
+          "definition": "Below something.",
+          "synonyms": []
+        },
+        {
+          "letter": "V",
+          "word": "vegetable",
+          "definition": "A plant such as a carrot or a potato that you eat.",
+          "synonyms": []
+        },
+        {
+          "letter": "W",
+          "word": "walk",
+          "definition": "To move on your feet at a normal speed.",
+          "synonyms": []
+        },
+        {
+          "letter": "X",
+          "word": "x-axis",
+          "definition": "The line that goes across the bottom of a graph.",
+          "synonyms": []
+        },
+        {
+          "letter": "Y",
+          "word": "year",
+          "definition": "A period of twelve months.",
+          "synonyms": []
+        },
+        {
+          "letter": "Z",
+          "word": "zip",
+          "definition": "A thing that closes a bag or a coat with two rows of small teeth.",
+          "synonyms": []
+        }
+      ]
+    },
+    {
+      "id": "a1-5",
+      "entries": [
+        {
+          "letter": "A",
+          "word": "animal",
+          "definition": "A living thing that is not a plant, such as a dog or a bird.",
+          "synonyms": []
+        },
+        {
+          "letter": "B",
+          "word": "baby",
+          "definition": "A very young child.",
+          "synonyms": []
+        },
+        {
+          "letter": "C",
+          "word": "clock",
+          "definition": "A thing on a wall that shows the time.",
+          "synonyms": []
+        },
+        {
+          "letter": "D",
+          "word": "dress",
+          "definition": "A piece of clothing for a woman or girl that covers the body and legs.",
+          "synonyms": []
+        },
+        {
+          "letter": "E",
+          "word": "eat",
+          "definition": "To put food in your mouth and swallow it.",
+          "synonyms": []
+        },
+        {
+          "letter": "F",
+          "word": "father",
+          "definition": "Your male parent.",
+          "synonyms": []
+        },
+        {
+          "letter": "G",
+          "word": "game",
+          "definition": "Something you play for fun, often with rules.",
+          "synonyms": []
+        },
+        {
+          "letter": "H",
+          "word": "hot",
+          "definition": "Having a high temperature.",
+          "synonyms": []
+        },
+        {
+          "letter": "I",
+          "word": "insect",
+          "definition": "A very small animal with six legs, like a fly.",
+          "synonyms": []
+        },
+        {
+          "letter": "J",
+          "word": "jump",
+          "definition": "To push yourself up into the air with your legs.",
+          "synonyms": []
+        },
+        {
+          "letter": "K",
+          "word": "kiss",
+          "definition": "To touch someone with your lips to show love.",
+          "synonyms": []
+        },
+        {
+          "letter": "L",
+          "word": "lion",
+          "definition": "A large wild cat; the male has long hair around its head.",
+          "synonyms": []
+        },
+        {
+          "letter": "M",
+          "word": "mouth",
+          "definition": "The part of your face that you eat and speak with.",
+          "synonyms": []
+        },
+        {
+          "letter": "N",
+          "word": "number",
+          "definition": "A word or sign like one, two or three.",
+          "synonyms": []
+        },
+        {
+          "letter": "O",
+          "word": "onion",
+          "definition": "A round vegetable with a strong smell that can make you cry.",
+          "synonyms": []
+        },
+        {
+          "letter": "P",
+          "word": "picture",
+          "definition": "A drawing, painting or photo.",
+          "synonyms": []
+        },
+        {
+          "letter": "Q",
+          "word": "quarter",
+          "definition": "One of four equal parts of something.",
+          "synonyms": []
+        },
+        {
+          "letter": "R",
+          "word": "room",
+          "definition": "A part of a house with walls, a floor and a door.",
+          "synonyms": []
+        },
+        {
+          "letter": "S",
+          "word": "sister",
+          "definition": "A girl or woman who has the same parents as you.",
+          "synonyms": []
+        },
+        {
+          "letter": "T",
+          "word": "train",
+          "definition": "A long vehicle that runs on rails and carries people.",
+          "synonyms": []
+        },
+        {
+          "letter": "U",
+          "word": "uniform",
+          "definition": "Special clothes that all the students at a school wear.",
+          "synonyms": []
+        },
+        {
+          "letter": "V",
+          "word": "visit",
+          "definition": "To go and see a person or a place.",
+          "synonyms": []
+        },
+        {
+          "letter": "W",
+          "word": "wind",
+          "definition": "Air that moves quickly outside.",
+          "synonyms": []
+        },
+        {
+          "letter": "X",
+          "word": "xerox",
+          "definition": "A copy of a page made on a copying machine.",
+          "synonyms": []
+        },
+        {
+          "letter": "Y",
+          "word": "yogurt",
+          "definition": "A thick white food made from milk, often eaten with fruit.",
+          "synonyms": [
+            "yoghurt"
+          ]
+        },
+        {
+          "letter": "Z",
+          "word": "zigzag",
+          "definition": "A line that goes sharply one way and then the other.",
           "synonyms": []
         }
       ]

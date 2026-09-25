@@ -343,6 +343,500 @@
           ]
         }
       ]
+    },
+    {
+      "id": "a2-3",
+      "entries": [
+        {
+          "letter": "A",
+          "word": "angry",
+          "definition": "Feeling very annoyed about something.",
+          "synonyms": []
+        },
+        {
+          "letter": "B",
+          "word": "boring",
+          "definition": "Not interesting at all.",
+          "synonyms": []
+        },
+        {
+          "letter": "C",
+          "word": "comfortable",
+          "definition": "Pleasant to sit in or wear, so you feel relaxed.",
+          "synonyms": []
+        },
+        {
+          "letter": "D",
+          "word": "dentist",
+          "definition": "A doctor who looks after people's teeth.",
+          "synonyms": []
+        },
+        {
+          "letter": "E",
+          "word": "exercise",
+          "definition": "Physical activity that keeps your body healthy.",
+          "synonyms": []
+        },
+        {
+          "letter": "F",
+          "word": "festival",
+          "definition": "A special time when people celebrate with music, food or events.",
+          "synonyms": []
+        },
+        {
+          "letter": "G",
+          "word": "guide",
+          "definition": "A person who shows tourists around a place.",
+          "synonyms": []
+        },
+        {
+          "letter": "H",
+          "word": "hotel",
+          "definition": "A building where you pay to sleep when you travel.",
+          "synonyms": []
+        },
+        {
+          "letter": "I",
+          "word": "invitation",
+          "definition": "A request asking someone to come to a party or event.",
+          "synonyms": []
+        },
+        {
+          "letter": "J",
+          "word": "journey",
+          "definition": "A trip from one place to another, especially a long one.",
+          "synonyms": []
+        },
+        {
+          "letter": "K",
+          "word": "kilometre",
+          "definition": "A distance of one thousand metres.",
+          "synonyms": [
+            "kilometer"
+          ]
+        },
+        {
+          "letter": "L",
+          "word": "lift",
+          "definition": "A machine that carries people up and down in a building.",
+          "synonyms": [
+            "elevator"
+          ]
+        },
+        {
+          "letter": "M",
+          "word": "museum",
+          "definition": "A building where you can see old or interesting objects.",
+          "synonyms": []
+        },
+        {
+          "letter": "N",
+          "word": "newspaper",
+          "definition": "Printed pages of news that you can buy every day.",
+          "synonyms": []
+        },
+        {
+          "letter": "O",
+          "word": "opposite",
+          "definition": "Completely different; for example, hot is this of cold.",
+          "synonyms": []
+        },
+        {
+          "letter": "P",
+          "word": "pharmacy",
+          "definition": "A shop where you can buy medicine.",
+          "synonyms": []
+        },
+        {
+          "letter": "Q",
+          "word": "quiz",
+          "definition": "A game where people answer questions.",
+          "synonyms": []
+        },
+        {
+          "letter": "R",
+          "word": "recipe",
+          "definition": "Instructions that tell you how to cook something.",
+          "synonyms": []
+        },
+        {
+          "letter": "S",
+          "word": "suitcase",
+          "definition": "A large bag with a handle that you pack clothes in for a trip.",
+          "synonyms": []
+        },
+        {
+          "letter": "T",
+          "word": "tired",
+          "definition": "Needing to rest or sleep.",
+          "synonyms": []
+        },
+        {
+          "letter": "U",
+          "word": "unhappy",
+          "definition": "Sad; not pleased.",
+          "synonyms": []
+        },
+        {
+          "letter": "V",
+          "word": "village",
+          "definition": "A very small town in the countryside.",
+          "synonyms": []
+        },
+        {
+          "letter": "W",
+          "word": "worried",
+          "definition": "Feeling that something bad might happen.",
+          "synonyms": []
+        },
+        {
+          "letter": "X",
+          "word": "xerox",
+          "definition": "A copy of a document made on a photocopier.",
+          "synonyms": []
+        },
+        {
+          "letter": "Y",
+          "word": "yawn",
+          "definition": "To open your mouth wide because you are tired or bored.",
+          "synonyms": []
+        },
+        {
+          "letter": "Z",
+          "word": "zero",
+          "definition": "The number 0; nothing at all.",
+          "synonyms": []
+        }
+      ]
+    },
+    {
+      "id": "a2-4",
+      "entries": [
+        {
+          "letter": "A",
+          "word": "arrive",
+          "definition": "To reach a place at the end of a trip.",
+          "synonyms": []
+        },
+        {
+          "letter": "B",
+          "word": "backpack",
+          "definition": "A bag with two straps that you wear over your shoulders.",
+          "synonyms": []
+        },
+        {
+          "letter": "C",
+          "word": "castle",
+          "definition": "A large, strong building where kings and queens lived long ago.",
+          "synonyms": []
+        },
+        {
+          "letter": "D",
+          "word": "dangerous",
+          "definition": "Likely to hurt or harm you.",
+          "synonyms": []
+        },
+        {
+          "letter": "E",
+          "word": "exciting",
+          "definition": "Making you feel very interested and happy.",
+          "synonyms": []
+        },
+        {
+          "letter": "F",
+          "word": "famous",
+          "definition": "Known by very many people.",
+          "synonyms": []
+        },
+        {
+          "letter": "G",
+          "word": "grandmother",
+          "definition": "The female parent of one of your parents.",
+          "synonyms": [
+            "granny",
+            "grandma"
+          ]
+        },
+        {
+          "letter": "H",
+          "word": "helmet",
+          "definition": "A hard hat that protects your head, for example on a bike.",
+          "synonyms": []
+        },
+        {
+          "letter": "I",
+          "word": "information",
+          "definition": "Facts or details about something.",
+          "synonyms": []
+        },
+        {
+          "letter": "J",
+          "word": "jeans",
+          "definition": "Trousers made of strong blue cotton.",
+          "synonyms": []
+        },
+        {
+          "letter": "K",
+          "word": "kettle",
+          "definition": "A container that you use to boil water.",
+          "synonyms": []
+        },
+        {
+          "letter": "L",
+          "word": "laugh",
+          "definition": "To make a happy sound when something is funny.",
+          "synonyms": []
+        },
+        {
+          "letter": "M",
+          "word": "menu",
+          "definition": "A list of the food you can order in a restaurant.",
+          "synonyms": []
+        },
+        {
+          "letter": "N",
+          "word": "nephew",
+          "definition": "The son of your brother or sister.",
+          "synonyms": []
+        },
+        {
+          "letter": "O",
+          "word": "offer",
+          "definition": "To ask if someone would like something.",
+          "synonyms": []
+        },
+        {
+          "letter": "P",
+          "word": "picnic",
+          "definition": "A meal you eat outside, often in a park.",
+          "synonyms": []
+        },
+        {
+          "letter": "Q",
+          "word": "queen",
+          "definition": "The woman who rules a country, or the wife of a king.",
+          "synonyms": []
+        },
+        {
+          "letter": "R",
+          "word": "ride",
+          "definition": "To travel on a bike or a horse.",
+          "synonyms": []
+        },
+        {
+          "letter": "S",
+          "word": "sunny",
+          "definition": "Bright, with a clear sky and no rain.",
+          "synonyms": []
+        },
+        {
+          "letter": "T",
+          "word": "theatre",
+          "definition": "A building where people go to watch plays.",
+          "synonyms": [
+            "theater"
+          ]
+        },
+        {
+          "letter": "U",
+          "word": "understand",
+          "definition": "To know what something means.",
+          "synonyms": []
+        },
+        {
+          "letter": "V",
+          "word": "view",
+          "definition": "What you can see from a place, for example from a window.",
+          "synonyms": []
+        },
+        {
+          "letter": "W",
+          "word": "wedding",
+          "definition": "The ceremony when two people get married.",
+          "synonyms": []
+        },
+        {
+          "letter": "X",
+          "word": "x-axis",
+          "definition": "The line along the bottom of a graph.",
+          "synonyms": []
+        },
+        {
+          "letter": "Y",
+          "word": "yard",
+          "definition": "An area of ground next to a house.",
+          "synonyms": []
+        },
+        {
+          "letter": "Z",
+          "word": "zoo",
+          "definition": "A place where people can go to see wild animals.",
+          "synonyms": []
+        }
+      ]
+    },
+    {
+      "id": "a2-5",
+      "entries": [
+        {
+          "letter": "A",
+          "word": "adventure",
+          "definition": "An exciting and unusual experience.",
+          "synonyms": []
+        },
+        {
+          "letter": "B",
+          "word": "bakery",
+          "definition": "A shop that makes and sells bread and cakes.",
+          "synonyms": []
+        },
+        {
+          "letter": "C",
+          "word": "camera",
+          "definition": "A machine you use to take photos.",
+          "synonyms": []
+        },
+        {
+          "letter": "D",
+          "word": "diary",
+          "definition": "A book where you write what happens each day.",
+          "synonyms": []
+        },
+        {
+          "letter": "E",
+          "word": "early",
+          "definition": "Before the usual or planned time.",
+          "synonyms": []
+        },
+        {
+          "letter": "F",
+          "word": "fridge",
+          "definition": "A cold cupboard in the kitchen that keeps food fresh.",
+          "synonyms": [
+            "refrigerator"
+          ]
+        },
+        {
+          "letter": "G",
+          "word": "gift",
+          "definition": "A present that you give to someone.",
+          "synonyms": []
+        },
+        {
+          "letter": "H",
+          "word": "heavy",
+          "definition": "Weighing a lot; hard to lift.",
+          "synonyms": []
+        },
+        {
+          "letter": "I",
+          "word": "injury",
+          "definition": "Harm done to a person's body, for example in an accident.",
+          "synonyms": []
+        },
+        {
+          "letter": "J",
+          "word": "joke",
+          "definition": "A short funny story that makes people laugh.",
+          "synonyms": []
+        },
+        {
+          "letter": "K",
+          "word": "kid",
+          "definition": "A child, in informal English.",
+          "synonyms": []
+        },
+        {
+          "letter": "L",
+          "word": "lazy",
+          "definition": "Not wanting to work or do anything active.",
+          "synonyms": []
+        },
+        {
+          "letter": "M",
+          "word": "medicine",
+          "definition": "Something you take when you are ill to feel better.",
+          "synonyms": []
+        },
+        {
+          "letter": "N",
+          "word": "normal",
+          "definition": "Usual and ordinary; not strange.",
+          "synonyms": []
+        },
+        {
+          "letter": "O",
+          "word": "outside",
+          "definition": "Not in a building; in the open air.",
+          "synonyms": []
+        },
+        {
+          "letter": "P",
+          "word": "polite",
+          "definition": "Behaving well and showing respect to other people.",
+          "synonyms": []
+        },
+        {
+          "letter": "Q",
+          "word": "quickly",
+          "definition": "At a fast speed.",
+          "synonyms": []
+        },
+        {
+          "letter": "R",
+          "word": "repair",
+          "definition": "To fix something that is broken.",
+          "synonyms": []
+        },
+        {
+          "letter": "S",
+          "word": "shower",
+          "definition": "A way of washing your body while standing under running water.",
+          "synonyms": []
+        },
+        {
+          "letter": "T",
+          "word": "tourist",
+          "definition": "A person who is travelling to visit places for fun.",
+          "synonyms": []
+        },
+        {
+          "letter": "U",
+          "word": "useful",
+          "definition": "Helping you to do something.",
+          "synonyms": []
+        },
+        {
+          "letter": "V",
+          "word": "volleyball",
+          "definition": "A game where two teams hit a ball over a high net with their hands.",
+          "synonyms": []
+        },
+        {
+          "letter": "W",
+          "word": "wait",
+          "definition": "To stay in a place until something happens.",
+          "synonyms": []
+        },
+        {
+          "letter": "X",
+          "word": "xylitol",
+          "definition": "A sweet powder used instead of sugar in chewing gum.",
+          "synonyms": []
+        },
+        {
+          "letter": "Y",
+          "word": "yell",
+          "definition": "To shout very loudly.",
+          "synonyms": []
+        },
+        {
+          "letter": "Z",
+          "word": "zone",
+          "definition": "An area that has a special use, like a no-parking area.",
+          "synonyms": []
+        }
+      ]
     }
   ]
 }

@@ -432,7 +432,7 @@ letters, each word filed under its own initial, and **no definition containing
 its own answer** — a clue that gives away the word is not a clue. Cheap tests,
 and the only thing standing between a typo and an unplayable level.
 
-**All six levels are authored, two sets each — 312 entries.** An unauthored
+**All six levels are authored, five sets each — 780 entries.** An unauthored
 level is no longer reachable through the picker, but a *missing asset* still
 resolves to `RoscoLevelUnavailable` and stays covered by a test against an
 empty bundle.

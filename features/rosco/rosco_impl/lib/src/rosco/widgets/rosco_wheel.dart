@@ -244,7 +244,7 @@ class _RoscoWheelPainter extends CustomPainter {
 
     _paintTimer(canvas, center, ringRadius - chipRadius * 1.9);
     _paintChips(canvas, center, ringRadius, chipRadius);
-    _paintCenter(canvas, center);
+    _paintCenter(canvas, center, size.shortestSide);
   }
 
   /// How urgent the letter's clock is, 0 (calm) .. 1 (nearly out).
@@ -347,13 +347,16 @@ class _RoscoWheelPainter extends CustomPainter {
     }
   }
 
-  void _paintCenter(Canvas canvas, Offset center) {
+  /// The countdown in the middle, sized to the wheel rather than fixed: a
+  /// fixed size crowds the ring on a small wheel — a phone on its side — and
+  /// looks lost in a large one.
+  void _paintCenter(Canvas canvas, Offset center, double extent) {
     _paintText(
       canvas,
       center,
       centerLabel,
       Color.lerp(centerColor, wrong, _urgency)!,
-      44,
+      (extent * 0.14).clamp(16.0, 56.0),
       bold: true,
     );
   }

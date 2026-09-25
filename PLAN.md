@@ -705,10 +705,12 @@ looks arbitrary later can be traced to the reasoning that produced it.
 | Does a failure end the round | **No.** The player plays on | [§1](#nothing-ends-the-round-early) |
 | Rare letters (X, Z) | **Always A–Z.** No relaxed pool | [§1](#always-az) |
 | Unproductive lap | **Run the pool down.** Only an empty pool or an all-terminal board ends it | [§1](#nothing-ends-the-round-early) |
+| Word-bank size | **Five sets per level, as a floor** (780 entries). CI fails below five and on any word repeated across a level's sets | `rosco_impl/test/word_bank_assets_test.dart` |
 | Speech in-tree or its own repo | **Own repo** (`Yusubov-Engineering/speech`), once proven on hardware | [§3](#why-speech-is-a-core-module-not-part-of-the-game) |
 | What colour means | **Accents say where, status says what.** Each CEFR level has a hue (`CefrLevel.accent`) that tints its card, its round and its result; success/danger/warning keep one meaning everywhere | `rosco_api/lib/src/cefr_level_accent.dart` |
 | How much motion | **Lively but calm.** Press feedback, a gliding highlight, a pop on each decided letter, a count-up on the score; nothing loops but the listening pulse, and all of it yields to the OS reduce-motion setting | `core/design_system/lib/src/tokens/motion/` |
 | Page transitions | **Fade-through, set once** as the router's default (router `v1.1.0` added `CustomPresentationMode`); the three screens are not spatially related, so a slide would imply a direction that does not exist | `app/lib/bootstrap/router_configuration.dart` |
+| Landscape | **Rearrange, don't lock.** Rotation stays allowed; each screen has a landscape arrangement chosen by `AppAdaptiveLayout` from its own constraints — the wheel beside the controls rather than above them, levels in two columns, score beside actions | `core/design_system/lib/src/layouts/app_adaptive_layout.dart` |
 
 One sub-question is settled by judgment rather than by requirement, and is the
 one to overrule first if the game feels wrong:

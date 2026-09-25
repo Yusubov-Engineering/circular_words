@@ -249,6 +249,15 @@ is built from.
   `quiet`) and `AppCard` sit on it. The motion widgets are `AppEntrance`
   (staggered arrival), `AppSwitcher` (keyed cross-fade), `AppPop` (swell on
   change) and `AppCountUp`.
+- **Lay out for the room, not the device.** `AppAdaptiveLayout` picks a
+  `portrait` or `landscape` builder from its own constraints (landscape means
+  more than 1.2× wider than tall), so split view and tablets get the right
+  arrangement too. Every screen has both: in landscape the round puts the
+  wheel beside everything else, the picker goes to two columns, and the result
+  splits score from actions. `AppFillScroll` fills the height when there is
+  room and scrolls when there is not — lay its child out with
+  `MainAxisAlignment`, never `Spacer`/`Expanded`, which have no height to
+  share inside a scroll view.
 - **Page transitions are set once**, as the router's
   `defaultPresentationMode` in `router_configuration.dart` (`appFadeThrough`).
   A route overrides it only if it has a reason to differ.
@@ -445,6 +454,12 @@ schema itself.
 - **Reserve space with a minimum height, never a fixed one.** A `SizedBox`
   around text clips it above roughly a 1.3 font scale. Use `ConstrainedBox`
   with `minHeight` so the row still cannot jump around.
+- **`AppScaffold` owns the bottom inset.** It pads for the home indicator
+  and keyboard itself, then removes that inset from the body's `MediaQuery`.
+  Before it did, every screen's `SafeArea` padded for it a second time — a
+  dead band under each screen, which in landscape cost a sixth of the height
+  and pushed the result screen's second button off the bottom. Keep using
+  `SafeArea` inside a body; it now only handles the top and the sides.
 - **`excludeSemantics` drops the tap action too.** A `Semantics` that
   replaces its child's label also removes the child `GestureDetector`'s tap,
   so a screen reader announces the button and cannot press it. That is why

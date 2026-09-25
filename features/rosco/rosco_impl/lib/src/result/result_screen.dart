@@ -75,15 +75,16 @@ class _ResultView extends StatelessWidget {
 
                 // Everything arrives in reading order — where you were, how
                 // you did, what next — each a beat after the last, so the eye
-                // is led down the screen rather than handed all of it at once.
+                // is led through the screen rather than handed all of it at
+                // once. The beats run on across both panes in landscape.
                 var beat = 0;
                 Widget enter(Widget child) =>
                     AppEntrance(index: beat++, child: child);
 
-                return Column(
+                Widget summary() => Column(
+                  mainAxisSize: MainAxisSize.min,
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    const Spacer(),
                     enter(
                       AppText(
                         title: state.level.label,
@@ -119,7 +120,13 @@ class _ResultView extends StatelessWidget {
                     ),
                     context.spacing.spacingLg.verticalSpace,
                     _BestLine(state: state),
-                    const Spacer(),
+                  ],
+                );
+
+                Widget actions() => Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
                     enter(
                       AppButton(
                         title: l10n.resultPlayAgain,
@@ -139,6 +146,34 @@ class _ResultView extends StatelessWidget {
                       ),
                     ),
                   ],
+                );
+
+                // Both arrangements fill the screen when they can and scroll
+                // when they cannot, so a large font or a short screen pushes
+                // the buttons down rather than off the edge.
+                return AppAdaptiveLayout(
+                  // Upright: the summary centred in the space above the
+                  // buttons, which sit where a thumb reaches.
+                  portrait: (context) => AppFillScroll(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [const SizedBox.shrink(), summary(), actions()],
+                    ),
+                  ),
+                  // On its side there is not the height to stack both, so
+                  // the result and what to do next sit beside each other.
+                  landscape: (context) => Row(
+                    children: [
+                      Expanded(
+                        child: AppFillScroll(child: Center(child: summary())),
+                      ),
+                      context.spacing.spacing3Xl.horizontalSpace,
+                      Expanded(
+                        child: AppFillScroll(child: Center(child: actions())),
+                      ),
+                    ],
+                  ),
                 );
               },
             ),

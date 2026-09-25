@@ -12,6 +12,7 @@ export 'src/ext/app_theme_ext.dart';
 export 'src/ext/font_weight_ext.dart';
 export 'src/ext/size_ext.dart';
 export 'src/ext/sliver_ext.dart';
+export 'src/layouts/app_adaptive_layout.dart';
 export 'src/layouts/app_scaffold.dart';
 export 'src/layouts/app_scaffold_controller.dart';
 export 'src/modals/show_app_dialog.dart';

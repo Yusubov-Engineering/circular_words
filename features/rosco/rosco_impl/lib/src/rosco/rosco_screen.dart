@@ -266,65 +266,104 @@ class _RoundBodyState extends State<_RoundBody> {
 
   @override
   Widget build(BuildContext context) {
+    // The same four pieces, arranged for the room there is. Upright, they
+    // stack with the wheel taking what is spare; on its side, a stacked
+    // layout would leave the wheel a sliver of height, so it moves beside
+    // everything else and gets the full height instead.
+    return AppAdaptiveLayout(
+      portrait: (context) => Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          _RoundHeader(state: widget.state),
+          context.spacing.spacingLg.verticalSpace,
+          // The wheel is the screen's subject, so it takes the room that is
+          // going spare rather than a fixed height.
+          Flexible(child: Center(child: _wheel(context))),
+          context.spacing.spacingLg.verticalSpace,
+          // Flexible so a long clue at a large font scale takes room from the
+          // wheel — which can afford it — rather than from the layout.
+          Flexible(child: _clue(context)),
+          AppControllerBuilder<MicController>(builder: _answerArea),
+        ],
+      ),
+      landscape: (context) => Row(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Expanded(flex: 5, child: Center(child: _wheel(context))),
+          context.spacing.spacing3Xl.horizontalSpace,
+          // Everything else in one column that fills the height when it can
+          // and scrolls when it cannot — which is the moment the keyboard
+          // opens, on a phone on its side.
+          Expanded(
+            flex: 6,
+            child: AppFillScroll(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  _RoundHeader(state: widget.state),
+                  Padding(
+                    padding: EdgeInsets.symmetric(
+                      vertical: context.spacing.spacingLg,
+                    ),
+                    child: _clue(context),
+                  ),
+                  AppControllerBuilder<MicController>(builder: _answerArea),
+                ],
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _wheel(BuildContext context) {
+    final state = widget.state;
+
+    return RoscoWheel(
+      slots: state.slots,
+      activeIndex: state.currentIndex,
+      letterProgress: state.letterRemaining / kLetterCapSeconds,
+      centerLabel: '${state.letterRemaining}',
+      semanticsLabel: context.localization.roscoWheelSemantics(
+        state.current!.letter,
+        state.letterRemaining,
+        state.correctCount,
+        state.slots.length,
+      ),
+    );
+  }
+
+  /// Cross-fading on the letter, not the text, so re-showing a passed
+  /// letter's clue animates too.
+  Widget _clue(BuildContext context) {
     final state = widget.state;
     final current = state.current!;
 
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: [
-        _RoundHeader(state: state),
-        context.spacing.spacingLg.verticalSpace,
-        // The wheel is the screen's subject, so it takes the room that is
-        // going spare rather than a fixed height.
-        Flexible(
-          child: Center(
-            child: RoscoWheel(
-              slots: state.slots,
-              activeIndex: state.currentIndex,
-              letterProgress: state.letterRemaining / kLetterCapSeconds,
-              centerLabel: '${state.letterRemaining}',
-              semanticsLabel: context.localization.roscoWheelSemantics(
-                current.letter,
-                state.letterRemaining,
-                state.correctCount,
-                state.slots.length,
+    return AppSwitcher(
+      child: Semantics(
+        key: ValueKey('${current.letter}-${state.lap}'),
+        // A new clue is the one change on this screen a player *must* be
+        // told about, and it arrives without them touching anything.
+        liveRegion: true,
+        // Scrolls only when it has to. At an ordinary font scale a clue is
+        // two lines and this is inert; at 2x it is the difference between a
+        // readable clue and a clipped one — and truncating the clue would
+        // make the letter unanswerable.
+        child: SingleChildScrollView(
+          child: SizedBox(
+            width: double.infinity,
+            child: AppText(
+              title: current.entry.definition,
+              textAlign: TextAlign.center,
+              style: context.typography.textLg.regular.copyWith(
+                color: context.textColors.textPrimary,
               ),
             ),
           ),
         ),
-        context.spacing.spacingLg.verticalSpace,
-        // Cross-fading on the letter, not the text, so re-showing a passed
-        // letter's clue animates too.
-        // Flexible so a long clue at a large font scale takes room from the
-        // wheel — which can afford it — rather than from the layout.
-        Flexible(
-          child: AppSwitcher(
-            child: Semantics(
-              key: ValueKey('${current.letter}-${state.lap}'),
-              // A new clue is the one change on this screen a player *must* be
-              // told about, and it arrives without them touching anything.
-              liveRegion: true,
-              // Scrolls only when it has to. At an ordinary font scale a clue
-              // is two lines and this is inert; at 2x it is the difference
-              // between a readable clue and a clipped one — and truncating the
-              // clue would make the letter unanswerable.
-              child: SingleChildScrollView(
-                child: SizedBox(
-                  width: double.infinity,
-                  child: AppText(
-                    title: current.entry.definition,
-                    textAlign: TextAlign.center,
-                    style: context.typography.textLg.regular.copyWith(
-                      color: context.textColors.textPrimary,
-                    ),
-                  ),
-                ),
-              ),
-            ),
-          ),
-        ),
-        AppControllerBuilder<MicController>(builder: _answerArea),
-      ],
+      ),
     );
   }
 

@@ -126,8 +126,8 @@ accepted trade-off.
 
 | Package | Status | Holds |
 | ------- | ------ | ----- |
-| `core/speech/speech_api` | built | `SpeechRecognizerApi`, sealed `SpeechAvailability`, `SpeechResult` |
-| `core/speech/speech_impl` | built | `speech_to_text` ^7.3.0 wrapper, `SpeechModule` |
+| `speech_api` ([own repo](https://github.com/Yusubov-Engineering/speech), `v1.0.0`) | built | `SpeechRecognizerApi`, sealed `SpeechAvailability`, `SpeechResult` |
+| `speech_impl` ([own repo](https://github.com/Yusubov-Engineering/speech), `v1.0.0`) | built | `speech_to_text` ^7.3.0 wrapper, `SpeechModule` |
 | `features/levels/levels_{api,impl}` | built | level picker, best scores, entry route |
 | `features/rosco/rosco_{api,impl}` | in progress | `CefrLevel`, `LevelScore`, `RoscoScoreboard`, `/rosco/:level`; the round itself is milestones 5–7 |
 
@@ -135,9 +135,11 @@ accepted trade-off.
 
 Speech recognition is infrastructure, not domain. It gets the same `_api`/`_impl`
 split every other core capability has, so the game feature depends on an
-interface it can fake in tests and never on a platform plugin. It lives
-in-tree as a workspace member rather than in its own repo until it has proven
-itself; extracting it later is a `pubspec.yaml` move.
+interface it can fake in tests and never on a platform plugin. It lived
+in-tree as a workspace member until it had proven itself on hardware
+(milestones 2 and 9); it now lives in `Yusubov-Engineering/speech` like the
+other core modules, pulled in as a `git:` dependency pinned to `v1.0.0`.
+Changing it means a new tag there and a `ref:` bump in `app` and `rosco_impl`.
 
 ### `CefrLevel` lives in `rosco_api`, not `levels_api`
 
@@ -703,6 +705,7 @@ looks arbitrary later can be traced to the reasoning that produced it.
 | Does a failure end the round | **No.** The player plays on | [§1](#nothing-ends-the-round-early) |
 | Rare letters (X, Z) | **Always A–Z.** No relaxed pool | [§1](#always-az) |
 | Unproductive lap | **Run the pool down.** Only an empty pool or an all-terminal board ends it | [§1](#nothing-ends-the-round-early) |
+| Speech in-tree or its own repo | **Own repo** (`Yusubov-Engineering/speech`), once proven on hardware | [§3](#why-speech-is-a-core-module-not-part-of-the-game) |
 
 One sub-question is settled by judgment rather than by requirement, and is the
 one to overrule first if the game feels wrong:

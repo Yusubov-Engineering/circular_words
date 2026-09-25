@@ -107,10 +107,12 @@ class _LevelsView extends StatelessWidget {
                   ],
                 ),
                 context.spacing.spacingXs.verticalSpace,
-                AppText(
-                  title: context.localization.levelsSubtitle,
-                  style: context.typography.textMd.regular.copyWith(
-                    color: context.textColors.textTertiary,
+                AppEntrance(
+                  child: AppText(
+                    title: context.localization.levelsSubtitle,
+                    style: context.typography.textMd.regular.copyWith(
+                      color: context.textColors.textTertiary,
+                    ),
                   ),
                 ),
                 context.spacing.spacingXl.verticalSpace,
@@ -135,30 +137,42 @@ class _LevelList extends StatelessWidget {
 
         // The six levels are a fixed list, so there is no empty state to
         // design — only the moment before the stored scores have been read.
-        if (state.isLoading) {
-          return Center(
-            child: AppText(
-              title: context.localization.loading,
-              style: context.typography.textMd.regular.copyWith(
-                color: context.textColors.textTertiary,
-              ),
-            ),
-          );
-        }
+        // Switched rather than swapped, so the list replaces the placeholder
+        // instead of popping in over it.
+        return AppSwitcher(
+          alignment: Alignment.topCenter,
+          child: state.isLoading
+              ? Center(
+                  key: const ValueKey('loading'),
+                  child: AppText(
+                    title: context.localization.loading,
+                    style: context.typography.textMd.regular.copyWith(
+                      color: context.textColors.textTertiary,
+                    ),
+                  ),
+                )
+              : ListView.separated(
+                  key: const ValueKey('levels'),
+                  itemCount: state.entries.length,
+                  separatorBuilder: (context, _) =>
+                      context.spacing.spacingMd.verticalSpace,
+                  itemBuilder: (context, index) {
+                    final entry = state.entries[index];
 
-        return ListView.separated(
-          itemCount: state.entries.length,
-          separatorBuilder: (context, _) =>
-              context.spacing.spacingMd.verticalSpace,
-          itemBuilder: (context, index) {
-            final entry = state.entries[index];
-
-            return LevelCard(
-              entry: entry,
-              onTap: () =>
-                  controller.dispatch(LevelSelected(level: entry.level)),
-            );
-          },
+                    // Keyed on the level so a refresh after a round updates
+                    // the score in place rather than replaying the entrance.
+                    return AppEntrance(
+                      key: ValueKey(entry.level),
+                      index: index,
+                      child: LevelCard(
+                        entry: entry,
+                        onTap: () => controller.dispatch(
+                          LevelSelected(level: entry.level),
+                        ),
+                      ),
+                    );
+                  },
+                ),
         );
       },
     );

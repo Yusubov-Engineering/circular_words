@@ -29,12 +29,12 @@ dependencies:
     git:
       url: https://github.com/Yusubov-Engineering/router.git
       path: router_api
-      ref: v1.0.0
+      ref: v1.1.0
   router_impl:
     git:
       url: https://github.com/Yusubov-Engineering/router.git
       path: router_impl
-      ref: v1.0.0
+      ref: v1.1.0
   logger_api:
     git:
       url: https://github.com/Yusubov-Engineering/logger.git

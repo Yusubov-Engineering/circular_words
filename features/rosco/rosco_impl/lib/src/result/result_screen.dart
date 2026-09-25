@@ -24,14 +24,18 @@ class const ResultScreen({required final RoscoResultArgs args, super.key})
     extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return AppStateProvider(
-      create: () => ResultController(
-        scoreboard: context.locator<RoscoScoreboard>(),
-        level: args.level,
-        score: args.score,
+    // Still in the level's colour: the result belongs to the round it ends.
+    return AppAccentScope(
+      accent: args.level.accent,
+      child: AppStateProvider(
+        create: () => ResultController(
+          scoreboard: context.locator<RoscoScoreboard>(),
+          level: args.level,
+          score: args.score,
+        ),
+        onEffect: _onEffect,
+        child: const _ResultView(),
       ),
-      onEffect: _onEffect,
-      child: const _ResultView(),
     );
   }
 
@@ -69,49 +73,69 @@ class _ResultView extends StatelessWidget {
                 final state = controller.state;
                 final l10n = context.localization;
 
+                // Everything arrives in reading order — where you were, how
+                // you did, what next — each a beat after the last, so the eye
+                // is led down the screen rather than handed all of it at once.
+                var beat = 0;
+                Widget enter(Widget child) =>
+                    AppEntrance(index: beat++, child: child);
+
                 return Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
                     const Spacer(),
-                    AppText(
-                      title: state.level.label,
-                      textAlign: TextAlign.center,
-                      style: context.typography.textSm.medium.copyWith(
-                        color: context.textColors.textTertiary,
+                    enter(
+                      AppText(
+                        title: state.level.label,
+                        textAlign: TextAlign.center,
+                        style: context.typography.textSm.bold.copyWith(
+                          color: context.accentColors.accentText,
+                        ),
                       ),
                     ),
                     context.spacing.spacingXs.verticalSpace,
-                    AppText(
-                      title: l10n.resultTitle,
-                      textAlign: TextAlign.center,
-                      style: context.typography.textLg.regular.copyWith(
-                        color: context.textColors.textSecondary,
+                    enter(
+                      AppText(
+                        title: l10n.resultTitle,
+                        textAlign: TextAlign.center,
+                        style: context.typography.textLg.regular.copyWith(
+                          color: context.textColors.textSecondary,
+                        ),
                       ),
                     ),
                     context.spacing.spacingXl.verticalSpace,
-                    _Score(score: state.score),
+                    enter(_Score(score: state.score)),
                     context.spacing.spacingMd.verticalSpace,
-                    AppText(
-                      title: l10n.resultTimeLeft(state.score.secondsRemaining),
-                      textAlign: TextAlign.center,
-                      style: context.typography.textMd.regular.copyWith(
-                        color: context.textColors.textTertiary,
+                    enter(
+                      AppText(
+                        title: l10n.resultTimeLeft(
+                          state.score.secondsRemaining,
+                        ),
+                        textAlign: TextAlign.center,
+                        style: context.typography.textMd.regular.copyWith(
+                          color: context.textColors.textTertiary,
+                        ),
                       ),
                     ),
                     context.spacing.spacingLg.verticalSpace,
                     _BestLine(state: state),
                     const Spacer(),
-                    AppPrimaryButton(
-                      title: l10n.resultPlayAgain,
-                      onTap: () => unawaited(
-                        controller.dispatch(const ResultReplayed()),
+                    enter(
+                      AppButton(
+                        title: l10n.resultPlayAgain,
+                        onTap: () => unawaited(
+                          controller.dispatch(const ResultReplayed()),
+                        ),
                       ),
                     ),
                     context.spacing.spacingMd.verticalSpace,
-                    _QuietButton(
-                      title: l10n.resultChooseLevel,
-                      onTap: () => unawaited(
-                        controller.dispatch(const ResultDismissed()),
+                    enter(
+                      AppButton(
+                        title: l10n.resultChooseLevel,
+                        variant: AppButtonVariant.quiet,
+                        onTap: () => unawaited(
+                          controller.dispatch(const ResultDismissed()),
+                        ),
                       ),
                     ),
                   ],
@@ -136,8 +160,10 @@ class const _Score({required final LevelScore score}) extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.baseline,
       textBaseline: TextBaseline.alphabetic,
       children: [
-        AppText(
-          title: '${score.correct}',
+        // Counted up rather than shown: the number is the payoff, and
+        // arriving at it is part of the moment.
+        AppCountUp(
+          value: score.correct,
           style: context.typography.textLg.copyWith(
             fontSize: 72,
             fontWeight: FontWeight.w700,
@@ -177,43 +203,47 @@ class const _BestLine({required final ResultState state})
             context.textColors.textTertiary,
           );
 
+    final line = AppText(
+      title: text,
+      textAlign: TextAlign.center,
+      style: context.typography.textMd.semiBold.copyWith(color: color),
+    );
+
     // Minimum, not fixed — see the round screen's status line for why.
     return ConstrainedBox(
       constraints: BoxConstraints(minHeight: context.spacing.spacing3Xl),
+      // It arrives once the save lands, so it enters on its own rather than
+      // with the rest; a new best is the one line worth a flourish.
       child: Center(
-        child: AppText(
-          title: text,
-          textAlign: TextAlign.center,
-          style: context.typography.textMd.semiBold.copyWith(color: color),
+        child: AppEntrance(
+          child: state.isNewBest ? _NewBestFlourish(child: line) : line,
         ),
       ),
     );
   }
 }
 
-/// A secondary action: present, but not competing with the primary one.
-class const _QuietButton({
-  required final String title,
-  required final VoidCallback onTap,
-}) extends StatelessWidget {
+/// Swells once when it appears — a new best is worth a moment.
+class const _NewBestFlourish({required final Widget child})
+    extends StatefulWidget {
   @override
-  Widget build(BuildContext context) => Semantics(
-    button: true,
-    label: title,
-    excludeSemantics: true,
-    child: GestureDetector(
-      behavior: HitTestBehavior.opaque,
-      onTap: onTap,
-      child: Padding(
-        padding: EdgeInsets.symmetric(vertical: context.spacing.spacingLg),
-        child: AppText(
-          title: title,
-          textAlign: TextAlign.center,
-          style: context.typography.textMd.semiBold.copyWith(
-            color: context.textColors.textBrand,
-          ),
-        ),
-      ),
-    ),
-  );
+  State<_NewBestFlourish> createState() => _NewBestFlourishState();
+}
+
+class _NewBestFlourishState extends State<_NewBestFlourish> {
+  /// Flipped once after the first frame, which is the change `AppPop`
+  /// animates on; it never pops on first build by design.
+  bool _shown = false;
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (mounted) setState(() => _shown = true);
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) =>
+      AppPop(trigger: _shown, amount: 0.12, child: widget.child);
 }

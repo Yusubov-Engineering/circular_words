@@ -1,4 +1,5 @@
 import 'package:dependency_injection_api/dependency_injection_api.dart';
+import 'package:design_system/design_system.dart';
 import 'package:levels_api/levels_api.dart';
 import 'package:levels_impl/levels_impl.dart';
 import 'package:rosco_impl/rosco_impl.dart';
@@ -18,6 +19,13 @@ final class RouterConfiguration._() {
 
     final config = AppGoRouterConfig(
       initialLocation: levels.launcher.root().routeInfo,
+      // Set once here rather than per route: every screen arrives the same
+      // way, and a route overrides it only if it has a reason to differ.
+      defaultPresentationMode: const CustomPresentationMode(
+        transitionsBuilder: appFadeThrough,
+        transitionDuration: appFadeThroughDuration,
+        reverseTransitionDuration: appFadeThroughDuration,
+      ),
       routerModules: [
         LevelsModuleRouter(),
         RoscoModuleRouter(),

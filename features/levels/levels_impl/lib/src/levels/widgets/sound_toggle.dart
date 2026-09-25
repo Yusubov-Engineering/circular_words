@@ -53,22 +53,24 @@ class _SoundToggleState extends State<SoundToggle> {
     final l10n = context.localization;
     final label = muted ? l10n.soundOff : l10n.soundOn;
 
-    return Semantics(
-      button: true,
+    return AppPressable(
       toggled: !muted,
-      label: label,
-      child: GestureDetector(
-        behavior: HitTestBehavior.opaque,
-        onTap: () => unawaited(_toggle()),
-        child: Padding(
-          padding: EdgeInsets.all(context.spacing.spacingSm),
-          child: SizedBox.square(
-            dimension: context.sizes.size24,
+      semanticsLabel: label,
+      onTap: () => unawaited(_toggle()),
+      child: Padding(
+        padding: EdgeInsets.all(context.spacing.spacingSm),
+        child: SizedBox.square(
+          dimension: context.sizes.size24,
+          // The two glyphs cross-fade, keyed on the state, so the change reads
+          // as the speaker switching rather than as a redraw.
+          child: AppSwitcher(
             child: CustomPaint(
+              key: ValueKey(muted),
+              size: Size.square(context.sizes.size24),
               painter: _SpeakerPainter(
                 color: muted
                     ? context.foregroundColors.fgDisabled
-                    : context.foregroundColors.fgSecondary,
+                    : context.accentColors.accentText,
                 muted: muted,
               ),
             ),

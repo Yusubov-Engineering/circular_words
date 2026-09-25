@@ -34,6 +34,13 @@ class const RoscoScreen({required final CefrLevel level, super.key})
     extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    // The whole round is drawn in the level's colour — the same one its card
+    // wore on the picker — so every accented thing below follows with no
+    // colour named anywhere else.
+    return AppAccentScope(accent: level.accent, child: _providers(context));
+  }
+
+  Widget _providers(BuildContext context) {
     return AppStateProvider(
       create: () => RoscoController(
         level: level,
@@ -127,26 +134,36 @@ class _RoscoView extends StatelessWidget {
               builder: (context, controller) {
                 final state = controller.state;
 
-                if (state.isLoading) {
-                  return _Centered(text: context.localization.loading);
-                }
-
                 final failure = state.failure;
-                if (failure != null) {
-                  return _Centered(text: failure.message(context));
-                }
-
                 final current = state.current;
-                if (current == null || state.isOver) {
-                  return _Centered(
-                    text: context.localization.scoreSummary(
-                      state.correctCount,
-                      state.slots.length,
-                    ),
-                  );
-                }
 
-                return _RoundBody(state: state, controller: controller);
+                // Each phase is keyed, so moving between them cross-fades —
+                // above all the load, where the wheel would otherwise appear
+                // all at once in place of a line of text.
+                return AppSwitcher(
+                  child: switch (state) {
+                    _ when state.isLoading => _Centered(
+                      key: const ValueKey('loading'),
+                      text: context.localization.loading,
+                    ),
+                    _ when failure != null => _Centered(
+                      key: const ValueKey('failure'),
+                      text: failure.message(context),
+                    ),
+                    _ when current == null || state.isOver => _Centered(
+                      key: const ValueKey('over'),
+                      text: context.localization.scoreSummary(
+                        state.correctCount,
+                        state.slots.length,
+                      ),
+                    ),
+                    _ => _RoundBody(
+                      key: const ValueKey('round'),
+                      state: state,
+                      controller: controller,
+                    ),
+                  },
+                );
               },
             ),
           ),
@@ -159,6 +176,7 @@ class _RoscoView extends StatelessWidget {
 class const _RoundBody({
   required final RoscoState state,
   required final RoscoController controller,
+  super.key,
 }) extends StatefulWidget {
   @override
   State<_RoundBody> createState() => _RoundBodyState();
@@ -254,14 +272,7 @@ class _RoundBodyState extends State<_RoundBody> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        AppText(
-          title:
-              '${state.level.label} · ${context.localization.lap(state.lap)} · '
-              '${state.remainingPool}s · ${state.correctCount}',
-          style: context.typography.textSm.medium.copyWith(
-            color: context.textColors.textTertiary,
-          ),
-        ),
+        _RoundHeader(state: state),
         context.spacing.spacingLg.verticalSpace,
         // The wheel is the screen's subject, so it takes the room that is
         // going spare rather than a fixed height.
@@ -287,8 +298,7 @@ class _RoundBodyState extends State<_RoundBody> {
         // Flexible so a long clue at a large font scale takes room from the
         // wheel — which can afford it — rather than from the layout.
         Flexible(
-          child: AnimatedSwitcher(
-            duration: const Duration(milliseconds: 220),
+          child: AppSwitcher(
             child: Semantics(
               key: ValueKey('${current.letter}-${state.lap}'),
               // A new clue is the one change on this screen a player *must* be
@@ -324,29 +334,39 @@ class _RoundBodyState extends State<_RoundBody> {
     final blocked = micState.status == MicStatus.unavailable;
     final typing = _typing || blocked;
 
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: [
-        _StatusLine(state: widget.state, mic: micState, typing: typing),
-        if (typing) ...[
-          AppOutlinedTextField(
-            controller: _input,
-            hintText: widget.state.current!.letter,
-          ),
-          context.spacing.spacingMd.verticalSpace,
-          Row(
+    final motion = context.motion;
+
+    // Answering and passing are not equals: the answer is what the screen is
+    // for, a pass is the way out. Filled against tinted says so at a glance.
+    final controls = typing
+        ? Column(
+            key: const ValueKey('typing'),
+            crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              Expanded(
-                child: AppPrimaryButton(title: l10n.answer, onTap: _submit),
+              AppOutlinedTextField(
+                controller: _input,
+                hintText: widget.state.current!.letter,
               ),
-              context.spacing.spacingMd.horizontalSpace,
-              Expanded(
-                child: AppPrimaryButton(title: l10n.pass, onTap: _pass),
+              context.spacing.spacingMd.verticalSpace,
+              Row(
+                children: [
+                  Expanded(
+                    child: AppButton(title: l10n.answer, onTap: _submit),
+                  ),
+                  context.spacing.spacingMd.horizontalSpace,
+                  Expanded(
+                    child: AppButton(
+                      title: l10n.pass,
+                      onTap: _pass,
+                      variant: AppButtonVariant.secondary,
+                    ),
+                  ),
+                ],
               ),
             ],
-          ),
-        ] else
-          Row(
+          )
+        : Row(
+            key: const ValueKey('speaking'),
             children: [
               MicButton(
                 status: micState.status,
@@ -359,17 +379,35 @@ class _RoundBodyState extends State<_RoundBody> {
               ),
               context.spacing.spacingMd.horizontalSpace,
               Expanded(
-                child: AppPrimaryButton(title: l10n.pass, onTap: _pass),
+                child: AppButton(
+                  title: l10n.pass,
+                  onTap: _pass,
+                  variant: AppButtonVariant.secondary,
+                ),
               ),
             ],
-          ),
+          );
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        _StatusLine(state: widget.state, mic: micState, typing: typing),
+        // Speaking and typing swap in place, and the area grows or shrinks
+        // to fit rather than jumping — the keyboard's arrival is jolt enough.
+        AnimatedSize(
+          duration: motion.medium,
+          curve: motion.standard,
+          alignment: Alignment.topCenter,
+          child: AppSwitcher(alignment: Alignment.topCenter, child: controls),
+        ),
         // With no microphone to go back to, offering the choice would be a
         // button that cannot do anything.
         if (!blocked) ...[
           context.spacing.spacingSm.verticalSpace,
-          _TextButton(
+          AppButton(
             title: typing ? l10n.useMic : l10n.typeInstead,
             onTap: () => _toggleTyping(mic),
+            variant: AppButtonVariant.quiet,
           ),
         ],
       ],
@@ -401,30 +439,39 @@ class const _StatusLine({
     // the controls down mid-utterance. An explanation of why the microphone is
     // gone is a whole sentence, and clipping it leaves the player reading
     // "Type your" with no idea what to do.
-    final (text, color, lines) = switch (mic.status) {
+    //
+    // The fourth is what the line is *about*, which is what animates. A
+    // transcript growing syllable by syllable stays one message and updates in
+    // place — cross-fading every syllable would smear the word — while a new
+    // kind of message, or a new rejected word, eases in.
+    final (text, color, lines, topic) = switch (mic.status) {
       MicStatus.unavailable when reason != null => (
         reason.message(context),
         context.textColors.textError,
         3,
+        'unavailable',
       ),
       _ when mic.heard.isNotEmpty => (
         mic.heard,
         context.textColors.textPrimary,
         1,
+        'heard',
       ),
       _ when state.lastRejected != null => (
         state.lastRejected!,
         context.textColors.textError,
         1,
+        'rejected:${state.lastRejected}',
       ),
       // Typing, with nothing to report: the field below says everything.
-      _ when typing => ('', context.textColors.textTertiary, 1),
+      _ when typing => ('', context.textColors.textTertiary, 1, 'typing'),
       MicStatus.listening => (
         l10n.micListening,
         context.textColors.textTertiary,
         1,
+        'listening',
       ),
-      _ => (l10n.micIdle, context.textColors.textTertiary, 1),
+      _ => (l10n.micIdle, context.textColors.textTertiary, 1, 'idle'),
     };
 
     // A *minimum* height, not a fixed one. Reserving the space stops the
@@ -434,45 +481,79 @@ class const _StatusLine({
     return ConstrainedBox(
       constraints: BoxConstraints(minHeight: context.spacing.spacing3Xl),
       child: Center(
-        child: AppText(
-          title: text,
-          maxLines: lines,
-          textAlign: TextAlign.center,
-          style: context.typography.textMd.regular.copyWith(color: color),
+        child: AppSwitcher(
+          child: AppText(
+            key: ValueKey(topic),
+            title: text,
+            maxLines: lines,
+            textAlign: TextAlign.center,
+            style: context.typography.textMd.regular.copyWith(color: color),
+          ),
         ),
       ),
     );
   }
 }
 
-/// A quiet, tappable line of text — a choice, not an action.
-class const _TextButton({
-  required final String title,
-  required final VoidCallback onTap,
-}) extends StatelessWidget {
+/// The round at a glance: which level, which lap, how long, how many.
+///
+/// The correct count pops when it goes up — the one number on this row that
+/// only ever moves in the player's favour, so the one worth celebrating.
+class const _RoundHeader({required final RoscoState state})
+    extends StatelessWidget {
   @override
-  Widget build(BuildContext context) => Semantics(
-    button: true,
-    label: title,
-    excludeSemantics: true,
-    child: GestureDetector(
-      behavior: HitTestBehavior.opaque,
-      onTap: onTap,
-      child: Padding(
-        padding: EdgeInsets.symmetric(vertical: context.spacing.spacingSm),
-        child: AppText(
-          title: title,
-          textAlign: TextAlign.center,
-          style: context.typography.textSm.medium.copyWith(
-            color: context.textColors.textBrand,
+  Widget build(BuildContext context) {
+    final accent = context.accentColors;
+    final quiet = context.typography.textSm.medium.copyWith(
+      color: context.textColors.textTertiary,
+    );
+
+    return Row(
+      children: [
+        Container(
+          padding: EdgeInsets.symmetric(
+            horizontal: context.spacing.spacingMd,
+            vertical: context.spacing.spacingXxs,
+          ),
+          decoration: BoxDecoration(
+            color: accent.accentSoft,
+            borderRadius: BorderRadius.circular(context.radii.radiusFull),
+            border: Border.all(color: accent.accentSoftBorder),
+          ),
+          child: AppText(
+            title: state.level.label,
+            style: context.typography.textSm.bold.copyWith(
+              color: accent.accentText,
+            ),
           ),
         ),
-      ),
-    ),
-  );
+        context.spacing.spacingMd.horizontalSpace,
+        Expanded(
+          child: AppText(
+            title:
+                '${context.localization.lap(state.lap)} · '
+                '${state.remainingPool}s',
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            style: quiet,
+          ),
+        ),
+        AppPop(
+          trigger: state.correctCount,
+          child: AppText(
+            title: '${state.correctCount}',
+            style: context.typography.textLg.bold.copyWith(
+              color: context.statusColors.statusSuccess,
+            ),
+          ),
+        ),
+      ],
+    );
+  }
 }
 
-class const _Centered({required final String text}) extends StatelessWidget {
+class const _Centered({required final String text, super.key})
+    extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Center(
     child: AppText(

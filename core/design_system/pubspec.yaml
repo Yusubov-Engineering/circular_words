@@ -15,3 +15,7 @@ dependencies:
   vector_graphics: ^1.2.3
   material_ui: ^1.0.0
   assets:
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter

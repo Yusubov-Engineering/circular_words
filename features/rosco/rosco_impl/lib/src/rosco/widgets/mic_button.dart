@@ -39,9 +39,14 @@ class _MicButtonState extends State<MicButton>
     duration: const Duration(milliseconds: 1400),
   );
 
+  /// Whether the platform asked for less motion. Read in
+  /// [didChangeDependencies], since it comes from an inherited widget.
+  bool _reduced = false;
+
   @override
-  void initState() {
-    super.initState();
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    _reduced = context.motion.isReduced;
     _syncPulse();
   }
 
@@ -59,8 +64,16 @@ class _MicButtonState extends State<MicButton>
 
   /// The pulse runs only while listening — an animation ticking behind an idle
   /// button is a frame's work per frame for nothing.
+  ///
+  /// Under reduced motion it does not loop at all: the ring is drawn still,
+  /// half-way out, which says "listening" just as plainly.
   void _syncPulse() {
-    if (widget.status == MicStatus.listening) {
+    final listening = widget.status == MicStatus.listening;
+    if (listening && _reduced) {
+      _pulse
+        ..stop()
+        ..value = 0.35;
+    } else if (listening) {
       _pulse.repeat();
     } else {
       _pulse.stop();
@@ -70,10 +83,11 @@ class _MicButtonState extends State<MicButton>
 
   @override
   Widget build(BuildContext context) {
-    final status = context.statusColors;
+    final accent = context.accentColors;
+    final motion = context.motion;
 
     final (fill, glyph) = switch (widget.status) {
-      MicStatus.listening => (status.statusInfo, status.statusOnFill),
+      MicStatus.listening => (accent.accentSolid, accent.accentOnSolid),
       MicStatus.idle => (
         context.backgroundColors.bgSecondary,
         context.foregroundColors.fgSecondary,
@@ -84,24 +98,32 @@ class _MicButtonState extends State<MicButton>
       ),
     };
 
-    return Semantics(
-      button: true,
+    return AppPressable(
       toggled: widget.status == MicStatus.listening,
       enabled: widget.status != MicStatus.unavailable,
-      label: widget.semanticsLabel,
-      child: GestureDetector(
-        behavior: HitTestBehavior.opaque,
-        onTap: widget.status == MicStatus.unavailable ? null : widget.onTap,
-        child: SizedBox.square(
-          dimension: _diameter,
-          child: AnimatedBuilder(
-            animation: _pulse,
-            builder: (context, _) => CustomPaint(
-              painter: _MicPainter(
-                fill: fill,
-                glyph: glyph,
-                // Held at zero when idle, so the painter draws no ring at all.
-                pulse: _pulse.value,
+      semanticsLabel: widget.semanticsLabel,
+      onTap: widget.onTap,
+      child: SizedBox.square(
+        dimension: _diameter,
+        // The colours ease between states, so switching the microphone on
+        // reads as it lighting up rather than as a different button.
+        child: TweenAnimationBuilder<Color?>(
+          tween: ColorTween(end: fill),
+          duration: motion.fast,
+          curve: motion.standard,
+          builder: (context, animatedFill, _) => TweenAnimationBuilder<Color?>(
+            tween: ColorTween(end: glyph),
+            duration: motion.fast,
+            curve: motion.standard,
+            builder: (context, animatedGlyph, _) => AnimatedBuilder(
+              animation: _pulse,
+              builder: (context, _) => CustomPaint(
+                painter: _MicPainter(
+                  fill: animatedFill ?? fill,
+                  glyph: animatedGlyph ?? glyph,
+                  // Held at zero when idle, so the painter draws no ring.
+                  pulse: _pulse.value,
+                ),
               ),
             ),
           ),

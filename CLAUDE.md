@@ -225,13 +225,33 @@ screen leaks more visibly than most.
 
 ### Design system
 
-`core/design_system` owns tokens (colour, spacing, radius, size, typography),
-theming, and a small set of example components.
+`core/design_system` owns tokens (colour, spacing, radius, size, typography,
+motion), theming, accents, and the components and motion widgets every screen
+is built from.
 
 - **Always use tokens, never raw values**: `context.spacing.spacingXl`, not
-  `16.0`; `context.textColors.textPrimary`, not `Color(0xFF...)`.
+  `16.0`; `context.textColors.textPrimary`, not `Color(0xFF...)`;
+  `context.motion.medium`, not `Duration(milliseconds: 280)`.
 - The token set is deliberately small. Adding a token means adding it to **both**
   the `light()` and `dark()` factories.
+- **Colour a subtree with an accent, not with colours.** Wrap it in
+  `AppAccentScope(accent: ...)` and everything under it that reads
+  `context.accentColors` follows, in both themes. Each CEFR level's hue is
+  `CefrLevel.accent` (in `rosco_api`), and the round and its result are
+  wrapped in it — so no screen names a level's colour itself. Status colours
+  stay fixed in meaning (success is green everywhere); accents say *where*.
+- **Motion comes from `context.motion`**, which returns
+  `AppMotionTokens.reduced()` when the OS asks for less motion. Anything
+  built from it honours that setting for free; anything that *loops* must
+  also check `motion.isReduced`, since a zero duration has no sensible loop.
+- **Build tappable things on `AppPressable`** — it owns button semantics, the
+  hit area and press feedback. `AppButton` (`primary` / `secondary` /
+  `quiet`) and `AppCard` sit on it. The motion widgets are `AppEntrance`
+  (staggered arrival), `AppSwitcher` (keyed cross-fade), `AppPop` (swell on
+  change) and `AppCountUp`.
+- **Page transitions are set once**, as the router's
+  `defaultPresentationMode` in `router_configuration.dart` (`appFadeThrough`).
+  A route overrides it only if it has a reason to differ.
 - Assets are referenced through the generated `AppVectorAssets` /
   `AppRasterAssets`, never by a raw path. After adding a file to
   `core/design_system/assets/{vectors,rasters}/`, run `modular gen assets` — those
@@ -425,6 +445,16 @@ schema itself.
 - **Reserve space with a minimum height, never a fixed one.** A `SizedBox`
   around text clips it above roughly a 1.3 font scale. Use `ConstrainedBox`
   with `minHeight` so the row still cannot jump around.
+- **`excludeSemantics` drops the tap action too.** A `Semantics` that
+  replaces its child's label also removes the child `GestureDetector`'s tap,
+  so a screen reader announces the button and cannot press it. That is why
+  `AppPressable` puts `onTap` on its own `Semantics` node — give any
+  hand-rolled control the same treatment, or better, build it on
+  `AppPressable`.
+- **Key an `AppSwitcher` child on what is news, not on its content.** The
+  round's status line keys on the *kind* of message, so a transcript growing
+  syllable by syllable updates in place while a new rejection eases in;
+  keying on the text would cross-fade every syllable into a smear.
 - **A `CustomPaint` contributes nothing to the semantics tree.** The wheel, the
   mic button and the speaker icon all draw themselves, so each carries an
   explicit `Semantics` label. A painted control with no label is invisible to a

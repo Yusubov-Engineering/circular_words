@@ -65,10 +65,18 @@ dependencies:
       url: https://github.com/Yusubov-Engineering/dependency_injection.git
       path: dependency_injection_impl
       ref: v1.0.0
-  design_system:
   speech_api:
-  feedback_impl:
+    git:
+      url: https://github.com/Yusubov-Engineering/speech.git
+      path: speech_api
+      ref: v1.0.0
   speech_impl:
+    git:
+      url: https://github.com/Yusubov-Engineering/speech.git
+      path: speech_impl
+      ref: v1.0.0
+  design_system:
+  feedback_impl:
 
   ### BASE MODULES
   app_localization:

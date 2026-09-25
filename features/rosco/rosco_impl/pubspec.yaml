@@ -25,6 +25,10 @@ dependencies:
   design_system:
   feedback_api:
   speech_api:
+    git:
+      url: https://github.com/Yusubov-Engineering/speech.git
+      path: speech_api
+      ref: v1.0.0
   state_manager:
     git:
       url: https://github.com/Yusubov-Engineering/state_manager.git

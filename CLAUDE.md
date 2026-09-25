@@ -75,16 +75,19 @@ Dependencies flow downward: `app` → `features` → `base`/`core`.
   [Routing](#routing).
 - **`base/`** — cross-feature primitives: `app_localization` (ARB translations,
   locale scope), `app_network_contract` (`AppResponse` and its parser).
-- **`core/`** — infrastructure. `design_system` (+ `design_system/assets`) and
-  `speech` (`speech_api`/`speech_impl`, wrapping `speech_to_text`) live
-  in-tree; speech is infrastructure rather than domain, which is why it gets
-  the `_api`/`_impl` split and the game feature can fake it in tests. `network`, `router`, `logger`, `dependency_injection`,
-  `storage`, `biometric_auth` (each an `_api`/`_impl` pair), `state_manager`
+- **`core/`** — infrastructure. `design_system` (+ `design_system/assets`)
+  and `feedback` (`feedback_api`/`feedback_impl`) live in-tree. `network`,
+  `router`, `logger`, `dependency_injection`, `storage`, `biometric_auth`,
+  `speech` (each an `_api`/`_impl` pair), `state_manager`
   and `app_linter` (analysis options only, not a Dart library) each live in
   their own `Yusubov-Engineering/<module>` repo and are pulled in as `git:`
   dependencies pinned to a `vX.Y.Z` tag — see `app/pubspec.yaml`. They are no
   longer pub workspace members: bumping one means cutting a new tag in its
   repo and moving every consumer's `ref:`, not editing a local path.
+  `speech` (wrapping `speech_to_text`) is infrastructure rather than domain,
+  which is why it gets the `_api`/`_impl` split and the game feature can fake
+  it in tests; its behavioural traps below still apply, but the code they
+  describe now lives in `Yusubov-Engineering/speech`.
 
 ### The `_api` / `_impl` rule
 

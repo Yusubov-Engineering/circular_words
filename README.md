@@ -68,7 +68,6 @@ base/
   app_network_contract/       AppResponse and its parser
 core/
   design_system/              tokens, theming, components
-  speech/                     speech_api + speech_impl — voice recognition
 features/
   levels/                     levels_api + levels_impl  — level picker
   rosco/                      rosco_api  + rosco_impl   — the game
@@ -81,7 +80,7 @@ imports an `_impl`; everything else depends on the `_api` contract.
 genuinely unreachable from outside it.
 
 Core infrastructure — `network`, `router`, `logger`, `storage`,
-`dependency_injection`, `biometric_auth`, `state_manager`, `app_linter` — lives
+`dependency_injection`, `biometric_auth`, `speech`, `state_manager`, `app_linter` — lives
 in its own `Yusubov-Engineering/<module>` repo and is pulled in as a `git:`
 dependency pinned to a tag. See `app/pubspec.yaml`.
 

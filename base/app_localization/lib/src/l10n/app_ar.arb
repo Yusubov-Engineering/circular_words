@@ -43,5 +43,9 @@
     "soundOn": "الصوت مفعّل",
     "soundOff": "الصوت متوقف",
     "roscoWheelSemantics": "الحرف {letter}، بقيت {seconds} ثانية، {correct} من {total} صحيحة",
-    "microphone": "الميكروفون"
+    "microphone": "الميكروفون",
+    "resultMissedTitle": "الكلمات التي فاتتك",
+    "resultAllCorrect": "أجبت عن كل الحروف — جولة مثالية!",
+    "resultShare": "شارك النتيجة",
+    "shareMessage": "حصلت على {correct}/{total} في المستوى {level} في Circular Words!"
 }

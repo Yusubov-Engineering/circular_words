@@ -107,10 +107,12 @@ class _LevelsView extends StatelessWidget {
                   ],
                 ),
                 context.spacing.spacingXs.verticalSpace,
-                AppText(
-                  title: context.localization.levelsSubtitle,
-                  style: context.typography.textMd.regular.copyWith(
-                    color: context.textColors.textTertiary,
+                AppEntrance(
+                  child: AppText(
+                    title: context.localization.levelsSubtitle,
+                    style: context.typography.textMd.regular.copyWith(
+                      color: context.textColors.textTertiary,
+                    ),
                   ),
                 ),
                 context.spacing.spacingXl.verticalSpace,
@@ -135,32 +137,89 @@ class _LevelList extends StatelessWidget {
 
         // The six levels are a fixed list, so there is no empty state to
         // design — only the moment before the stored scores have been read.
-        if (state.isLoading) {
-          return Center(
-            child: AppText(
-              title: context.localization.loading,
-              style: context.typography.textMd.regular.copyWith(
-                color: context.textColors.textTertiary,
-              ),
-            ),
-          );
-        }
-
-        return ListView.separated(
-          itemCount: state.entries.length,
-          separatorBuilder: (context, _) =>
-              context.spacing.spacingMd.verticalSpace,
-          itemBuilder: (context, index) {
-            final entry = state.entries[index];
-
-            return LevelCard(
-              entry: entry,
-              onTap: () =>
-                  controller.dispatch(LevelSelected(level: entry.level)),
-            );
-          },
+        // Switched rather than swapped, so the list replaces the placeholder
+        // instead of popping in over it.
+        return AppSwitcher(
+          alignment: Alignment.topCenter,
+          child: state.isLoading
+              ? Center(
+                  key: const ValueKey('loading'),
+                  child: AppText(
+                    title: context.localization.loading,
+                    style: context.typography.textMd.regular.copyWith(
+                      color: context.textColors.textTertiary,
+                    ),
+                  ),
+                )
+              : KeyedSubtree(
+                  key: const ValueKey('levels'),
+                  child: AppAdaptiveLayout(
+                    portrait: (context) => _portrait(context, controller),
+                    landscape: (context) => _landscape(context, controller),
+                  ),
+                ),
         );
       },
+    );
+  }
+
+  /// One column — the list a phone held upright has room for.
+  Widget _portrait(BuildContext context, LevelsController controller) {
+    final entries = controller.state.entries;
+
+    return ListView.separated(
+      itemCount: entries.length,
+      separatorBuilder: (context, _) => context.spacing.spacingMd.verticalSpace,
+      itemBuilder: (context, index) => _tile(controller, index),
+    );
+  }
+
+  /// Two columns. On its side a phone shows three rows of one column, so
+  /// half the levels start off screen; in pairs, all six are in view.
+  Widget _landscape(BuildContext context, LevelsController controller) {
+    final entries = controller.state.entries;
+    final rows = (entries.length + 1) ~/ 2;
+    final gap = context.spacing.spacingMd;
+
+    return ListView.separated(
+      itemCount: rows,
+      separatorBuilder: (context, _) => gap.verticalSpace,
+      itemBuilder: (context, row) {
+        final left = row * 2;
+        final right = left + 1;
+
+        // Equal heights, so a pair reads as one row even when one level's
+        // name wraps and the other's does not.
+        return IntrinsicHeight(
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Expanded(child: _tile(controller, left)),
+              gap.horizontalSpace,
+              Expanded(
+                child: right < entries.length
+                    ? _tile(controller, right)
+                    : const SizedBox.shrink(),
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
+  Widget _tile(LevelsController controller, int index) {
+    final entry = controller.state.entries[index];
+
+    // Keyed on the level so a refresh after a round updates the score in
+    // place rather than replaying the entrance.
+    return AppEntrance(
+      key: ValueKey(entry.level),
+      index: index,
+      child: LevelCard(
+        entry: entry,
+        onTap: () => controller.dispatch(LevelSelected(level: entry.level)),
+      ),
     );
   }
 }

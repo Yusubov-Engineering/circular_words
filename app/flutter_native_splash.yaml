@@ -1,0 +1,17 @@
+# The native splash, shown before Flutter draws anything. Its image is
+# rendered from the logo's painter (see flutter_launcher_icons.yaml), and the
+# in-app intro (AppLaunchIntro) takes over from it frame for frame: same
+# ground, same mark, same size.
+#
+#     dart run flutter_native_splash:create --path=flutter_native_splash.yaml
+#
+# One colour for light and dark alike: the brand ground reads as night in
+# both, and a splash that changes with the system theme would no longer
+# match the intro that follows it.
+flutter_native_splash:
+  color: "#2C1C5F"
+  image: assets/brand/splash.png
+  android_12:
+    image: assets/brand/splash_android12.png
+    color: "#2C1C5F"
+  ios_content_mode: center

@@ -341,6 +341,491 @@
           "synonyms": []
         }
       ]
+    },
+    {
+      "id": "b2-3",
+      "entries": [
+        {
+          "letter": "A",
+          "word": "allocate",
+          "definition": "To give a share of something for a particular purpose.",
+          "synonyms": []
+        },
+        {
+          "letter": "B",
+          "word": "bureaucracy",
+          "definition": "A system of complicated official rules and procedures.",
+          "synonyms": []
+        },
+        {
+          "letter": "C",
+          "word": "controversial",
+          "definition": "Causing a lot of public disagreement.",
+          "synonyms": []
+        },
+        {
+          "letter": "D",
+          "word": "diminish",
+          "definition": "To become smaller or less important.",
+          "synonyms": []
+        },
+        {
+          "letter": "E",
+          "word": "empathy",
+          "definition": "The ability to understand and share someone else's feelings.",
+          "synonyms": []
+        },
+        {
+          "letter": "F",
+          "word": "framework",
+          "definition": "A set of ideas or rules used as a basis for decisions.",
+          "synonyms": []
+        },
+        {
+          "letter": "G",
+          "word": "genuine",
+          "definition": "Real; exactly what it appears to be.",
+          "synonyms": []
+        },
+        {
+          "letter": "H",
+          "word": "hypothesis",
+          "definition": "An idea suggested as an explanation but not yet proved.",
+          "synonyms": []
+        },
+        {
+          "letter": "I",
+          "word": "implication",
+          "definition": "A possible effect or result of an action or decision.",
+          "synonyms": []
+        },
+        {
+          "letter": "J",
+          "word": "justification",
+          "definition": "A good reason for doing something.",
+          "synonyms": []
+        },
+        {
+          "letter": "K",
+          "word": "kinship",
+          "definition": "A family relationship, or a feeling of closeness to someone.",
+          "synonyms": []
+        },
+        {
+          "letter": "L",
+          "word": "legitimate",
+          "definition": "Allowed by law, or fair and reasonable.",
+          "synonyms": []
+        },
+        {
+          "letter": "M",
+          "word": "marginal",
+          "definition": "Very small and not important.",
+          "synonyms": []
+        },
+        {
+          "letter": "N",
+          "word": "negligible",
+          "definition": "So small that it is not worth considering.",
+          "synonyms": []
+        },
+        {
+          "letter": "O",
+          "word": "outcome",
+          "definition": "The final result of an activity or process.",
+          "synonyms": []
+        },
+        {
+          "letter": "P",
+          "word": "perception",
+          "definition": "The way you notice or understand something.",
+          "synonyms": []
+        },
+        {
+          "letter": "Q",
+          "word": "questionnaire",
+          "definition": "A printed form of items that people answer to give information.",
+          "synonyms": []
+        },
+        {
+          "letter": "R",
+          "word": "reluctant",
+          "definition": "Not willing to do something.",
+          "synonyms": []
+        },
+        {
+          "letter": "S",
+          "word": "sustainable",
+          "definition": "Able to continue without damaging the environment.",
+          "synonyms": []
+        },
+        {
+          "letter": "T",
+          "word": "transparent",
+          "definition": "Open and honest, with nothing hidden.",
+          "synonyms": []
+        },
+        {
+          "letter": "U",
+          "word": "unprecedented",
+          "definition": "Never having happened before.",
+          "synonyms": []
+        },
+        {
+          "letter": "V",
+          "word": "versatile",
+          "definition": "Able to do many different things well.",
+          "synonyms": []
+        },
+        {
+          "letter": "W",
+          "word": "widespread",
+          "definition": "Happening in many places or among many people.",
+          "synonyms": []
+        },
+        {
+          "letter": "X",
+          "word": "x-ray",
+          "definition": "An image of the inside of the body made with radiation.",
+          "synonyms": []
+        },
+        {
+          "letter": "Y",
+          "word": "youthful",
+          "definition": "Having the qualities of a young person.",
+          "synonyms": []
+        },
+        {
+          "letter": "Z",
+          "word": "zealous",
+          "definition": "Showing great energy and enthusiasm for a belief or cause.",
+          "synonyms": []
+        }
+      ]
+    },
+    {
+      "id": "b2-4",
+      "entries": [
+        {
+          "letter": "A",
+          "word": "advocate",
+          "definition": "To publicly support a particular idea or policy.",
+          "synonyms": []
+        },
+        {
+          "letter": "B",
+          "word": "breakthrough",
+          "definition": "An important discovery or development.",
+          "synonyms": []
+        },
+        {
+          "letter": "C",
+          "word": "compromise",
+          "definition": "An agreement in which both sides give up something.",
+          "synonyms": []
+        },
+        {
+          "letter": "D",
+          "word": "dilemma",
+          "definition": "A situation in which you must choose between two difficult options.",
+          "synonyms": []
+        },
+        {
+          "letter": "E",
+          "word": "erode",
+          "definition": "To gradually damage or destroy something.",
+          "synonyms": []
+        },
+        {
+          "letter": "F",
+          "word": "fragile",
+          "definition": "Easily broken or damaged.",
+          "synonyms": []
+        },
+        {
+          "letter": "G",
+          "word": "guideline",
+          "definition": "Advice about how something should be done.",
+          "synonyms": []
+        },
+        {
+          "letter": "H",
+          "word": "hostile",
+          "definition": "Unfriendly and ready to argue or fight.",
+          "synonyms": []
+        },
+        {
+          "letter": "I",
+          "word": "integrity",
+          "definition": "The quality of being honest and having strong moral principles.",
+          "synonyms": []
+        },
+        {
+          "letter": "J",
+          "word": "judicious",
+          "definition": "Showing good judgement and sense.",
+          "synonyms": []
+        },
+        {
+          "letter": "K",
+          "word": "knowledgeable",
+          "definition": "Knowing a lot about a subject.",
+          "synonyms": []
+        },
+        {
+          "letter": "L",
+          "word": "lenient",
+          "definition": "Not strict when punishing people.",
+          "synonyms": []
+        },
+        {
+          "letter": "M",
+          "word": "mandatory",
+          "definition": "Required by law or rules; compulsory.",
+          "synonyms": []
+        },
+        {
+          "letter": "N",
+          "word": "novelty",
+          "definition": "The quality of being new and unusual.",
+          "synonyms": []
+        },
+        {
+          "letter": "O",
+          "word": "optimistic",
+          "definition": "Hopeful and confident about the future.",
+          "synonyms": []
+        },
+        {
+          "letter": "P",
+          "word": "pragmatic",
+          "definition": "Dealing with problems in a practical and sensible way.",
+          "synonyms": []
+        },
+        {
+          "letter": "Q",
+          "word": "qualitative",
+          "definition": "Relating to how good something is rather than how much of it there is.",
+          "synonyms": []
+        },
+        {
+          "letter": "R",
+          "word": "rigorous",
+          "definition": "Very careful and thorough.",
+          "synonyms": []
+        },
+        {
+          "letter": "S",
+          "word": "sceptical",
+          "definition": "Doubting whether something is true.",
+          "synonyms": [
+            "skeptical"
+          ]
+        },
+        {
+          "letter": "T",
+          "word": "tangible",
+          "definition": "Real and able to be seen, touched or measured.",
+          "synonyms": []
+        },
+        {
+          "letter": "U",
+          "word": "unify",
+          "definition": "To bring together into a single whole.",
+          "synonyms": []
+        },
+        {
+          "letter": "V",
+          "word": "vulnerable",
+          "definition": "Easily hurt, physically or emotionally.",
+          "synonyms": []
+        },
+        {
+          "letter": "W",
+          "word": "withdraw",
+          "definition": "To take money out of a bank account, or to leave a situation.",
+          "synonyms": []
+        },
+        {
+          "letter": "X",
+          "word": "xylophone",
+          "definition": "A musical instrument of wooden bars struck with small hammers.",
+          "synonyms": []
+        },
+        {
+          "letter": "Y",
+          "word": "yardstick",
+          "definition": "A standard used to judge or compare something.",
+          "synonyms": []
+        },
+        {
+          "letter": "Z",
+          "word": "zero-sum",
+          "definition": "Describing a situation in which one side's gain is the other's loss.",
+          "synonyms": []
+        }
+      ]
+    },
+    {
+      "id": "b2-5",
+      "entries": [
+        {
+          "letter": "A",
+          "word": "anticipate",
+          "definition": "To expect something to happen and prepare for it.",
+          "synonyms": []
+        },
+        {
+          "letter": "B",
+          "word": "beneficial",
+          "definition": "Having a good effect; helpful.",
+          "synonyms": []
+        },
+        {
+          "letter": "C",
+          "word": "comprehensive",
+          "definition": "Including everything that is needed; complete.",
+          "synonyms": []
+        },
+        {
+          "letter": "D",
+          "word": "dominant",
+          "definition": "More important, powerful or noticeable than others.",
+          "synonyms": []
+        },
+        {
+          "letter": "E",
+          "word": "eligible",
+          "definition": "Having the right qualifications to do or receive something.",
+          "synonyms": []
+        },
+        {
+          "letter": "F",
+          "word": "fundamental",
+          "definition": "Forming the basic and most important part.",
+          "synonyms": []
+        },
+        {
+          "letter": "G",
+          "word": "gratitude",
+          "definition": "The feeling of being thankful.",
+          "synonyms": []
+        },
+        {
+          "letter": "H",
+          "word": "hazardous",
+          "definition": "Dangerous, especially to health or safety.",
+          "synonyms": []
+        },
+        {
+          "letter": "I",
+          "word": "innovative",
+          "definition": "Using new methods or ideas.",
+          "synonyms": []
+        },
+        {
+          "letter": "J",
+          "word": "jeopardy",
+          "definition": "Danger of harm or loss.",
+          "synonyms": []
+        },
+        {
+          "letter": "K",
+          "word": "keynote",
+          "definition": "The main idea or speech at an event.",
+          "synonyms": []
+        },
+        {
+          "letter": "L",
+          "word": "liability",
+          "definition": "Legal responsibility for something.",
+          "synonyms": []
+        },
+        {
+          "letter": "M",
+          "word": "manipulate",
+          "definition": "To control or influence someone in a clever, unfair way.",
+          "synonyms": []
+        },
+        {
+          "letter": "N",
+          "word": "notion",
+          "definition": "An idea or belief.",
+          "synonyms": []
+        },
+        {
+          "letter": "O",
+          "word": "obligation",
+          "definition": "Something you must do because of a law or a promise.",
+          "synonyms": []
+        },
+        {
+          "letter": "P",
+          "word": "predominantly",
+          "definition": "Mostly; mainly.",
+          "synonyms": []
+        },
+        {
+          "letter": "Q",
+          "word": "quest",
+          "definition": "A long search for something difficult to find.",
+          "synonyms": []
+        },
+        {
+          "letter": "R",
+          "word": "reconcile",
+          "definition": "To make two people friendly again after an argument.",
+          "synonyms": []
+        },
+        {
+          "letter": "S",
+          "word": "substantial",
+          "definition": "Large in amount or importance.",
+          "synonyms": []
+        },
+        {
+          "letter": "T",
+          "word": "tedious",
+          "definition": "Long, boring and tiring.",
+          "synonyms": []
+        },
+        {
+          "letter": "U",
+          "word": "undergo",
+          "definition": "To experience something unpleasant or necessary.",
+          "synonyms": []
+        },
+        {
+          "letter": "V",
+          "word": "validate",
+          "definition": "To prove that something is true or correct.",
+          "synonyms": []
+        },
+        {
+          "letter": "W",
+          "word": "wholesome",
+          "definition": "Good for your health or your moral well-being.",
+          "synonyms": []
+        },
+        {
+          "letter": "X",
+          "word": "x-axis",
+          "definition": "The horizontal reference line on a graph.",
+          "synonyms": []
+        },
+        {
+          "letter": "Y",
+          "word": "yesteryear",
+          "definition": "Past times, especially when remembered fondly.",
+          "synonyms": []
+        },
+        {
+          "letter": "Z",
+          "word": "zoning",
+          "definition": "The official division of land into areas for different uses.",
+          "synonyms": []
+        }
+      ]
     }
   ]
 }

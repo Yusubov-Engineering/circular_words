@@ -1,4 +1,5 @@
 export 'src/cefr_level.dart';
+export 'src/cefr_level_accent.dart';
 export 'src/level_score.dart';
 export 'src/rosco_api.dart';
 export 'src/rosco_launcher.dart';

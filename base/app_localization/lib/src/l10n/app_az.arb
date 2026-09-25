@@ -43,5 +43,9 @@
     "soundOn": "Səs açıq",
     "soundOff": "Səs bağlı",
     "roscoWheelSemantics": "{letter} hərfi, {seconds} saniyə qaldı, {total} sualdan {correct} düzgün",
-    "microphone": "Mikrofon"
+    "microphone": "Mikrofon",
+    "resultMissedTitle": "Tapmadığın sözlər",
+    "resultAllCorrect": "Bütün hərflər tapıldı — mükəmməl raund!",
+    "resultShare": "Nəticəni paylaş",
+    "shareMessage": "Circular Words oyununda {level} səviyyəsində {correct}/{total} topladım!"
 }

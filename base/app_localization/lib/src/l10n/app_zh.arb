@@ -43,5 +43,9 @@
     "soundOn": "声音开启",
     "soundOff": "声音关闭",
     "roscoWheelSemantics": "字母 {letter}，剩余 {seconds} 秒，{total} 题中答对 {correct} 题",
-    "microphone": "麦克风"
+    "microphone": "麦克风",
+    "resultMissedTitle": "你错过的单词",
+    "resultAllCorrect": "所有字母全部答对——完美的一轮！",
+    "resultShare": "分享结果",
+    "shareMessage": "我在 Circular Words 的 {level} 级别中答对了 {correct}/{total}！"
 }

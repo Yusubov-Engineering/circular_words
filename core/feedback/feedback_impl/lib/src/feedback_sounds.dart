@@ -1,4 +1,5 @@
 import 'package:audioplayers/audioplayers.dart';
+import 'package:flutter/foundation.dart';
 
 /// The sounds the game can make.
 enum FeedbackSound {
@@ -42,6 +43,36 @@ final class AudioPlayersSounds implements FeedbackSounds {
   /// this package's own tests and nowhere else.
   static const assetPrefix = 'packages/feedback_impl/assets/sounds/';
 
+  /// How these cues share the device's audio with the microphone.
+  ///
+  /// Left to its default, `audioplayers` switches the whole iOS audio session
+  /// to a playback-only category every time it plays — mid-round, while the
+  /// recogniser has it recording. That can cut the microphone off, and the
+  /// recogniser's own session puts output on the quiet earpiece, so a cue
+  /// played at exactly the moment a word lands was the cue least likely to be
+  /// heard. This matches the session `speech_to_text` sets while listening,
+  /// so neither undoes the other: record-capable, out of the loudspeaker,
+  /// mixed rather than exclusive.
+  ///
+  /// On Android the cues take no audio focus: a quarter-second chime has no
+  /// business pausing the player's music, or the recogniser.
+  static AudioContext get audioContext => AudioContext(
+    iOS: AudioContextIOS(
+      category: AVAudioSessionCategory.playAndRecord,
+      options: const {
+        AVAudioSessionOptions.defaultToSpeaker,
+        AVAudioSessionOptions.mixWithOthers,
+        AVAudioSessionOptions.allowBluetooth,
+        AVAudioSessionOptions.allowBluetoothA2DP,
+      },
+    ),
+    android: const AudioContextAndroid(
+      contentType: AndroidContentType.sonification,
+      usageType: AndroidUsageType.game,
+      audioFocus: AndroidAudioFocus.none,
+    ),
+  );
+
   final AudioPlayer Function() _createPlayer;
   final _players = <FeedbackSound, AudioPlayer>{};
 
@@ -55,6 +86,7 @@ final class AudioPlayersSounds implements FeedbackSounds {
         // are answered a second apart and a reload between them is audible.
         ..audioCache = AudioCache(prefix: assetPrefix);
 
+      await player.setAudioContext(audioContext);
       await player.setReleaseMode(ReleaseMode.stop);
       await player.setPlayerMode(PlayerMode.lowLatency);
       await player.setSource(AssetSource(sound.fileName));
@@ -68,9 +100,23 @@ final class AudioPlayersSounds implements FeedbackSounds {
     final player = _players[sound];
     if (player == null) return;
 
-    // Rewind first: a cue asked for twice in quick succession should sound
-    // twice, not be ignored because the player is still busy.
-    await player.seek(Duration.zero);
+    await restart(player);
+  }
+
+  /// Plays [player] from the top, even if it is still sounding.
+  ///
+  /// Rewinds with `stop`, **never `seek`**. In low-latency mode Android plays
+  /// through a `SoundPool`, which never reports a seek as complete — and
+  /// `AudioPlayer.seek` waits for exactly that report, for up to thirty
+  /// seconds, before failing. Every cue on Android therefore timed out before
+  /// reaching `resume`, and because feedback swallows its errors by design,
+  /// the game was simply silent there. iOS ignores low-latency mode and its
+  /// player does report seeks, which is why only Android lost its sound.
+  /// `stop` waits on no platform event, and with `ReleaseMode.stop` it keeps
+  /// the source loaded, so the next `resume` starts from the beginning.
+  @visibleForTesting
+  static Future<void> restart(AudioPlayer player) async {
+    await player.stop();
     await player.resume();
   }
 

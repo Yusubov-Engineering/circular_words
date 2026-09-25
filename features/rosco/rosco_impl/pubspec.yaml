@@ -21,7 +21,7 @@ dependencies:
     git:
       url: https://github.com/Yusubov-Engineering/router.git
       path: router_api
-      ref: v1.0.0
+      ref: v1.1.0
   design_system:
   feedback_api:
   speech_api:
@@ -40,6 +40,7 @@ dependencies:
       url: https://github.com/Yusubov-Engineering/storage.git
       path: storage_api
       ref: v1.0.0
+  share_plus: ^13.3.0
 
 dev_dependencies:
   flutter_test:

@@ -11,6 +11,8 @@ Design notes, since they are choices rather than facts:
 
 - **Correct rises, wrong falls.** The direction carries the meaning even at low
   volume or through a phone speaker in a noisy room.
+- **Correct is a celebration.** Four ringing notes, not two beeps: finding
+  a word is the moment the game exists for.
 - **Wrong is quieter and shorter than correct.** A game that punishes loudly is
   unpleasant to play badly, and playing badly is how a learner starts.
 - **Every tone is enveloped.** A sine that starts at full amplitude clicks, and
@@ -57,13 +59,48 @@ def tone(frequency: float, seconds: float, gain: float) -> list[float]:
     return samples
 
 
-def write(name: str, samples: list[float]) -> None:
+def bell(frequency: float, seconds: float, gain: float) -> list[float]:
+    """A struck, ringing note: instant attack, then an exponential decay.
+
+    The partials make it a bell rather than a beep — the octave carries the
+    body, the faint inharmonic one on top is the sparkle.
+    """
+    total = int(seconds * SAMPLE_RATE)
+    attack = int(0.004 * SAMPLE_RATE)
+    samples = []
+    for i in range(total):
+        t = i / SAMPLE_RATE
+        angle = 2 * math.pi * frequency * t
+        value = (
+            math.sin(angle)
+            + 0.30 * math.sin(2 * angle) * math.exp(-t / 0.09)
+            + 0.08 * math.sin(4.2 * angle) * math.exp(-t / 0.05)
+        )
+        level = min(1.0, i / attack) * math.exp(-t / 0.16)
+        # A short fade at the very end, so the tail never clicks off.
+        level *= min(1.0, (total - i) / (0.02 * SAMPLE_RATE))
+        samples.append(value * gain * level)
+    return samples
+
+
+def mix(voices: list[tuple[float, list[float]]]) -> list[float]:
+    """Overlays each (start in seconds, samples) voice into one track."""
+    length = max(int(start * SAMPLE_RATE) + len(v) for start, v in voices)
+    out = [0.0] * length
+    for start, samples in voices:
+        offset = int(start * SAMPLE_RATE)
+        for i, value in enumerate(samples):
+            out[offset + i] += value
+    return out
+
+
+def write(name: str, samples: list[float], loudness: float = 0.72) -> None:
     os.makedirs(OUT_DIR, exist_ok=True)
     path = os.path.join(OUT_DIR, name)
 
     peak = max((abs(s) for s in samples), default=1.0) or 1.0
     frames = b"".join(
-        struct.pack("<h", int(max(-1.0, min(1.0, s / peak * 0.72)) * 32767))
+        struct.pack("<h", int(max(-1.0, min(1.0, s / peak * loudness)) * 32767))
         for s in samples
     )
 
@@ -77,9 +114,22 @@ def write(name: str, samples: list[float]) -> None:
 
 
 def main() -> None:
-    # Rising major third: unambiguous, and short enough not to cover the next
-    # clue being read.
-    write("correct.wav", tone(880.0, 0.075, 0.9) + tone(1318.5, 0.11, 0.85))
+    # A found word should sound like a small win, not an acknowledgement: a
+    # quick rising major arpeggio of ringing bell notes, each still sounding
+    # as the next lands, so the four blend into one bright sparkle. Rising, so
+    # it still means "right" through a phone speaker in a noisy room; done in
+    # about half a second, before the next clue needs the player's attention.
+    # Louder than the other cues on purpose — this is the one to celebrate.
+    write(
+        "correct.wav",
+        mix([
+            (0.000, bell(1046.5, 0.36, 0.55)),  # C6
+            (0.055, bell(1318.5, 0.36, 0.55)),  # E6
+            (0.110, bell(1568.0, 0.38, 0.60)),  # G6
+            (0.165, bell(2093.0, 0.40, 0.70)),  # C7, the top of the sparkle
+        ]),
+        loudness=0.9,
+    )
 
     # Falling, lower, quieter, and over quickly.
     write("wrong.wav", tone(233.1, 0.075, 0.55) + tone(174.6, 0.13, 0.5))

@@ -112,5 +112,32 @@
     "microphone": "Microphone",
     "@microphone": {
         "description": "Accessibility label for the microphone toggle. The on/off state is announced separately from the button's toggled semantics, so this names the control only."
+    },
+    "resultMissedTitle": "Words you missed",
+    "@resultMissedTitle": {
+        "description": "Heading above the list of words the player did not answer."
+    },
+    "resultAllCorrect": "Every letter answered — a perfect round!",
+    "@resultAllCorrect": {
+        "description": "Shown instead of the missed-words list when every letter was answered."
+    },
+    "resultShare": "Share result",
+    "@resultShare": {
+        "description": "Button that opens the share sheet with the result card."
+    },
+    "shareMessage": "I got {correct}/{total} on level {level} in Circular Words!",
+    "@shareMessage": {
+        "description": "Text sent alongside the result image when sharing.",
+        "placeholders": {
+            "correct": {
+                "type": "int"
+            },
+            "total": {
+                "type": "int"
+            },
+            "level": {
+                "type": "String"
+            }
+        }
     }
 }

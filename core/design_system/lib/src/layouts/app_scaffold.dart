@@ -69,7 +69,21 @@ class _AppScaffoldState extends State<AppScaffold> {
         },
         child: Padding(
           padding: EdgeInsets.only(bottom: totalBottomPadding),
-          child: widget.body,
+          // The bottom inset is paid for here, so the body must not see it
+          // again: without this, a `SafeArea` inside the body pads for the
+          // home indicator a second time — a dead band under every screen,
+          // and worse in landscape, where height is the scarce dimension.
+          //
+          // One combined query, not three nested `MediaQuery.remove*` calls:
+          // each of those reads the query above *this* context, so nesting
+          // them would have every layer undo the one before it.
+          child: MediaQuery(
+            data: MediaQuery.of(context)
+                .removeViewInsets(removeBottom: true)
+                .removeViewPadding(removeBottom: true)
+                .removePadding(removeBottom: true),
+            child: widget.body,
+          ),
         ),
       ),
     );

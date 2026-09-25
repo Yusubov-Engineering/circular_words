@@ -3,8 +3,8 @@ import 'word_entry.dart';
 /// Where one letter stands in a round.
 ///
 /// `passed` is deliberately **not** terminal: a passed letter goes back into
-/// the queue and the circle loops until the pool is empty or nothing
-/// unresolved remains. That is what makes a second lap reachable.
+/// the queue and the circle loops until the pool is empty or every letter is
+/// answered. That is what makes a second lap reachable.
 enum LetterStatus {
   /// Not reached yet on this lap.
   pending,
@@ -15,10 +15,12 @@ enum LetterStatus {
   /// Answered acceptably. Terminal.
   correct,
 
-  /// The ten second cap expired. Terminal.
+  /// Still unanswered when the round ended. Terminal, and set only then:
+  /// during play an unanswered letter is always `passed` or `active`.
   wrong,
 
-  /// Deferred by the player. Comes round again.
+  /// Deferred — by the player, or by its ten seconds running out. Comes
+  /// round again.
   passed;
 
   /// Whether this letter is finished for the rest of the round.

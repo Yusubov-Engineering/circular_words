@@ -43,5 +43,9 @@
     "soundOn": "Звук включён",
     "soundOff": "Звук выключен",
     "roscoWheelSemantics": "Буква {letter}, осталось {seconds} с, {correct} из {total} верно",
-    "microphone": "Микрофон"
+    "microphone": "Микрофон",
+    "resultMissedTitle": "Слова, которые вы пропустили",
+    "resultAllCorrect": "Все буквы отгаданы — идеальный раунд!",
+    "resultShare": "Поделиться результатом",
+    "shareMessage": "Мой результат в Circular Words на уровне {level}: {correct}/{total}!"
 }

@@ -43,5 +43,9 @@
     "soundOn": "Sonido activado",
     "soundOff": "Sonido desactivado",
     "roscoWheelSemantics": "Letra {letter}, quedan {seconds} segundos, {correct} de {total} correctas",
-    "microphone": "Micrófono"
+    "microphone": "Micrófono",
+    "resultMissedTitle": "Palabras que te faltaron",
+    "resultAllCorrect": "¡Todas las letras acertadas: una ronda perfecta!",
+    "resultShare": "Compartir resultado",
+    "shareMessage": "¡Conseguí {correct}/{total} en el nivel {level} de Circular Words!"
 }

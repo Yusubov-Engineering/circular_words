@@ -27,8 +27,26 @@ void main() {
           sets = document['sets'] as List<dynamic>;
         });
 
-        test('ships at least two sets, so a replay is not identical', () {
-          expect(sets.length, greaterThanOrEqualTo(2));
+        // Five is the floor, not a target: with two, a player who replays a
+        // level sees the same round every other time.
+        test('ships at least five sets, so replays rarely repeat', () {
+          expect(sets.length, greaterThanOrEqualTo(5));
+        });
+
+        test('no word is used twice across the sets of a level', () {
+          final words = [
+            for (final set in sets)
+              for (final entry
+                  in (set as Map<String, dynamic>)['entries'] as List<dynamic>)
+                ((entry as Map<String, dynamic>)['word'] as String)
+                    .toLowerCase(),
+          ];
+          final repeated = {
+            for (final word in words)
+              if (words.where((other) => other == word).length > 1) word,
+          };
+
+          expect(repeated, isEmpty, reason: 'repeated: $repeated');
         });
 
         // The rules never relax the alphabet, not even for X and Z, so a set

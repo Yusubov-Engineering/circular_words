@@ -8,6 +8,7 @@ import '../data/rosco_scoreboard_impl.dart';
 import '../data/word_bank_asset_data_source.dart';
 import '../data/word_bank_repository_impl.dart';
 import '../domain/word_bank_repository.dart';
+import '../share/result_sharer.dart';
 import 'rosco_api_impl.dart';
 
 /// {@template rosco_module}
@@ -33,6 +34,9 @@ final class RoscoModule implements DependencyModule {
       )
       ..registerLazySingleton<RoscoScoreboard>(
         (locator) => RoscoScoreboardImpl(storage: locator()),
+      )
+      ..registerLazySingleton<ResultSharer>(
+        (_) => const SharePlusResultSharer(),
       )
       ..registerLazySingleton<RoscoApi>(
         (locator) => RoscoApiImpl(scoreboard: locator()),

@@ -15,7 +15,12 @@ abstract interface class GameFeedbackApi {
   Future<void> initialize();
 
   /// The answer was accepted.
-  Future<void> correct();
+  ///
+  /// With [audible] false only the haptic plays. For a caller that knows a
+  /// sound would do harm right now — on Android, a chime played while the
+  /// microphone is open is recorded along with the player, and it breaks the
+  /// session that was hearing them.
+  Future<void> correct({bool audible = true});
 
   /// The answer was not accepted, and the letter is still live.
   ///
@@ -24,11 +29,11 @@ abstract interface class GameFeedbackApi {
   /// buzzed and chimed at every one would be exhausting to play.
   Future<void> rejected();
 
-  /// The letter ran out of time and was lost.
-  Future<void> wrong();
+  /// The letter ran out of time. See [correct] for [audible].
+  Future<void> wrong({bool audible = true});
 
-  /// The round is over.
-  Future<void> finished();
+  /// The round is over. See [correct] for [audible].
+  Future<void> finished({bool audible = true});
 
   /// Whether sound is currently suppressed.
   ///

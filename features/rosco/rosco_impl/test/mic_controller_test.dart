@@ -521,4 +521,77 @@ void main() {
 
     expect(recognizer.sessions, hasLength(1));
   });
+
+  // On Android the microphone records the loudspeaker. A chime played into an
+  // open session is transcribed with the player, and a session that opens
+  // while one sounds calibrates to it and then hears speech as silence.
+  group('making room for a cue', () {
+    const cue = Duration(milliseconds: 40);
+
+    Future<void> waitOut() async {
+      await Future<void>.delayed(cue * 2);
+      await settle();
+    }
+
+    test('closes the open session and opens one after the cue', () async {
+      await controller.dispatch(const MicRequested());
+      expect(recognizer.sessions, hasLength(1));
+
+      await controller.dispatch(const MicCueing(length: cue));
+      await settle();
+      // Nothing opens while the cue sounds.
+      expect(recognizer.sessions, hasLength(1));
+
+      await waitOut();
+      expect(recognizer.sessions, hasLength(2));
+      expect(controller.state.status, MicStatus.listening);
+    });
+
+    test('a letter changing mid-cue does not open a session early', () async {
+      await controller.dispatch(const MicRequested());
+      await controller.dispatch(const MicCueing(length: cue));
+
+      await controller.dispatch(const MicPromptChanged());
+      await settle();
+      expect(recognizer.sessions, hasLength(1));
+
+      await waitOut();
+      // One session after the cue — not one for the letter and one for the
+      // cue.
+      expect(recognizer.sessions, hasLength(2));
+    });
+
+    test('what the closed session heard is not settled afterwards', () async {
+      await controller.dispatch(const MicRequested());
+      recognizer.session.hear('abundant');
+      await settle();
+      effects.clear();
+
+      await controller.dispatch(const MicCueing(length: cue));
+      await recognizer.sessions.first.end();
+      await waitOut();
+
+      // The chime comments on an answer already scored; replaying the
+      // transcript as a settled answer would score or reject it again.
+      expect(effects, isEmpty);
+    });
+
+    test('turning the microphone off mid-cue keeps it off', () async {
+      await controller.dispatch(const MicRequested());
+      await controller.dispatch(const MicCueing(length: cue));
+      await controller.dispatch(const MicDismissed());
+
+      await waitOut();
+      expect(recognizer.sessions, hasLength(1));
+      expect(controller.state.enabled, isFalse);
+    });
+
+    test('a cue with the microphone off turns nothing on', () async {
+      await controller.dispatch(const MicCueing(length: cue));
+
+      await waitOut();
+      expect(recognizer.sessions, isEmpty);
+      expect(controller.state.enabled, isFalse);
+    });
+  });
 }

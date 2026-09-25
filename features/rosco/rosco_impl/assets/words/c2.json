@@ -324,6 +324,489 @@
           "synonyms": []
         }
       ]
+    },
+    {
+      "id": "c2-3",
+      "entries": [
+        {
+          "letter": "A",
+          "word": "apocryphal",
+          "definition": "Widely believed but probably not true.",
+          "synonyms": []
+        },
+        {
+          "letter": "B",
+          "word": "bombastic",
+          "definition": "Using grand words that sound important but mean little.",
+          "synonyms": []
+        },
+        {
+          "letter": "C",
+          "word": "circumlocution",
+          "definition": "The use of many words where fewer would do.",
+          "synonyms": []
+        },
+        {
+          "letter": "D",
+          "word": "deleterious",
+          "definition": "Causing harm or damage.",
+          "synonyms": []
+        },
+        {
+          "letter": "E",
+          "word": "esoteric",
+          "definition": "Understood by only a small group with special knowledge.",
+          "synonyms": []
+        },
+        {
+          "letter": "F",
+          "word": "fecund",
+          "definition": "Producing many offspring or new ideas; fertile.",
+          "synonyms": []
+        },
+        {
+          "letter": "G",
+          "word": "grandiose",
+          "definition": "Impressive in appearance but too ambitious or showy.",
+          "synonyms": []
+        },
+        {
+          "letter": "H",
+          "word": "histrionic",
+          "definition": "Too dramatic or emotional in behaviour.",
+          "synonyms": []
+        },
+        {
+          "letter": "I",
+          "word": "iconoclast",
+          "definition": "A person who attacks cherished beliefs or institutions.",
+          "synonyms": []
+        },
+        {
+          "letter": "J",
+          "word": "juggernaut",
+          "definition": "A huge, powerful force that crushes everything in its path.",
+          "synonyms": []
+        },
+        {
+          "letter": "K",
+          "word": "kitsch",
+          "definition": "Art or objects in poor taste, often enjoyed ironically.",
+          "synonyms": []
+        },
+        {
+          "letter": "L",
+          "word": "loquacious",
+          "definition": "Tending to talk a great deal.",
+          "synonyms": []
+        },
+        {
+          "letter": "M",
+          "word": "misanthrope",
+          "definition": "A person who dislikes humankind.",
+          "synonyms": []
+        },
+        {
+          "letter": "N",
+          "word": "nascent",
+          "definition": "Just coming into existence and beginning to develop.",
+          "synonyms": []
+        },
+        {
+          "letter": "O",
+          "word": "obdurate",
+          "definition": "Stubbornly refusing to change your opinion.",
+          "synonyms": []
+        },
+        {
+          "letter": "P",
+          "word": "panacea",
+          "definition": "A solution claimed to cure all problems.",
+          "synonyms": []
+        },
+        {
+          "letter": "Q",
+          "word": "quagmire",
+          "definition": "A difficult situation from which it is hard to escape; a bog.",
+          "synonyms": []
+        },
+        {
+          "letter": "R",
+          "word": "redolent",
+          "definition": "Strongly reminiscent of something; fragrant.",
+          "synonyms": []
+        },
+        {
+          "letter": "S",
+          "word": "sanguine",
+          "definition": "Optimistic, especially in a difficult situation.",
+          "synonyms": []
+        },
+        {
+          "letter": "T",
+          "word": "temerity",
+          "definition": "Excessive confidence or boldness; audacity.",
+          "synonyms": []
+        },
+        {
+          "letter": "U",
+          "word": "unctuous",
+          "definition": "Excessively flattering in a way that seems insincere.",
+          "synonyms": []
+        },
+        {
+          "letter": "V",
+          "word": "verisimilitude",
+          "definition": "The appearance of being true or real.",
+          "synonyms": []
+        },
+        {
+          "letter": "W",
+          "word": "wanton",
+          "definition": "Deliberate and unprovoked, especially of cruelty.",
+          "synonyms": []
+        },
+        {
+          "letter": "X",
+          "word": "xenolith",
+          "definition": "A piece of rock embedded in another, different kind of rock.",
+          "synonyms": []
+        },
+        {
+          "letter": "Y",
+          "word": "yeoman",
+          "definition": "A farmer who owns and works his own land.",
+          "synonyms": []
+        },
+        {
+          "letter": "Z",
+          "word": "zealotry",
+          "definition": "Fanatical and uncompromising commitment to a cause.",
+          "synonyms": []
+        }
+      ]
+    },
+    {
+      "id": "c2-4",
+      "entries": [
+        {
+          "letter": "A",
+          "word": "abrogate",
+          "definition": "To repeal or formally abolish a law or agreement.",
+          "synonyms": []
+        },
+        {
+          "letter": "B",
+          "word": "bucolic",
+          "definition": "Relating to the pleasant aspects of country life.",
+          "synonyms": []
+        },
+        {
+          "letter": "C",
+          "word": "capricious",
+          "definition": "Given to sudden changes of mood or behaviour.",
+          "synonyms": []
+        },
+        {
+          "letter": "D",
+          "word": "dilettante",
+          "definition": "A person who dabbles in a subject without serious study.",
+          "synonyms": []
+        },
+        {
+          "letter": "E",
+          "word": "enervate",
+          "definition": "To make someone feel drained of energy.",
+          "synonyms": []
+        },
+        {
+          "letter": "F",
+          "word": "feckless",
+          "definition": "Lacking initiative or strength of character.",
+          "synonyms": []
+        },
+        {
+          "letter": "G",
+          "word": "gauche",
+          "definition": "Socially awkward and lacking grace.",
+          "synonyms": []
+        },
+        {
+          "letter": "H",
+          "word": "harangue",
+          "definition": "A long, aggressive speech criticising someone.",
+          "synonyms": []
+        },
+        {
+          "letter": "I",
+          "word": "impecunious",
+          "definition": "Having little or no money.",
+          "synonyms": []
+        },
+        {
+          "letter": "J",
+          "word": "jocular",
+          "definition": "Fond of joking; humorous.",
+          "synonyms": []
+        },
+        {
+          "letter": "K",
+          "word": "kakistocracy",
+          "definition": "Government by the least suitable or competent citizens.",
+          "synonyms": []
+        },
+        {
+          "letter": "L",
+          "word": "lachrymose",
+          "definition": "Tearful or given to weeping.",
+          "synonyms": []
+        },
+        {
+          "letter": "M",
+          "word": "maudlin",
+          "definition": "Self-pityingly or tearfully sentimental.",
+          "synonyms": []
+        },
+        {
+          "letter": "N",
+          "word": "nonplussed",
+          "definition": "So surprised and confused that you do not know how to react.",
+          "synonyms": []
+        },
+        {
+          "letter": "O",
+          "word": "ossify",
+          "definition": "To become rigid and unable to change.",
+          "synonyms": []
+        },
+        {
+          "letter": "P",
+          "word": "parsimonious",
+          "definition": "Extremely unwilling to spend money.",
+          "synonyms": []
+        },
+        {
+          "letter": "Q",
+          "word": "quisling",
+          "definition": "A traitor who collaborates with an occupying enemy.",
+          "synonyms": []
+        },
+        {
+          "letter": "R",
+          "word": "rapacious",
+          "definition": "Aggressively greedy.",
+          "synonyms": []
+        },
+        {
+          "letter": "S",
+          "word": "sesquipedalian",
+          "definition": "Characterised by the use of very long words.",
+          "synonyms": []
+        },
+        {
+          "letter": "T",
+          "word": "tendentious",
+          "definition": "Promoting a particular point of view, especially a controversial one.",
+          "synonyms": []
+        },
+        {
+          "letter": "U",
+          "word": "unassailable",
+          "definition": "Unable to be attacked, questioned or defeated.",
+          "synonyms": []
+        },
+        {
+          "letter": "V",
+          "word": "vacillate",
+          "definition": "To waver between different opinions or actions.",
+          "synonyms": []
+        },
+        {
+          "letter": "W",
+          "word": "wheedle",
+          "definition": "To persuade someone by flattery or coaxing.",
+          "synonyms": []
+        },
+        {
+          "letter": "X",
+          "word": "xerophyte",
+          "definition": "A plant adapted to survive with very little water.",
+          "synonyms": []
+        },
+        {
+          "letter": "Y",
+          "word": "yammer",
+          "definition": "To talk loudly and at length in an annoying way.",
+          "synonyms": []
+        },
+        {
+          "letter": "Z",
+          "word": "zeugma",
+          "definition": "A figure of speech in which one word applies to two others in different senses.",
+          "synonyms": []
+        }
+      ]
+    },
+    {
+      "id": "c2-5",
+      "entries": [
+        {
+          "letter": "A",
+          "word": "abstemious",
+          "definition": "Not self-indulgent, especially about food and drink.",
+          "synonyms": []
+        },
+        {
+          "letter": "B",
+          "word": "blandishment",
+          "definition": "A flattering statement used to persuade someone.",
+          "synonyms": []
+        },
+        {
+          "letter": "C",
+          "word": "chimerical",
+          "definition": "Existing only as a product of wild imagination.",
+          "synonyms": []
+        },
+        {
+          "letter": "D",
+          "word": "dissemble",
+          "definition": "To hide your true feelings or motives.",
+          "synonyms": []
+        },
+        {
+          "letter": "E",
+          "word": "effrontery",
+          "definition": "Insolent or impertinent behaviour; nerve.",
+          "synonyms": []
+        },
+        {
+          "letter": "F",
+          "word": "fractious",
+          "definition": "Irritable and quarrelsome.",
+          "synonyms": []
+        },
+        {
+          "letter": "G",
+          "word": "gainsay",
+          "definition": "To deny or contradict a statement.",
+          "synonyms": []
+        },
+        {
+          "letter": "H",
+          "word": "hagiography",
+          "definition": "A biography that treats its subject with excessive reverence.",
+          "synonyms": []
+        },
+        {
+          "letter": "I",
+          "word": "intransigent",
+          "definition": "Unwilling to change your views or to agree.",
+          "synonyms": []
+        },
+        {
+          "letter": "J",
+          "word": "jingoism",
+          "definition": "Extreme patriotism, especially in an aggressive foreign policy.",
+          "synonyms": []
+        },
+        {
+          "letter": "K",
+          "word": "kerfuffle",
+          "definition": "A commotion or fuss, especially over conflicting views.",
+          "synonyms": []
+        },
+        {
+          "letter": "L",
+          "word": "limpid",
+          "definition": "Completely clear and transparent.",
+          "synonyms": []
+        },
+        {
+          "letter": "M",
+          "word": "martinet",
+          "definition": "A strict disciplinarian.",
+          "synonyms": []
+        },
+        {
+          "letter": "N",
+          "word": "noisome",
+          "definition": "Having an extremely offensive smell; harmful.",
+          "synonyms": []
+        },
+        {
+          "letter": "O",
+          "word": "otiose",
+          "definition": "Serving no practical purpose.",
+          "synonyms": []
+        },
+        {
+          "letter": "P",
+          "word": "peripatetic",
+          "definition": "Travelling from place to place.",
+          "synonyms": []
+        },
+        {
+          "letter": "Q",
+          "word": "quibble",
+          "definition": "A slight objection or criticism about a trivial matter.",
+          "synonyms": []
+        },
+        {
+          "letter": "R",
+          "word": "reprobate",
+          "definition": "An unprincipled person.",
+          "synonyms": []
+        },
+        {
+          "letter": "S",
+          "word": "solipsism",
+          "definition": "The view that only the self can be known to exist.",
+          "synonyms": []
+        },
+        {
+          "letter": "T",
+          "word": "turpitude",
+          "definition": "Depraved or wicked behaviour.",
+          "synonyms": []
+        },
+        {
+          "letter": "U",
+          "word": "uxorious",
+          "definition": "Excessively fond of one's wife.",
+          "synonyms": []
+        },
+        {
+          "letter": "V",
+          "word": "vitriolic",
+          "definition": "Filled with bitter criticism or malice.",
+          "synonyms": []
+        },
+        {
+          "letter": "W",
+          "word": "wizened",
+          "definition": "Shrivelled or wrinkled with age.",
+          "synonyms": []
+        },
+        {
+          "letter": "X",
+          "word": "xenograft",
+          "definition": "Tissue transplanted from one species into another.",
+          "synonyms": []
+        },
+        {
+          "letter": "Y",
+          "word": "yawp",
+          "definition": "A harsh or hoarse cry; a loud yelp.",
+          "synonyms": []
+        },
+        {
+          "letter": "Z",
+          "word": "zoomorphic",
+          "definition": "Having the form of an animal.",
+          "synonyms": []
+        }
+      ]
     }
   ]
 }

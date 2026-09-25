@@ -336,6 +336,489 @@
           "synonyms": []
         }
       ]
+    },
+    {
+      "id": "c1-3",
+      "entries": [
+        {
+          "letter": "A",
+          "word": "alleviate",
+          "definition": "To make pain or a problem less severe.",
+          "synonyms": []
+        },
+        {
+          "letter": "B",
+          "word": "bolster",
+          "definition": "To support or strengthen something.",
+          "synonyms": []
+        },
+        {
+          "letter": "C",
+          "word": "circumvent",
+          "definition": "To find a way around a rule or an obstacle.",
+          "synonyms": []
+        },
+        {
+          "letter": "D",
+          "word": "discern",
+          "definition": "To notice or understand something that is not obvious.",
+          "synonyms": []
+        },
+        {
+          "letter": "E",
+          "word": "egregious",
+          "definition": "Outstandingly bad or shocking.",
+          "synonyms": []
+        },
+        {
+          "letter": "F",
+          "word": "frugal",
+          "definition": "Careful not to spend more money than necessary.",
+          "synonyms": []
+        },
+        {
+          "letter": "G",
+          "word": "gratuitous",
+          "definition": "Done without good reason; unnecessary.",
+          "synonyms": []
+        },
+        {
+          "letter": "H",
+          "word": "hinder",
+          "definition": "To make it difficult for something to happen.",
+          "synonyms": []
+        },
+        {
+          "letter": "I",
+          "word": "impeccable",
+          "definition": "Perfect, with no faults at all.",
+          "synonyms": []
+        },
+        {
+          "letter": "J",
+          "word": "jovial",
+          "definition": "Cheerful and friendly.",
+          "synonyms": []
+        },
+        {
+          "letter": "K",
+          "word": "kinetic",
+          "definition": "Relating to movement.",
+          "synonyms": []
+        },
+        {
+          "letter": "L",
+          "word": "lethargic",
+          "definition": "Lacking energy and enthusiasm.",
+          "synonyms": []
+        },
+        {
+          "letter": "M",
+          "word": "mundane",
+          "definition": "Ordinary and dull.",
+          "synonyms": []
+        },
+        {
+          "letter": "N",
+          "word": "nonchalant",
+          "definition": "Calm and relaxed, seeming not to care.",
+          "synonyms": []
+        },
+        {
+          "letter": "O",
+          "word": "ominous",
+          "definition": "Suggesting that something bad is going to happen.",
+          "synonyms": []
+        },
+        {
+          "letter": "P",
+          "word": "pervasive",
+          "definition": "Spreading widely through every part of something.",
+          "synonyms": []
+        },
+        {
+          "letter": "Q",
+          "word": "quintessential",
+          "definition": "Being the most perfect example of something.",
+          "synonyms": []
+        },
+        {
+          "letter": "R",
+          "word": "replenish",
+          "definition": "To fill something up again.",
+          "synonyms": []
+        },
+        {
+          "letter": "S",
+          "word": "succinct",
+          "definition": "Expressed clearly in few words.",
+          "synonyms": []
+        },
+        {
+          "letter": "T",
+          "word": "tenuous",
+          "definition": "Very weak or slight.",
+          "synonyms": []
+        },
+        {
+          "letter": "U",
+          "word": "unequivocal",
+          "definition": "Completely clear, leaving no doubt.",
+          "synonyms": []
+        },
+        {
+          "letter": "V",
+          "word": "vehement",
+          "definition": "Showing strong and passionate feeling.",
+          "synonyms": []
+        },
+        {
+          "letter": "W",
+          "word": "wistful",
+          "definition": "Sadly thinking about something you want or have lost.",
+          "synonyms": []
+        },
+        {
+          "letter": "X",
+          "word": "xenophobia",
+          "definition": "Hatred or fear of foreigners.",
+          "synonyms": []
+        },
+        {
+          "letter": "Y",
+          "word": "yore",
+          "definition": "Long ago; former times, as in days of old.",
+          "synonyms": []
+        },
+        {
+          "letter": "Z",
+          "word": "zest",
+          "definition": "Great enthusiasm and energy.",
+          "synonyms": []
+        }
+      ]
+    },
+    {
+      "id": "c1-4",
+      "entries": [
+        {
+          "letter": "A",
+          "word": "ambivalent",
+          "definition": "Having mixed feelings about something.",
+          "synonyms": []
+        },
+        {
+          "letter": "B",
+          "word": "blatant",
+          "definition": "Very obvious and deliberate, with no attempt to hide it.",
+          "synonyms": []
+        },
+        {
+          "letter": "C",
+          "word": "complacent",
+          "definition": "Too satisfied with yourself to see danger or the need to improve.",
+          "synonyms": []
+        },
+        {
+          "letter": "D",
+          "word": "daunting",
+          "definition": "Making you feel less confident; intimidating.",
+          "synonyms": []
+        },
+        {
+          "letter": "E",
+          "word": "elusive",
+          "definition": "Difficult to find, catch or remember.",
+          "synonyms": []
+        },
+        {
+          "letter": "F",
+          "word": "formidable",
+          "definition": "Inspiring fear or respect through being powerful.",
+          "synonyms": []
+        },
+        {
+          "letter": "G",
+          "word": "gullible",
+          "definition": "Easily tricked into believing things.",
+          "synonyms": []
+        },
+        {
+          "letter": "H",
+          "word": "hackneyed",
+          "definition": "Used so often that it has lost its effect.",
+          "synonyms": []
+        },
+        {
+          "letter": "I",
+          "word": "indolent",
+          "definition": "Lazy and avoiding activity.",
+          "synonyms": []
+        },
+        {
+          "letter": "J",
+          "word": "jaded",
+          "definition": "Tired and bored after having too much of something.",
+          "synonyms": []
+        },
+        {
+          "letter": "K",
+          "word": "kaleidoscope",
+          "definition": "A constantly changing pattern or sequence.",
+          "synonyms": []
+        },
+        {
+          "letter": "L",
+          "word": "lament",
+          "definition": "To express sorrow or regret about something.",
+          "synonyms": []
+        },
+        {
+          "letter": "M",
+          "word": "malleable",
+          "definition": "Easily influenced or changed.",
+          "synonyms": []
+        },
+        {
+          "letter": "N",
+          "word": "nefarious",
+          "definition": "Wicked or criminal.",
+          "synonyms": []
+        },
+        {
+          "letter": "O",
+          "word": "obsequious",
+          "definition": "Too eager to please or obey.",
+          "synonyms": []
+        },
+        {
+          "letter": "P",
+          "word": "paradigm",
+          "definition": "A typical model or pattern of something.",
+          "synonyms": []
+        },
+        {
+          "letter": "Q",
+          "word": "qualm",
+          "definition": "A feeling of doubt about whether you are doing the right thing.",
+          "synonyms": []
+        },
+        {
+          "letter": "R",
+          "word": "rhetoric",
+          "definition": "Language designed to persuade, often without real meaning.",
+          "synonyms": []
+        },
+        {
+          "letter": "S",
+          "word": "sporadic",
+          "definition": "Happening only occasionally, not regularly.",
+          "synonyms": []
+        },
+        {
+          "letter": "T",
+          "word": "trepidation",
+          "definition": "A feeling of fear about something that may happen.",
+          "synonyms": []
+        },
+        {
+          "letter": "U",
+          "word": "unscrupulous",
+          "definition": "Willing to act dishonestly to get what you want.",
+          "synonyms": []
+        },
+        {
+          "letter": "V",
+          "word": "vicarious",
+          "definition": "Experienced through the actions of another person.",
+          "synonyms": []
+        },
+        {
+          "letter": "W",
+          "word": "wily",
+          "definition": "Clever at deceiving people.",
+          "synonyms": []
+        },
+        {
+          "letter": "X",
+          "word": "x-chromosome",
+          "definition": "One of the two sex-determining structures in human cells; females have two.",
+          "synonyms": []
+        },
+        {
+          "letter": "Y",
+          "word": "yawning",
+          "definition": "Very wide and open, like a large gap between two things.",
+          "synonyms": []
+        },
+        {
+          "letter": "Z",
+          "word": "zany",
+          "definition": "Amusingly unconventional and strange.",
+          "synonyms": []
+        }
+      ]
+    },
+    {
+      "id": "c1-5",
+      "entries": [
+        {
+          "letter": "A",
+          "word": "acrimonious",
+          "definition": "Angry and bitter, as in an argument.",
+          "synonyms": []
+        },
+        {
+          "letter": "B",
+          "word": "belligerent",
+          "definition": "Hostile and eager to fight.",
+          "synonyms": []
+        },
+        {
+          "letter": "C",
+          "word": "cursory",
+          "definition": "Hasty and not thorough.",
+          "synonyms": []
+        },
+        {
+          "letter": "D",
+          "word": "deference",
+          "definition": "Polite respect for someone's opinions or wishes.",
+          "synonyms": []
+        },
+        {
+          "letter": "E",
+          "word": "exemplary",
+          "definition": "So good that it serves as a model for others.",
+          "synonyms": []
+        },
+        {
+          "letter": "F",
+          "word": "fervent",
+          "definition": "Having or showing strong, passionate feeling.",
+          "synonyms": []
+        },
+        {
+          "letter": "G",
+          "word": "gratify",
+          "definition": "To give pleasure or satisfaction to someone.",
+          "synonyms": []
+        },
+        {
+          "letter": "H",
+          "word": "harbinger",
+          "definition": "A sign that something is going to happen.",
+          "synonyms": []
+        },
+        {
+          "letter": "I",
+          "word": "intrinsic",
+          "definition": "Belonging naturally to something; essential.",
+          "synonyms": []
+        },
+        {
+          "letter": "J",
+          "word": "jettison",
+          "definition": "To throw away or abandon something no longer wanted.",
+          "synonyms": []
+        },
+        {
+          "letter": "K",
+          "word": "kindred",
+          "definition": "Similar in kind; related.",
+          "synonyms": []
+        },
+        {
+          "letter": "L",
+          "word": "lax",
+          "definition": "Not strict or careful enough about rules.",
+          "synonyms": []
+        },
+        {
+          "letter": "M",
+          "word": "magnanimous",
+          "definition": "Generous and forgiving, especially toward a rival.",
+          "synonyms": []
+        },
+        {
+          "letter": "N",
+          "word": "notwithstanding",
+          "definition": "In spite of something.",
+          "synonyms": []
+        },
+        {
+          "letter": "O",
+          "word": "onerous",
+          "definition": "Involving a great deal of effort or difficulty.",
+          "synonyms": []
+        },
+        {
+          "letter": "P",
+          "word": "precarious",
+          "definition": "Not securely held; likely to fall or collapse.",
+          "synonyms": []
+        },
+        {
+          "letter": "Q",
+          "word": "querulous",
+          "definition": "Complaining in an irritable way.",
+          "synonyms": []
+        },
+        {
+          "letter": "R",
+          "word": "rudimentary",
+          "definition": "Basic; involving only the simplest elements.",
+          "synonyms": []
+        },
+        {
+          "letter": "S",
+          "word": "serendipity",
+          "definition": "The luck of finding good things by chance.",
+          "synonyms": []
+        },
+        {
+          "letter": "T",
+          "word": "tacit",
+          "definition": "Understood without being stated directly.",
+          "synonyms": []
+        },
+        {
+          "letter": "U",
+          "word": "usurp",
+          "definition": "To take a position of power illegally or by force.",
+          "synonyms": []
+        },
+        {
+          "letter": "V",
+          "word": "venerable",
+          "definition": "Respected because of age, wisdom or character.",
+          "synonyms": []
+        },
+        {
+          "letter": "W",
+          "word": "wry",
+          "definition": "Showing dry, mocking humour.",
+          "synonyms": []
+        },
+        {
+          "letter": "X",
+          "word": "xylem",
+          "definition": "The tissue in plants that carries water up from the roots.",
+          "synonyms": []
+        },
+        {
+          "letter": "Y",
+          "word": "yielding",
+          "definition": "Giving way under pressure; not stiff.",
+          "synonyms": []
+        },
+        {
+          "letter": "Z",
+          "word": "zealous",
+          "definition": "Full of eager, intense enthusiasm for a cause.",
+          "synonyms": []
+        }
+      ]
     }
   ]
 }

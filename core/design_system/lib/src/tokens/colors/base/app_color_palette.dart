@@ -108,4 +108,84 @@ final class AppColorPalette {
     w900: Color(0xFF7A271A),
     w950: Color(0xFF55160C),
   );
+
+  /// Teal ramp — an accent.
+  static const teal = PrimitiveColors(
+    w25: Color(0xFFF6FEFC),
+    w50: Color(0xFFF0FDF9),
+    w100: Color(0xFFCCFBEF),
+    w200: Color(0xFF99F6E0),
+    w300: Color(0xFF5FE9D0),
+    w400: Color(0xFF2ED3B7),
+    w500: Color(0xFF15B79E),
+    w600: Color(0xFF0E9384),
+    w700: Color(0xFF107569),
+    w800: Color(0xFF125D56),
+    w900: Color(0xFF134E48),
+    w950: Color(0xFF0A2926),
+  );
+
+  /// Blue ramp — an accent.
+  static const blue = PrimitiveColors(
+    w25: Color(0xFFF5FAFF),
+    w50: Color(0xFFEFF8FF),
+    w100: Color(0xFFD1E9FF),
+    w200: Color(0xFFB2DDFF),
+    w300: Color(0xFF84CAFF),
+    w400: Color(0xFF53B1FD),
+    w500: Color(0xFF2E90FA),
+    w600: Color(0xFF1570EF),
+    w700: Color(0xFF175CD3),
+    w800: Color(0xFF1849A9),
+    w900: Color(0xFF194185),
+    w950: Color(0xFF102A56),
+  );
+
+  /// Indigo ramp — an accent.
+  static const indigo = PrimitiveColors(
+    w25: Color(0xFFF5F8FF),
+    w50: Color(0xFFEEF4FF),
+    w100: Color(0xFFE0EAFF),
+    w200: Color(0xFFC7D7FE),
+    w300: Color(0xFFA4BCFD),
+    w400: Color(0xFF8098F9),
+    w500: Color(0xFF6172F3),
+    w600: Color(0xFF444CE7),
+    w700: Color(0xFF3538CD),
+    w800: Color(0xFF2D31A6),
+    w900: Color(0xFF2D3282),
+    w950: Color(0xFF1F235B),
+  );
+
+  /// Fuchsia ramp — an accent.
+  static const fuchsia = PrimitiveColors(
+    w25: Color(0xFFFEFAFF),
+    w50: Color(0xFFFDF4FF),
+    w100: Color(0xFFFBE8FF),
+    w200: Color(0xFFF6D0FE),
+    w300: Color(0xFFEEAAFD),
+    w400: Color(0xFFE478FA),
+    w500: Color(0xFFD444F1),
+    w600: Color(0xFFBA24D5),
+    w700: Color(0xFF9F1AB1),
+    w800: Color(0xFF821890),
+    w900: Color(0xFF6F1877),
+    w950: Color(0xFF47104C),
+  );
+
+  /// Orange ramp — an accent.
+  static const orange = PrimitiveColors(
+    w25: Color(0xFFFEFAF5),
+    w50: Color(0xFFFEF6EE),
+    w100: Color(0xFFFDEAD7),
+    w200: Color(0xFFF9DBAF),
+    w300: Color(0xFFF7B27A),
+    w400: Color(0xFFF38744),
+    w500: Color(0xFFEF6820),
+    w600: Color(0xFFE04F16),
+    w700: Color(0xFFB93815),
+    w800: Color(0xFF932F19),
+    w900: Color(0xFF772917),
+    w950: Color(0xFF511C10),
+  );
 }

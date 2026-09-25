@@ -225,13 +225,42 @@ screen leaks more visibly than most.
 
 ### Design system
 
-`core/design_system` owns tokens (colour, spacing, radius, size, typography),
-theming, and a small set of example components.
+`core/design_system` owns tokens (colour, spacing, radius, size, typography,
+motion), theming, accents, and the components and motion widgets every screen
+is built from.
 
 - **Always use tokens, never raw values**: `context.spacing.spacingXl`, not
-  `16.0`; `context.textColors.textPrimary`, not `Color(0xFF...)`.
+  `16.0`; `context.textColors.textPrimary`, not `Color(0xFF...)`;
+  `context.motion.medium`, not `Duration(milliseconds: 280)`.
 - The token set is deliberately small. Adding a token means adding it to **both**
   the `light()` and `dark()` factories.
+- **Colour a subtree with an accent, not with colours.** Wrap it in
+  `AppAccentScope(accent: ...)` and everything under it that reads
+  `context.accentColors` follows, in both themes. Each CEFR level's hue is
+  `CefrLevel.accent` (in `rosco_api`), and the round and its result are
+  wrapped in it — so no screen names a level's colour itself. Status colours
+  stay fixed in meaning (success is green everywhere); accents say *where*.
+- **Motion comes from `context.motion`**, which returns
+  `AppMotionTokens.reduced()` when the OS asks for less motion. Anything
+  built from it honours that setting for free; anything that *loops* must
+  also check `motion.isReduced`, since a zero duration has no sensible loop.
+- **Build tappable things on `AppPressable`** — it owns button semantics, the
+  hit area and press feedback. `AppButton` (`primary` / `secondary` /
+  `quiet`) and `AppCard` sit on it. The motion widgets are `AppEntrance`
+  (staggered arrival), `AppSwitcher` (keyed cross-fade), `AppPop` (swell on
+  change) and `AppCountUp`.
+- **Lay out for the room, not the device.** `AppAdaptiveLayout` picks a
+  `portrait` or `landscape` builder from its own constraints (landscape means
+  more than 1.2× wider than tall), so split view and tablets get the right
+  arrangement too. Every screen has both: in landscape the round puts the
+  wheel beside everything else, the picker goes to two columns, and the result
+  splits score from actions. `AppFillScroll` fills the height when there is
+  room and scrolls when there is not — lay its child out with
+  `MainAxisAlignment`, never `Spacer`/`Expanded`, which have no height to
+  share inside a scroll view.
+- **Page transitions are set once**, as the router's
+  `defaultPresentationMode` in `router_configuration.dart` (`appFadeThrough`).
+  A route overrides it only if it has a reason to differ.
 - Assets are referenced through the generated `AppVectorAssets` /
   `AppRasterAssets`, never by a raw path. After adding a file to
   `core/design_system/assets/{vectors,rasters}/`, run `modular gen assets` — those
@@ -402,10 +431,20 @@ schema itself.
   however long it has been open.
 - **A rejected answer must not advance the letter.** The obvious way to
   "handle a wrong answer" resolves the letter and moves on; here the letter
-  stays `active` and the player retries until the 10 s cap expires. Likewise,
-  nothing ends the round except an empty pool or an all-terminal board — not a
-  wrong answer, not a lap with no answers. See
-  [PLAN.md](PLAN.md#nothing-ends-the-round-early).
+  stays `active` and the player retries until the 10 s cap expires — and then
+  it is *passed* round to the next lap, not lost. Nothing ends the round
+  except an empty pool or every letter answered — not a wrong answer, not a
+  lap with no answers. See [PLAN.md](PLAN.md#nothing-ends-the-round-early).
+- **`wrong` means "missed at the end", and only `_finish` sets it.** A
+  timeout once set it mid-round, which made every letter final on the first
+  lap for a player who never pressed Pass: no second lap, ever. The result
+  screen reveals exactly the `wrong` letters, so setting it anywhere else
+  would also reveal words that are still coming back.
+- **The result screen names a word only when it is sure.** It rebuilds the
+  missed words from the set id and a 26-character `c`/`w` mark string in the
+  URL. A missing set, a short or garbled string, or a word bank that fails to
+  load all reveal *nothing* — showing the wrong word as the answer is worse
+  than showing none.
 - **`enabled` and `status` on the microphone move together.** They disagreed
   once — the give-up path set `status: idle` and left `enabled: true` — and the
   result was a button that read as off whose tap turned it *further* off. Any
@@ -425,10 +464,63 @@ schema itself.
 - **Reserve space with a minimum height, never a fixed one.** A `SizedBox`
   around text clips it above roughly a 1.3 font scale. Use `ConstrainedBox`
   with `minHeight` so the row still cannot jump around.
+- **`AppScaffold` owns the bottom inset.** It pads for the home indicator
+  and keyboard itself, then removes that inset from the body's `MediaQuery`.
+  Before it did, every screen's `SafeArea` padded for it a second time — a
+  dead band under each screen, which in landscape cost a sixth of the height
+  and pushed the result screen's second button off the bottom. Keep using
+  `SafeArea` inside a body; it now only handles the top and the sides.
+- **`excludeSemantics` drops the tap action too.** A `Semantics` that
+  replaces its child's label also removes the child `GestureDetector`'s tap,
+  so a screen reader announces the button and cannot press it. That is why
+  `AppPressable` puts `onTap` on its own `Semantics` node — give any
+  hand-rolled control the same treatment, or better, build it on
+  `AppPressable`.
+- **Key an `AppSwitcher` child on what is news, not on its content.** The
+  round's status line keys on the *kind* of message, so a transcript growing
+  syllable by syllable updates in place while a new rejection eases in;
+  keying on the text would cross-fade every syllable into a smear.
 - **A `CustomPaint` contributes nothing to the semantics tree.** The wheel, the
   mic button and the speaker icon all draw themselves, so each carries an
   explicit `Semantics` label. A painted control with no label is invisible to a
   screen reader however large it looks.
+- **Cues pin their audio session.** `AudioPlayersSounds.audioContext`
+  matches the session `speech_to_text` sets while listening
+  (`playAndRecord`, loudspeaker, mixed). Left to its default, `audioplayers`
+  flips iOS to playback-only on every cue — mid-round, with the microphone
+  open — and the "correct" chime was the one least likely to be heard.
+- **On Android, a cue and an open microphone must never overlap.** The
+  recogniser records the loudspeaker. A chime played into a session is
+  transcribed with the player, and a session that *opens* while one sounds
+  calibrates its silence to the chime and then hears speech as nothing — the
+  microphone restarts and stops listening. So on Android the correct chime
+  sends `MicCueing`: the open session closes, the chime plays, and no session
+  opens until the hold (750 ms) ends — a letter changing meanwhile waits too.
+  The timeout cue is silent while listening instead: time runs out while a
+  player may be mid-word. Making every cue silent was tried first and lost
+  the game its sound; keeping one session through the chime is what broke
+  the microphone.
+- **Never `seek` to rewind a cue.** Low-latency players on Android run on
+  `SoundPool`, which never reports a seek complete, and `AudioPlayer.seek`
+  waits for that report for 30 s before failing. Every Android cue died
+  there, silently — feedback swallows errors by design — so the game had no
+  sound on Android at all. `AudioPlayersSounds.restart` rewinds with `stop`;
+  `sound_restart_test.dart` fakes a SoundPool-like platform to keep it so.
+- **Brand assets are rendered, not drawn by hand.** `AppLogoPainter` is the
+  logo. `cd core/design_system && flutter test tool/render_brand_assets.dart`
+  writes `app/assets/brand/`; then, in `app/`,
+  `dart pub global run flutter_launcher_icons -f flutter_launcher_icons.yaml`
+  and `dart run flutter_native_splash:create --path=flutter_native_splash.yaml`.
+  `flutter_launcher_icons` cannot be a workspace dependency (its `cli_util`
+  conflicts with melos), hence the global run — and **revert what it does to
+  `project.pbxproj`**: its icon-name rewrite also sets
+  `ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS` to `AppIcon`,
+  which must be YES or NO.
+- **The native splash is held, then handed over.** `initializer()` calls
+  `FlutterNativeSplash.preserve`, and `AppLaunchIntro` removes it after its
+  first frame — which is drawn to match the splash exactly. Remove it any
+  earlier and the first Flutter frame, blank while the theme loads, flashes
+  white between two dark screens.
 - **Sound assets are generated, not sourced.**
   `tool/sound_authoring/generate_sounds.py` writes them; regenerate rather than
   hand-editing, and keep the `packages/feedback_impl/` asset prefix — the same

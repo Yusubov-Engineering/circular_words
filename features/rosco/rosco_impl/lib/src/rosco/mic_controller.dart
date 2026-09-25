@@ -103,6 +103,15 @@ final class MicPromptChanged extends MicEvent {
   const MicPromptChanged();
 }
 
+/// A sound is about to play through the loudspeaker, for [length].
+///
+/// On a platform whose microphone records the loudspeaker, a cue played into
+/// an open session is transcribed with the player — and one that sounds as a
+/// session *opens* is worse: the recogniser calibrates its sense of silence
+/// to the chime, and then hears normal speech as nothing. So the open session
+/// is closed, and no session opens until the cue has faded.
+final class const MicCueing({required final Duration length}) extends MicEvent;
+
 /// One-shot side effects.
 sealed class MicEffect {
   const MicEffect();
@@ -179,6 +188,10 @@ final class MicController
   StreamSubscription<SpeechResult>? _session;
   Timer? _restart;
 
+  /// Running while a cue sounds. No session opens until it fires; when it
+  /// does, it opens one.
+  Timer? _hold;
+
   /// Bumped whenever a session stops being the current one, so a callback
   /// from a session that has been replaced cannot restart the microphone or
   /// report a transcript against the wrong letter.
@@ -213,6 +226,7 @@ final class MicController
     _sessionOpen = false;
     _generation++;
     _restart?.cancel();
+    _hold?.cancel();
     unawaited(_session?.cancel());
     _session = null;
     super.dispose();
@@ -227,7 +241,34 @@ final class MicController
         await _disable();
       case MicPromptChanged():
         await _nextPrompt();
+      case MicCueing(:final length):
+        await _cue(length);
     }
+  }
+
+  Future<void> _cue(Duration length) async {
+    if (!state.enabled || _disposed) return;
+
+    // Whatever the open session was carrying has been dealt with — a cue
+    // comments on something already decided — so it is closed rather than
+    // settled, and its callbacks are orphaned by the generation bump.
+    _generation++;
+    _restart?.cancel();
+    _restart = null;
+    _sessionOpen = false;
+    _lastHeard = null;
+
+    _hold?.cancel();
+    _hold = Timer(length, () {
+      _hold = null;
+      if (_disposed || !state.enabled) return;
+      // A fresh budget: the gap was ours, not the platform's.
+      _sessionsForPrompt = 0;
+      unawaited(_listen());
+    });
+
+    await _session?.cancel();
+    _session = null;
   }
 
   Future<void> _enable() async {
@@ -263,6 +304,8 @@ final class MicController
     _generation++;
     _restart?.cancel();
     _restart = null;
+    _hold?.cancel();
+    _hold = null;
 
     _sessionOpen = false;
     emit(state.copyWith(enabled: false, status: MicStatus.idle, heard: ''));
@@ -306,6 +349,9 @@ final class MicController
 
   Future<void> _listen() async {
     if (!state.enabled || _disposed) return;
+    // A cue is sounding. The hold opens the session when it has faded;
+    // opening one now would calibrate it to the chime.
+    if (_hold != null) return;
 
     _restart?.cancel();
     _restart = null;

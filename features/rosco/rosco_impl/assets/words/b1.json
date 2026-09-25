@@ -357,6 +357,497 @@
           "synonyms": []
         }
       ]
+    },
+    {
+      "id": "b1-3",
+      "entries": [
+        {
+          "letter": "A",
+          "word": "advice",
+          "definition": "An opinion someone gives you about what you should do.",
+          "synonyms": []
+        },
+        {
+          "letter": "B",
+          "word": "budget",
+          "definition": "The amount of money you plan to spend on something.",
+          "synonyms": []
+        },
+        {
+          "letter": "C",
+          "word": "complain",
+          "definition": "To say that you are unhappy or annoyed about something.",
+          "synonyms": []
+        },
+        {
+          "letter": "D",
+          "word": "decision",
+          "definition": "A choice you make after thinking about it.",
+          "synonyms": []
+        },
+        {
+          "letter": "E",
+          "word": "experience",
+          "definition": "Knowledge or skill that you get from doing something.",
+          "synonyms": []
+        },
+        {
+          "letter": "F",
+          "word": "frightened",
+          "definition": "Feeling afraid.",
+          "synonyms": []
+        },
+        {
+          "letter": "G",
+          "word": "goal",
+          "definition": "Something you hope to achieve in the future.",
+          "synonyms": []
+        },
+        {
+          "letter": "H",
+          "word": "habit",
+          "definition": "Something you do often, usually without thinking.",
+          "synonyms": []
+        },
+        {
+          "letter": "I",
+          "word": "independent",
+          "definition": "Not needing help or control from other people.",
+          "synonyms": []
+        },
+        {
+          "letter": "J",
+          "word": "jealous",
+          "definition": "Unhappy because someone has something you want.",
+          "synonyms": []
+        },
+        {
+          "letter": "K",
+          "word": "kindness",
+          "definition": "Behaviour that is friendly, generous and caring.",
+          "synonyms": []
+        },
+        {
+          "letter": "L",
+          "word": "lonely",
+          "definition": "Sad because you have no friends or company.",
+          "synonyms": []
+        },
+        {
+          "letter": "M",
+          "word": "mistake",
+          "definition": "Something that is not correct, done by accident.",
+          "synonyms": []
+        },
+        {
+          "letter": "N",
+          "word": "neighbourhood",
+          "definition": "The area around the place where you live.",
+          "synonyms": [
+            "neighborhood"
+          ]
+        },
+        {
+          "letter": "O",
+          "word": "opinion",
+          "definition": "What you think or believe about something.",
+          "synonyms": []
+        },
+        {
+          "letter": "P",
+          "word": "patient",
+          "definition": "Able to wait calmly without getting annoyed.",
+          "synonyms": []
+        },
+        {
+          "letter": "Q",
+          "word": "qualification",
+          "definition": "A certificate you get when you pass an exam or a course.",
+          "synonyms": []
+        },
+        {
+          "letter": "R",
+          "word": "responsible",
+          "definition": "Having the duty of taking care of something or someone.",
+          "synonyms": []
+        },
+        {
+          "letter": "S",
+          "word": "salary",
+          "definition": "The money you are paid every month for your job.",
+          "synonyms": []
+        },
+        {
+          "letter": "T",
+          "word": "tradition",
+          "definition": "A custom or belief passed down from older generations.",
+          "synonyms": []
+        },
+        {
+          "letter": "U",
+          "word": "unemployed",
+          "definition": "Without a paid job.",
+          "synonyms": []
+        },
+        {
+          "letter": "V",
+          "word": "volunteer",
+          "definition": "A person who does work without being paid.",
+          "synonyms": []
+        },
+        {
+          "letter": "W",
+          "word": "worth",
+          "definition": "Having a particular value in money.",
+          "synonyms": []
+        },
+        {
+          "letter": "X",
+          "word": "xerox",
+          "definition": "A copy of a document made with a photocopier.",
+          "synonyms": []
+        },
+        {
+          "letter": "Y",
+          "word": "yearly",
+          "definition": "Happening once every twelve months.",
+          "synonyms": []
+        },
+        {
+          "letter": "Z",
+          "word": "zero",
+          "definition": "The number that means nothing at all.",
+          "synonyms": []
+        }
+      ]
+    },
+    {
+      "id": "b1-4",
+      "entries": [
+        {
+          "letter": "A",
+          "word": "afford",
+          "definition": "To have enough money to pay for something.",
+          "synonyms": []
+        },
+        {
+          "letter": "B",
+          "word": "behaviour",
+          "definition": "The way someone acts.",
+          "synonyms": [
+            "behavior"
+          ]
+        },
+        {
+          "letter": "C",
+          "word": "curious",
+          "definition": "Wanting to know or learn about something.",
+          "synonyms": []
+        },
+        {
+          "letter": "D",
+          "word": "delay",
+          "definition": "A time when something happens later than planned.",
+          "synonyms": []
+        },
+        {
+          "letter": "E",
+          "word": "environment",
+          "definition": "The natural world of land, water, air, plants and animals.",
+          "synonyms": []
+        },
+        {
+          "letter": "F",
+          "word": "fair",
+          "definition": "Treating people equally and in a reasonable way.",
+          "synonyms": []
+        },
+        {
+          "letter": "G",
+          "word": "gradually",
+          "definition": "Slowly, over a period of time.",
+          "synonyms": []
+        },
+        {
+          "letter": "H",
+          "word": "homesick",
+          "definition": "Sad because you are away from your home and family.",
+          "synonyms": []
+        },
+        {
+          "letter": "I",
+          "word": "ignore",
+          "definition": "To pay no attention to someone or something.",
+          "synonyms": []
+        },
+        {
+          "letter": "J",
+          "word": "joy",
+          "definition": "A feeling of great happiness.",
+          "synonyms": []
+        },
+        {
+          "letter": "K",
+          "word": "keyboard",
+          "definition": "The part of a computer with buttons that you press to type.",
+          "synonyms": []
+        },
+        {
+          "letter": "L",
+          "word": "luxury",
+          "definition": "Great comfort, usually something expensive that you do not need.",
+          "synonyms": []
+        },
+        {
+          "letter": "M",
+          "word": "memory",
+          "definition": "The ability to remember things.",
+          "synonyms": []
+        },
+        {
+          "letter": "N",
+          "word": "narrow",
+          "definition": "Small from one side to the other; not wide.",
+          "synonyms": []
+        },
+        {
+          "letter": "O",
+          "word": "ordinary",
+          "definition": "Normal; not special or different.",
+          "synonyms": []
+        },
+        {
+          "letter": "P",
+          "word": "purpose",
+          "definition": "The reason why something is done.",
+          "synonyms": []
+        },
+        {
+          "letter": "Q",
+          "word": "quarrel",
+          "definition": "An angry argument between people who know each other.",
+          "synonyms": []
+        },
+        {
+          "letter": "R",
+          "word": "reduce",
+          "definition": "To make something smaller or less.",
+          "synonyms": []
+        },
+        {
+          "letter": "S",
+          "word": "survive",
+          "definition": "To continue to live after a dangerous event.",
+          "synonyms": []
+        },
+        {
+          "letter": "T",
+          "word": "threat",
+          "definition": "A statement that someone will hurt you or cause problems.",
+          "synonyms": []
+        },
+        {
+          "letter": "U",
+          "word": "upset",
+          "definition": "Unhappy or worried because something bad happened.",
+          "synonyms": []
+        },
+        {
+          "letter": "V",
+          "word": "violent",
+          "definition": "Using force to hurt or attack someone.",
+          "synonyms": []
+        },
+        {
+          "letter": "W",
+          "word": "wealthy",
+          "definition": "Having a lot of money; rich.",
+          "synonyms": []
+        },
+        {
+          "letter": "X",
+          "word": "x-axis",
+          "definition": "The horizontal line on a graph.",
+          "synonyms": []
+        },
+        {
+          "letter": "Y",
+          "word": "youngster",
+          "definition": "A young person, usually a child or a teenager.",
+          "synonyms": []
+        },
+        {
+          "letter": "Z",
+          "word": "zip",
+          "definition": "A metal fastener with two rows of teeth that lock together.",
+          "synonyms": []
+        }
+      ]
+    },
+    {
+      "id": "b1-5",
+      "entries": [
+        {
+          "letter": "A",
+          "word": "apologise",
+          "definition": "To say that you are sorry for something.",
+          "synonyms": [
+            "apologize"
+          ]
+        },
+        {
+          "letter": "B",
+          "word": "brave",
+          "definition": "Willing to do dangerous or difficult things without fear.",
+          "synonyms": []
+        },
+        {
+          "letter": "C",
+          "word": "convince",
+          "definition": "To make someone believe that something is true.",
+          "synonyms": []
+        },
+        {
+          "letter": "D",
+          "word": "damage",
+          "definition": "Harm that is done to something.",
+          "synonyms": []
+        },
+        {
+          "letter": "E",
+          "word": "efficient",
+          "definition": "Working well without wasting time or energy.",
+          "synonyms": []
+        },
+        {
+          "letter": "F",
+          "word": "flexible",
+          "definition": "Able to change easily to suit new conditions.",
+          "synonyms": []
+        },
+        {
+          "letter": "G",
+          "word": "gossip",
+          "definition": "Talk about other people's private lives.",
+          "synonyms": []
+        },
+        {
+          "letter": "H",
+          "word": "harmful",
+          "definition": "Causing damage or injury.",
+          "synonyms": []
+        },
+        {
+          "letter": "I",
+          "word": "impatient",
+          "definition": "Annoyed because you have to wait.",
+          "synonyms": []
+        },
+        {
+          "letter": "J",
+          "word": "jog",
+          "definition": "To run slowly, especially for exercise.",
+          "synonyms": []
+        },
+        {
+          "letter": "K",
+          "word": "knock",
+          "definition": "To hit a door to show that you are there.",
+          "synonyms": []
+        },
+        {
+          "letter": "L",
+          "word": "loyal",
+          "definition": "Always supporting your friends or your country.",
+          "synonyms": []
+        },
+        {
+          "letter": "M",
+          "word": "motivate",
+          "definition": "To make someone want to do something.",
+          "synonyms": []
+        },
+        {
+          "letter": "N",
+          "word": "nightmare",
+          "definition": "A frightening dream.",
+          "synonyms": []
+        },
+        {
+          "letter": "O",
+          "word": "organise",
+          "definition": "To plan and arrange something.",
+          "synonyms": [
+            "organize"
+          ]
+        },
+        {
+          "letter": "P",
+          "word": "proud",
+          "definition": "Pleased about something you or someone close to you has done.",
+          "synonyms": []
+        },
+        {
+          "letter": "Q",
+          "word": "quantity",
+          "definition": "An amount or number of something.",
+          "synonyms": []
+        },
+        {
+          "letter": "R",
+          "word": "rescue",
+          "definition": "To save someone from a dangerous situation.",
+          "synonyms": []
+        },
+        {
+          "letter": "S",
+          "word": "shy",
+          "definition": "Nervous and uncomfortable with other people.",
+          "synonyms": []
+        },
+        {
+          "letter": "T",
+          "word": "tidy",
+          "definition": "Neat, with everything in its right place.",
+          "synonyms": []
+        },
+        {
+          "letter": "U",
+          "word": "unfair",
+          "definition": "Not treating people in an equal or reasonable way.",
+          "synonyms": []
+        },
+        {
+          "letter": "V",
+          "word": "vote",
+          "definition": "To choose someone officially in an election.",
+          "synonyms": []
+        },
+        {
+          "letter": "W",
+          "word": "warn",
+          "definition": "To tell someone about a possible danger.",
+          "synonyms": []
+        },
+        {
+          "letter": "X",
+          "word": "xenophobia",
+          "definition": "A strong dislike or fear of people from other countries.",
+          "synonyms": []
+        },
+        {
+          "letter": "Y",
+          "word": "yoga",
+          "definition": "A kind of exercise that uses breathing and stretching.",
+          "synonyms": []
+        },
+        {
+          "letter": "Z",
+          "word": "zookeeper",
+          "definition": "A person whose job is to feed and care for animals kept for the public to see.",
+          "synonyms": []
+        }
+      ]
     }
   ]
 }

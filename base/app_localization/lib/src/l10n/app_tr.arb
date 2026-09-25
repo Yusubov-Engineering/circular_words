@@ -43,5 +43,9 @@
     "soundOn": "Ses açık",
     "soundOff": "Ses kapalı",
     "roscoWheelSemantics": "{letter} harfi, {seconds} saniye kaldı, {total} sorudan {correct} doğru",
-    "microphone": "Mikrofon"
+    "microphone": "Mikrofon",
+    "resultMissedTitle": "Bulamadığınız kelimeler",
+    "resultAllCorrect": "Tüm harfler bilindi — kusursuz bir tur!",
+    "resultShare": "Sonucu paylaşın",
+    "shareMessage": "Circular Words'te {level} seviyesinde {correct}/{total} yaptım!"
 }

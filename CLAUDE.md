@@ -431,10 +431,20 @@ schema itself.
   however long it has been open.
 - **A rejected answer must not advance the letter.** The obvious way to
   "handle a wrong answer" resolves the letter and moves on; here the letter
-  stays `active` and the player retries until the 10 s cap expires. Likewise,
-  nothing ends the round except an empty pool or an all-terminal board — not a
-  wrong answer, not a lap with no answers. See
-  [PLAN.md](PLAN.md#nothing-ends-the-round-early).
+  stays `active` and the player retries until the 10 s cap expires — and then
+  it is *passed* round to the next lap, not lost. Nothing ends the round
+  except an empty pool or every letter answered — not a wrong answer, not a
+  lap with no answers. See [PLAN.md](PLAN.md#nothing-ends-the-round-early).
+- **`wrong` means "missed at the end", and only `_finish` sets it.** A
+  timeout once set it mid-round, which made every letter final on the first
+  lap for a player who never pressed Pass: no second lap, ever. The result
+  screen reveals exactly the `wrong` letters, so setting it anywhere else
+  would also reveal words that are still coming back.
+- **The result screen names a word only when it is sure.** It rebuilds the
+  missed words from the set id and a 26-character `c`/`w` mark string in the
+  URL. A missing set, a short or garbled string, or a word bank that fails to
+  load all reveal *nothing* — showing the wrong word as the answer is worse
+  than showing none.
 - **`enabled` and `status` on the microphone move together.** They disagreed
   once — the give-up path set `status: idle` and left `enabled: true` — and the
   result was a button that read as off whose tap turned it *further* off. Any
@@ -474,6 +484,26 @@ schema itself.
   mic button and the speaker icon all draw themselves, so each carries an
   explicit `Semantics` label. A painted control with no label is invisible to a
   screen reader however large it looks.
+- **Cues pin their audio session.** `AudioPlayersSounds.audioContext`
+  matches the session `speech_to_text` sets while listening
+  (`playAndRecord`, loudspeaker, mixed). Left to its default, `audioplayers`
+  flips iOS to playback-only on every cue — mid-round, with the microphone
+  open — and the "correct" chime was the one least likely to be heard.
+- **Brand assets are rendered, not drawn by hand.** `AppLogoPainter` is the
+  logo. `cd core/design_system && flutter test tool/render_brand_assets.dart`
+  writes `app/assets/brand/`; then, in `app/`,
+  `dart pub global run flutter_launcher_icons -f flutter_launcher_icons.yaml`
+  and `dart run flutter_native_splash:create --path=flutter_native_splash.yaml`.
+  `flutter_launcher_icons` cannot be a workspace dependency (its `cli_util`
+  conflicts with melos), hence the global run — and **revert what it does to
+  `project.pbxproj`**: its icon-name rewrite also sets
+  `ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS` to `AppIcon`,
+  which must be YES or NO.
+- **The native splash is held, then handed over.** `initializer()` calls
+  `FlutterNativeSplash.preserve`, and `AppLaunchIntro` removes it after its
+  first frame — which is drawn to match the splash exactly. Remove it any
+  earlier and the first Flutter frame, blank while the theme loads, flashes
+  white between two dark screens.
 - **Sound assets are generated, not sourced.**
   `tool/sound_authoring/generate_sounds.py` writes them; regenerate rather than
   hand-editing, and keep the `packages/feedback_impl/` asset prefix — the same

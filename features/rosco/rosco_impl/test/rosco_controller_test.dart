@@ -264,13 +264,49 @@ void main() {
       await round.dispose();
     });
 
-    test('only the cap turns a letter wrong', () async {
+    // Running out of time is a pass the player did not ask for. It was once
+    // final, which ended a round with time left for anyone who never pressed
+    // Pass: every letter was decided on the first lap.
+    test('the cap sends a letter round again, never out', () async {
       final round = await startRound();
 
       await round.clock.tick(kLetterCapSeconds);
 
-      expect(round.state.slots.first.status, LetterStatus.wrong);
+      expect(round.state.slots.first.status, LetterStatus.passed);
       expect(round.state.current?.letter, 'B');
+      expect(round.effects, contains(isA<RoscoTimedOut>()));
+
+      await round.dispose();
+    });
+
+    test('a timed-out letter comes back on the next lap', () async {
+      final round = await startRound();
+
+      await round.clock.tick(kLetterCapSeconds); // A runs out
+      for (var i = 1; i < WordSet.letterCount; i++) {
+        await round.answerCurrent(); // B..Z answered
+      }
+
+      expect(round.state.isOver, isFalse);
+      expect(round.state.lap, 2);
+      expect(round.state.current?.letter, 'A');
+
+      await round.dispose();
+    });
+
+    test('whatever is unanswered at the end is marked missed', () async {
+      final round = await startRound();
+
+      await round.answerCurrent(); // A correct
+      await round.clock.tick(kPoolSeconds); // the pool runs dry
+
+      expect(round.state.isOver, isTrue);
+      expect(round.state.slots.first.status, LetterStatus.correct);
+      expect(
+        round.state.slots.skip(1).map((slot) => slot.status),
+        everyElement(LetterStatus.wrong),
+      );
+      expect(round.state.correctCount, 1);
 
       await round.dispose();
     });
@@ -451,8 +487,8 @@ void main() {
   });
 
   group('a played-out round', () {
-    // The shape a real game takes: some right, some passed and recovered,
-    // some lost to the cap.
+    // The shape a real game takes: some right, some passed, some out of time
+    // — and during play the last two look the same, because both come back.
     test('mixes correct, passed and timed-out letters', () async {
       final round = await startRound();
 
@@ -467,7 +503,7 @@ void main() {
 
       expect(byLetter['A'], LetterStatus.correct);
       expect(byLetter['B'], LetterStatus.passed);
-      expect(byLetter['C'], LetterStatus.wrong);
+      expect(byLetter['C'], LetterStatus.passed);
       expect(byLetter['D'], LetterStatus.correct);
       expect(round.state.current?.letter, 'E');
       expect(round.state.correctCount, 2);

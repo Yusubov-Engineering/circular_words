@@ -1,6 +1,7 @@
 import 'package:app_localization/app_localization.dart';
 import 'package:design_system/design_system.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:material_ui/material_ui.dart';
 
 /// {@template root_app}
@@ -48,6 +49,12 @@ class RootApp({
         color: context.backgroundColors.bgPrimary,
         debugShowCheckedModeBanner: kDebugMode,
         routerConfig: routerConfig,
+        // Over the router, so the first screen builds underneath while the
+        // intro plays, and is ready the moment it lifts.
+        builder: (context, child) => AppLaunchIntro(
+          onFirstFrame: FlutterNativeSplash.remove,
+          child: child ?? const SizedBox.shrink(),
+        ),
         supportedLocales: supportedLocales,
         locale: locale,
         localizationsDelegates: [

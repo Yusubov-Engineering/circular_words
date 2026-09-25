@@ -8,8 +8,11 @@ import 'package:rosco_api/rosco_api.dart';
 import 'package:router_api/router_api.dart';
 import 'package:state_manager/state_manager.dart';
 
+import '../domain/word_bank_repository.dart';
 import '../router/rosco_result_args.dart';
 import '../router/rosco_route_info.dart';
+import '../share/result_card.dart';
+import '../share/result_sharer.dart';
 import 'result_controller.dart';
 
 /// {@template result_screen}
@@ -30,8 +33,11 @@ class const ResultScreen({required final RoscoResultArgs args, super.key})
       child: AppStateProvider(
         create: () => ResultController(
           scoreboard: context.locator<RoscoScoreboard>(),
+          repository: context.locator<WordBankRepository>(),
           level: args.level,
           score: args.score,
+          setId: args.setId,
+          marks: args.marks,
         ),
         onEffect: _onEffect,
         child: const _ResultView(),
@@ -53,7 +59,43 @@ class const ResultScreen({required final RoscoResultArgs args, super.key})
         );
       case LeaveResult():
         context.navigation.popRoute();
+      case ShareOutcome(:final result):
+        unawaited(_share(context, result));
     }
+  }
+
+  /// Paints the result card and opens the share sheet with it.
+  ///
+  /// Everything read from [context] is read before the first `await`: the
+  /// card takes a moment to encode, and the screen may be gone by then.
+  Future<void> _share(BuildContext context, ResultState result) async {
+    final sharer = context.locator<ResultSharer>();
+    final colors = ResultCardColors.of(context);
+    final typography = context.typography;
+    final l10n = context.localization;
+    final text = l10n.shareMessage(
+      result.score.correct,
+      result.score.total,
+      result.level.label,
+    );
+    // Anchors the sheet on iPad, where it is a popover rather than a sheet.
+    final box = context.findRenderObject() as RenderBox?;
+    final origin = box == null || !box.hasSize
+        ? null
+        : box.localToGlobal(Offset.zero) & box.size;
+
+    final caption = l10n.scoreSummary(result.score.correct, result.score.total);
+    final direction = Directionality.of(context);
+
+    final image = await renderResultCard(
+      result: result,
+      colors: colors,
+      typography: typography,
+      appName: 'Circular Words',
+      caption: caption,
+      textDirection: direction,
+    );
+    await sharer.share(image: image, text: text, origin: origin);
   }
 }
 
@@ -120,6 +162,11 @@ class _ResultView extends StatelessWidget {
                     ),
                     context.spacing.spacingLg.verticalSpace,
                     _BestLine(state: state),
+                    // Straight after the score: the words the player could
+                    // not find are the most useful thing on this screen,
+                    // and the moment right after the round is when they
+                    // are still wondering.
+                    _MissedWords(state: state, firstBeat: beat),
                   ],
                 );
 
@@ -136,6 +183,16 @@ class _ResultView extends StatelessWidget {
                       ),
                     ),
                     context.spacing.spacingMd.verticalSpace,
+                    enter(
+                      AppButton(
+                        title: l10n.resultShare,
+                        variant: AppButtonVariant.secondary,
+                        onTap: () => unawaited(
+                          controller.dispatch(const ResultShared()),
+                        ),
+                      ),
+                    ),
+                    context.spacing.spacingSm.verticalSpace,
                     enter(
                       AppButton(
                         title: l10n.resultChooseLevel,
@@ -281,4 +338,127 @@ class _NewBestFlourishState extends State<_NewBestFlourish> {
   @override
   Widget build(BuildContext context) =>
       AppPop(trigger: _shown, amount: 0.12, child: widget.child);
+}
+
+/// The answers to every letter the player did not find.
+///
+/// Revealed here, not during the round: a letter that runs out of time comes
+/// back on the next lap, so naming its word then would spoil it. Once the
+/// round is over nothing more can be spoiled, and the reveal is immediate.
+class const _MissedWords({
+  required final ResultState state,
+
+  /// Where these rows join the screen's entrance sequence.
+  required final int firstBeat,
+}) extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    final missed = state.missed;
+    // Unknown — the set could not be read back. Name nothing rather than risk
+    // naming the wrong word.
+    if (missed == null) return const SizedBox.shrink();
+
+    final l10n = context.localization;
+    final status = context.statusColors;
+
+    if (missed.isEmpty) {
+      return Padding(
+        padding: EdgeInsets.only(top: context.spacing.spacingXl),
+        child: AppEntrance(
+          index: firstBeat,
+          child: AppText(
+            title: l10n.resultAllCorrect,
+            textAlign: TextAlign.center,
+            style: context.typography.textMd.semiBold.copyWith(
+              color: status.statusSuccess,
+            ),
+          ),
+        ),
+      );
+    }
+
+    return Padding(
+      padding: EdgeInsets.only(top: context.spacing.spacing3Xl),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          AppEntrance(
+            index: firstBeat,
+            child: AppText(
+              title: l10n.resultMissedTitle,
+              style: context.typography.textMd.semiBold.copyWith(
+                color: context.textColors.textSecondary,
+              ),
+            ),
+          ),
+          for (final (index, letter) in missed.indexed) ...[
+            context.spacing.spacingMd.verticalSpace,
+            AppEntrance(
+              index: firstBeat + 1 + index,
+              child: _MissedWord(letter: letter),
+            ),
+          ],
+        ],
+      ),
+    );
+  }
+}
+
+/// One revealed word: its letter, the word, and the clue it answered.
+class const _MissedWord({required final ResultLetter letter})
+    extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    final status = context.statusColors;
+    final entry = letter.entry;
+
+    return AppCard(
+      // Read as one line: "B, borrow: To take something…".
+      semanticsLabel: '${entry.letter}, ${entry.word}: ${entry.definition}',
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          // The same red as the letter on the wheel, so the two connect.
+          Container(
+            constraints: BoxConstraints(
+              minWidth: context.sizes.size32,
+              minHeight: context.sizes.size32,
+            ),
+            alignment: Alignment.center,
+            decoration: BoxDecoration(
+              color: status.statusDanger,
+              shape: BoxShape.circle,
+            ),
+            child: AppText(
+              title: entry.letter,
+              style: context.typography.textSm.bold.copyWith(
+                color: status.statusOnFill,
+              ),
+            ),
+          ),
+          context.spacing.spacingLg.horizontalSpace,
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                AppText(
+                  title: entry.word,
+                  style: context.typography.textMd.semiBold.copyWith(
+                    color: context.textColors.textPrimary,
+                  ),
+                ),
+                context.spacing.spacingXxs.verticalSpace,
+                AppText(
+                  title: entry.definition,
+                  style: context.typography.textSm.regular.copyWith(
+                    color: context.textColors.textTertiary,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
 }

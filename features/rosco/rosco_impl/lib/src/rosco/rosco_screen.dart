@@ -74,7 +74,7 @@ class const RoscoScreen({required final CefrLevel level, super.key})
         unawaited(feedback.rejected());
       case RoscoTimedOut():
         unawaited(feedback.wrong());
-      case RoscoFinished(:final score):
+      case RoscoFinished(:final score, :final setId, :final marks):
         unawaited(feedback.finished());
         // Replacing, not pushing: a finished round has a stopped clock and no
         // letters left, so it is not somewhere the back gesture should be
@@ -87,6 +87,8 @@ class const RoscoScreen({required final CefrLevel level, super.key})
               queryParameters: RoscoResultArgs(
                 level: level,
                 score: score,
+                setId: setId,
+                marks: marks,
               ).toQuery(),
             ),
           ),

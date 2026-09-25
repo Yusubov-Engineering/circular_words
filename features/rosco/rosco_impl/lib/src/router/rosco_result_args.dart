@@ -12,22 +12,59 @@ import '../domain/word_set.dart';
 final class const RoscoResultArgs({
   required final CefrLevel level,
   required final LevelScore score,
+
+  /// The set that was played. With [marks], enough to name every missed word
+  /// without putting the words themselves in the URL.
+  final String? setId,
+
+  /// Whether each letter, A to Z, was answered — or `null` when the URL did
+  /// not carry a usable record, in which case nothing is revealed.
+  final List<bool>? marks,
 }) {
-  /// Parses `/rosco/:level/result?correct=12&total=26&left=165`.
+  /// Parses `/rosco/:level/result?correct=12&total=26&left=165&set=b1-3&marks=ccw…`.
   factory RoscoResultArgs.fromRaw(AppRouteArguments raw) => RoscoResultArgs(
     level: CefrLevel.tryParse(raw.pathParameters['level']) ?? CefrLevel.a1,
     score: _scoreFrom(raw.queryParameters),
+    setId: _setIdFrom(raw.queryParameters[_set]),
+    marks: _marksFrom(raw.queryParameters[_marks]),
   );
 
   static const _correct = 'correct';
   static const _total = 'total';
   static const _left = 'left';
+  static const _set = 'set';
+  static const _marks = 'marks';
+
+  /// One character per letter: `c` answered, `w` missed. Short enough for a
+  /// URL, and readable when debugging one.
+  static const _hit = 'c';
+  static const _miss = 'w';
 
   Map<String, String> toQuery() => {
     _correct: '${score.correct}',
     _total: '${score.total}',
     _left: '${score.secondsRemaining}',
+    if (setId case final id?) _set: id,
+    if (marks case final letters? when letters.isNotEmpty)
+      _marks: letters.map((hit) => hit ? _hit : _miss).join(),
   };
+
+  static String? _setIdFrom(String? raw) {
+    final id = raw?.trim() ?? '';
+    return id.isEmpty ? null : id;
+  }
+
+  /// A full A–Z record or nothing: a short or garbled one could pin the
+  /// wrong word on a letter, which is worse than naming none.
+  static List<bool>? _marksFrom(String? raw) {
+    if (raw == null || raw.length != WordSet.letterCount) return null;
+    final marks = <bool>[];
+    for (final char in raw.split('')) {
+      if (char != _hit && char != _miss) return null;
+      marks.add(char == _hit);
+    }
+    return marks;
+  }
 
   /// Reads a score out of the query string, defensively.
   ///

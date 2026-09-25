@@ -139,7 +139,7 @@ class _RoscoWheelState extends State<RoscoWheel> with TickerProviderStateMixin {
           builder: (context, progress, _) => AnimatedBuilder(
             animation: Listenable.merge([_move, _pop]),
             builder: (context, _) => CustomPaint(
-              painter: _RoscoWheelPainter(
+              painter: RoscoWheelPainter(
                 slots: widget.slots,
                 activeIndex: widget.activeIndex,
                 previousActive: _previousActive,
@@ -168,8 +168,8 @@ class _RoscoWheelState extends State<RoscoWheel> with TickerProviderStateMixin {
   }
 }
 
-class _RoscoWheelPainter extends CustomPainter {
-  _RoscoWheelPainter({
+class RoscoWheelPainter extends CustomPainter {
+  RoscoWheelPainter({
     required this.slots,
     required this.activeIndex,
     required this.previousActive,
@@ -398,7 +398,7 @@ class _RoscoWheelPainter extends CustomPainter {
   }
 
   @override
-  bool shouldRepaint(_RoscoWheelPainter old) =>
+  bool shouldRepaint(RoscoWheelPainter old) =>
       old.activeIndex != activeIndex ||
       old.move != move ||
       old.pop != pop ||

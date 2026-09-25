@@ -42,6 +42,36 @@ final class AudioPlayersSounds implements FeedbackSounds {
   /// this package's own tests and nowhere else.
   static const assetPrefix = 'packages/feedback_impl/assets/sounds/';
 
+  /// How these cues share the device's audio with the microphone.
+  ///
+  /// Left to its default, `audioplayers` switches the whole iOS audio session
+  /// to a playback-only category every time it plays — mid-round, while the
+  /// recogniser has it recording. That can cut the microphone off, and the
+  /// recogniser's own session puts output on the quiet earpiece, so a cue
+  /// played at exactly the moment a word lands was the cue least likely to be
+  /// heard. This matches the session `speech_to_text` sets while listening,
+  /// so neither undoes the other: record-capable, out of the loudspeaker,
+  /// mixed rather than exclusive.
+  ///
+  /// On Android the cues take no audio focus: a quarter-second chime has no
+  /// business pausing the player's music, or the recogniser.
+  static AudioContext get audioContext => AudioContext(
+    iOS: AudioContextIOS(
+      category: AVAudioSessionCategory.playAndRecord,
+      options: const {
+        AVAudioSessionOptions.defaultToSpeaker,
+        AVAudioSessionOptions.mixWithOthers,
+        AVAudioSessionOptions.allowBluetooth,
+        AVAudioSessionOptions.allowBluetoothA2DP,
+      },
+    ),
+    android: const AudioContextAndroid(
+      contentType: AndroidContentType.sonification,
+      usageType: AndroidUsageType.game,
+      audioFocus: AndroidAudioFocus.none,
+    ),
+  );
+
   final AudioPlayer Function() _createPlayer;
   final _players = <FeedbackSound, AudioPlayer>{};
 
@@ -55,6 +85,7 @@ final class AudioPlayersSounds implements FeedbackSounds {
         // are answered a second apart and a reload between them is audible.
         ..audioCache = AudioCache(prefix: assetPrefix);
 
+      await player.setAudioContext(audioContext);
       await player.setReleaseMode(ReleaseMode.stop);
       await player.setPlayerMode(PlayerMode.lowLatency);
       await player.setSource(AssetSource(sound.fileName));

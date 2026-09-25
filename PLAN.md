@@ -20,6 +20,7 @@ The format is Pasapalabra's *rosco*, adapted for language learning.
 | Total time | **260 s, a shared pool** |
 | Per-letter cap | **10 s, a soft cap** |
 | Passing | Allowed; a passed letter is requeued for a later lap |
+| Time out on a letter | **Same as a pass** — the letter comes back next lap |
 | Wrong answer | Never ends the round — the player plays on |
 | Alphabet | **Always A–Z.** No relaxed pool for rare letters |
 | Round ends | Pool hits 0, or all 26 letters are terminal |
@@ -67,22 +68,33 @@ end it either.
 Concretely, the round ends on exactly two conditions:
 
 1. `remainingPool == 0`, or
-2. every letter is terminal (`correct` or `wrong`).
+2. every letter is `correct`.
 
 `passed` is deliberately **not** terminal, which is what keeps a second lap
-reachable.
+reachable — and a letter that runs out its 10 s is `passed`, not lost.
+
+> **This used to say "every letter is terminal (`correct` or `wrong`)", with
+> a timeout making a letter `wrong`.** In play that read as a bug: a player
+> who never pressed Pass had every letter decided on the first lap, and the
+> round ended with no second lap and time still in the pool. A timeout is now
+> a pass the player did not have to ask for, which is also how the televised
+> *rosco* feels — there is no per-letter "wrong by timeout" there.
 
 ### Letter lifecycle
 
 ```
 pending ──▶ active ──┬──▶ correct              (accepted answer)
-                     ├──▶ wrong                (10 s cap expired)
                      └──▶ passed ──▶ (requeued) ──▶ active ...
+                          (Pass pressed, or the 10 s cap expired)
+
+at the end of the round, every letter not `correct` ──▶ wrong  (missed)
 ```
 
 A rejected answer does not resolve the letter. The letter stays `active` and
-the player may try again inside its remaining seconds; it becomes `wrong` only
-when the 10 s cap expires. The cost of a bad guess is the time it burned out of
+the player may try again inside its remaining seconds; when the 10 s cap
+expires it is passed round to the next lap. `wrong` is set in exactly one
+place — the end of the round — and means *missed*: it is what the result
+screen reveals, word and clue, immediately. The cost of a bad guess is the time it burned out of
 the shared pool — which is a real cost, since that time is gone for every
 letter after it.
 
@@ -500,9 +512,9 @@ of 260 seconds.
 **A rejected answer is not a state transition.** `AnswerSubmitted` with a
 non-matching word leaves `LetterStatus.active` exactly where it was; it emits
 feedback (`PlaySound`, `Haptic`), updates `lastTranscript`, and lets the clock
-keep running. Only two things resolve a letter: an accepted answer
-(`correct`), or the 10 s cap expiring (`wrong`). `Passed` defers it without
-resolving it.
+keep running. Only an accepted answer resolves a letter during play
+(`correct`). `Passed` — pressed, or the 10 s cap expiring — defers it without
+resolving it, and the round's end marks whatever is left `wrong`.
 
 This is worth stating in the state machine because it is the rule most likely
 to be broken by accident — the obvious implementation of "handle a wrong
@@ -519,7 +531,7 @@ wrong here:
 
 `Ticked` is also the only place the round can end, and it checks both
 conditions from [§1](#nothing-ends-the-round-early): the pool reaching 0, and
-every letter having become terminal. Ending anywhere else — on the last letter
+every letter having been answered. Ending anywhere else — on the last letter
 of a lap, on a wrong answer — reintroduces exactly the early exit the rules
 rule out.
 
@@ -711,12 +723,17 @@ looks arbitrary later can be traced to the reasoning that produced it.
 | How much motion | **Lively but calm.** Press feedback, a gliding highlight, a pop on each decided letter, a count-up on the score; nothing loops but the listening pulse, and all of it yields to the OS reduce-motion setting | `core/design_system/lib/src/tokens/motion/` |
 | Page transitions | **Fade-through, set once** as the router's default (router `v1.1.0` added `CustomPresentationMode`); the three screens are not spatially related, so a slide would imply a direction that does not exist | `app/lib/bootstrap/router_configuration.dart` |
 | Landscape | **Rearrange, don't lock.** Rotation stays allowed; each screen has a landscape arrangement chosen by `AppAdaptiveLayout` from its own constraints — the wheel beside the controls rather than above them, levels in two columns, score beside actions | `core/design_system/lib/src/layouts/app_adaptive_layout.dart` |
+| A letter running out of time | **Counts as a pass** — it comes back next lap. `wrong` is set only at the end, for whatever is still unanswered | [§1](#letter-lifecycle) |
+| Showing a word the player missed | **On the result screen, immediately** — word and clue for every missed letter. Not during the round: a timed-out letter comes back, so naming it then would spoil it | `rosco_impl/lib/src/result/result_screen.dart` |
+| Sharing a result | **An image card through the system share sheet** — the wheel in green and red, the score, the level colour. The player picks Instagram, WhatsApp or anything else; no accounts or app IDs | `rosco_impl/lib/src/share/` |
+| The logo | **Drawn, not imported** — the wheel in miniature, painted by `AppLogoPainter`; icons and splash images are rendered from that painter | `core/design_system/tool/render_brand_assets.dart` |
 
 One sub-question is settled by judgment rather than by requirement, and is the
 one to overrule first if the game feels wrong:
 
 - **A rejected answer does not burn the letter** — the player may retry inside
-  the letter's remaining seconds, and `wrong` means "the 10 s expired". See
+  the letter's remaining seconds, and running out of them passes it round to
+  the next lap. See
   [§1](#letter-lifecycle). Speech recognition is unreliable enough that
   one-shot answering punishes recognition failures as if they were vocabulary
   failures.

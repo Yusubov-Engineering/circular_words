@@ -61,7 +61,7 @@ final class const RoscoState({
   /// Letters still in play — pending, active or passed.
   ///
   /// `passed` counts as unresolved, which is what keeps a second lap
-  /// reachable.
+  /// reachable. A letter that runs out of time is passed, too.
   int get unresolvedCount => slots.where((slot) => !slot.isTerminal).length;
 
   LevelScore get score => LevelScore(
@@ -159,18 +159,25 @@ final class RoscoRejected extends RoscoEffect {
   const RoscoRejected();
 }
 
-/// The letter ran out of time and was lost.
+/// The letter ran out of time and goes round again.
 ///
 /// Distinct from [RoscoRejected] because it means something different to the
-/// player: a rejection is a try that missed, this is a letter gone. They earn
-/// different feedback.
+/// player: a rejection is a try that missed, this is the letter's time gone.
+/// They earn different feedback.
 final class RoscoTimedOut extends RoscoEffect {
   const RoscoTimedOut();
 }
 
 /// The round is over. The controller only *asks*; the screen navigates.
-final class const RoscoFinished({required final LevelScore score})
-    extends RoscoEffect;
+final class const RoscoFinished({
+  required final LevelScore score,
+
+  /// Which set was played, so the result can name the words that were missed.
+  final String? setId,
+
+  /// Whether each letter, A to Z, was answered.
+  final List<bool> marks = const [],
+}) extends RoscoEffect;
 
 /// {@template rosco_controller}
 /// A round of the game.
@@ -272,9 +279,11 @@ final class RoscoController
     }
 
     if (spent >= kLetterCapSeconds) {
-      // Only here does a letter become `wrong`: the cap ran out. A rejected
-      // answer never does this.
-      _resolveCurrent(LetterStatus.wrong);
+      // Running out of time is a pass the player did not have to ask for: the
+      // letter goes round again on the next lap. Treating it as final instead
+      // meant a player who never pressed Pass decided all 26 letters on the
+      // first lap, and the round ended there with time still in the pool.
+      _resolveCurrent(LetterStatus.passed);
       emitEffect(const RoscoTimedOut());
       _advance();
     }
@@ -356,7 +365,7 @@ final class RoscoController
       return;
     }
 
-    // Nothing unresolved is left: every letter is correct or wrong.
+    // Nothing unresolved is left: every letter has been answered.
     _finish();
   }
 
@@ -366,7 +375,21 @@ final class RoscoController
     unawaited(_ticks?.cancel());
     _ticks = null;
 
-    emit(state.copyWith(isOver: true));
-    emitEffect(RoscoFinished(score: state.score));
+    // The only place a letter becomes `wrong`: whatever the player had not
+    // answered when the round ended. It is what the result reveals.
+    final slots = [
+      for (final slot in state.slots)
+        slot.status == LetterStatus.correct
+            ? slot
+            : slot.copyWith(status: LetterStatus.wrong),
+    ];
+    emit(state.copyWith(slots: slots, isOver: true));
+    emitEffect(
+      RoscoFinished(
+        score: state.score,
+        setId: state.setId,
+        marks: [for (final slot in slots) slot.status == LetterStatus.correct],
+      ),
+    );
   }
 }

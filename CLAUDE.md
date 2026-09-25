@@ -489,6 +489,23 @@ schema itself.
   (`playAndRecord`, loudspeaker, mixed). Left to its default, `audioplayers`
   flips iOS to playback-only on every cue — mid-round, with the microphone
   open — and the "correct" chime was the one least likely to be heard.
+- **On Android, a cue and an open microphone must never overlap.** The
+  recogniser records the loudspeaker. A chime played into a session is
+  transcribed with the player, and a session that *opens* while one sounds
+  calibrates its silence to the chime and then hears speech as nothing — the
+  microphone restarts and stops listening. So on Android the correct chime
+  sends `MicCueing`: the open session closes, the chime plays, and no session
+  opens until the hold (750 ms) ends — a letter changing meanwhile waits too.
+  The timeout cue is silent while listening instead: time runs out while a
+  player may be mid-word. Making every cue silent was tried first and lost
+  the game its sound; keeping one session through the chime is what broke
+  the microphone.
+- **Never `seek` to rewind a cue.** Low-latency players on Android run on
+  `SoundPool`, which never reports a seek complete, and `AudioPlayer.seek`
+  waits for that report for 30 s before failing. Every Android cue died
+  there, silently — feedback swallows errors by design — so the game had no
+  sound on Android at all. `AudioPlayersSounds.restart` rewinds with `stop`;
+  `sound_restart_test.dart` fakes a SoundPool-like platform to keep it so.
 - **Brand assets are rendered, not drawn by hand.** `AppLogoPainter` is the
   logo. `cd core/design_system && flutter test tool/render_brand_assets.dart`
   writes `app/assets/brand/`; then, in `app/`,

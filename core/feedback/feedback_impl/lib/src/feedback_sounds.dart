@@ -1,4 +1,5 @@
 import 'package:audioplayers/audioplayers.dart';
+import 'package:flutter/foundation.dart';
 
 /// The sounds the game can make.
 enum FeedbackSound {
@@ -99,9 +100,23 @@ final class AudioPlayersSounds implements FeedbackSounds {
     final player = _players[sound];
     if (player == null) return;
 
-    // Rewind first: a cue asked for twice in quick succession should sound
-    // twice, not be ignored because the player is still busy.
-    await player.seek(Duration.zero);
+    await restart(player);
+  }
+
+  /// Plays [player] from the top, even if it is still sounding.
+  ///
+  /// Rewinds with `stop`, **never `seek`**. In low-latency mode Android plays
+  /// through a `SoundPool`, which never reports a seek as complete — and
+  /// `AudioPlayer.seek` waits for exactly that report, for up to thirty
+  /// seconds, before failing. Every cue on Android therefore timed out before
+  /// reaching `resume`, and because feedback swallows its errors by design,
+  /// the game was simply silent there. iOS ignores low-latency mode and its
+  /// player does report seeks, which is why only Android lost its sound.
+  /// `stop` waits on no platform event, and with `ReleaseMode.stop` it keeps
+  /// the source loaded, so the next `resume` starts from the beginning.
+  @visibleForTesting
+  static Future<void> restart(AudioPlayer player) async {
+    await player.stop();
     await player.resume();
   }
 

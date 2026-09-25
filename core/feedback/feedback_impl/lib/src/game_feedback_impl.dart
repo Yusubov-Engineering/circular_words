@@ -77,16 +77,19 @@ final class GameFeedbackImpl implements GameFeedbackApi {
   }
 
   @override
-  Future<void> correct() => _cue(FeedbackSound.correct, HapticCue.firm);
+  Future<void> correct({bool audible = true}) =>
+      _cue(audible ? FeedbackSound.correct : null, HapticCue.firm);
 
   @override
   Future<void> rejected() => _cue(null, HapticCue.faint);
 
   @override
-  Future<void> wrong() => _cue(FeedbackSound.wrong, HapticCue.faint);
+  Future<void> wrong({bool audible = true}) =>
+      _cue(audible ? FeedbackSound.wrong : null, HapticCue.faint);
 
   @override
-  Future<void> finished() => _cue(FeedbackSound.finished, HapticCue.heavy);
+  Future<void> finished({bool audible = true}) =>
+      _cue(audible ? FeedbackSound.finished : null, HapticCue.heavy);
 
   @override
   Future<void> dispose() async {

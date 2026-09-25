@@ -727,6 +727,7 @@ looks arbitrary later can be traced to the reasoning that produced it.
 | Showing a word the player missed | **On the result screen, immediately** — word and clue for every missed letter. Not during the round: a timed-out letter comes back, so naming it then would spoil it | `rosco_impl/lib/src/result/result_screen.dart` |
 | Sharing a result | **An image card through the system share sheet** — the wheel in green and red, the score, the level colour. The player picks Instagram, WhatsApp or anything else; no accounts or app IDs | `rosco_impl/lib/src/share/` |
 | The logo | **Drawn, not imported** — the wheel in miniature, painted by `AppLogoPainter`; icons and splash images are rendered from that painter | `core/design_system/tool/render_brand_assets.dart` |
+| Sound with the microphone open, on Android | **The chime gets the room to itself.** Android's recogniser records the loudspeaker, and a chime into — or at the start of — a session stopped it hearing the player. On a correct answer the session closes, the chime plays, and the microphone re-opens after 750 ms: one re-open per correct answer, landing while the next clue is read. Silencing every cue was tried first and rejected — no sound at all. The timeout cue stays silent while listening, since a player may be mid-word | `rosco_impl/lib/src/rosco/mic_controller.dart` (`MicCueing`) |
 
 One sub-question is settled by judgment rather than by requirement, and is the
 one to overrule first if the game feels wrong:

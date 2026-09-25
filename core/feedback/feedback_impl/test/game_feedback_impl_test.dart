@@ -131,6 +131,26 @@ void main() {
       expect(sounds.played, isEmpty);
       expect(haptics.played, [HapticCue.faint]);
     });
+
+    // On Android a sound played into an open microphone is recorded with the
+    // player and breaks the session, so the round asks for silent cues while
+    // it listens. The haptic is the whole message then, and must still come.
+    test(
+      'an inaudible cue is still felt, and never touches the speaker',
+      () async {
+        await feedback.initialize();
+        await feedback.correct(audible: false);
+        await feedback.wrong(audible: false);
+        await feedback.finished(audible: false);
+
+        expect(sounds.played, isEmpty);
+        expect(haptics.played, [
+          HapticCue.firm,
+          HapticCue.faint,
+          HapticCue.heavy,
+        ]);
+      },
+    );
   });
 
   group('muting', () {

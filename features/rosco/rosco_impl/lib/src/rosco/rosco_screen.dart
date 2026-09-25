@@ -4,6 +4,7 @@ import 'package:app_localization/app_localization.dart';
 import 'package:dependency_injection_api/dependency_injection_api.dart';
 import 'package:design_system/design_system.dart';
 import 'package:feedback_api/feedback_api.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 import 'package:rosco_api/rosco_api.dart';
 import 'package:router_api/router_api.dart';
@@ -31,31 +32,88 @@ import 'widgets/rosco_wheel.dart';
 /// round playable in a unit test with no microphone at all.
 /// {@endtemplate}
 class const RoscoScreen({required final CefrLevel level, super.key})
-    extends StatelessWidget {
+    extends StatefulWidget {
+  @override
+  State<RoscoScreen> createState() => _RoscoScreenState();
+}
+
+class _RoscoScreenState extends State<RoscoScreen> {
+  /// The microphone this screen created.
+  ///
+  /// Held because the round's effect handler sits *outside* the microphone's
+  /// provider — nested providers reach outward, never inward — and it needs
+  /// to know whether the microphone is open before it plays a sound. The
+  /// provider still owns the controller's lifetime; this is a borrowed
+  /// reference, never disposed here.
+  MicController? _mic;
+
+  /// Whether this platform's recogniser hears the loudspeaker.
+  ///
+  /// On Android the microphone records what the phone itself plays: a chime
+  /// sounded into an open session is transcribed along with the player, and
+  /// the session stops hearing them — it closes, re-opens, and hears nothing.
+  /// iOS keeps playback out of the recognition input, and its sessions were
+  /// never disturbed by the same cue.
+  static bool get _speakerReachesMic =>
+      defaultTargetPlatform == TargetPlatform.android;
+
+  /// Whether a cue may make a sound right now. Its haptic plays regardless.
+  bool get _audible =>
+      !_speakerReachesMic || _mic?.state.status != MicStatus.listening;
+
+  /// How long the microphone stays shut for the correct chime: the chime
+  /// itself (565 ms, see `tool/sound_authoring/generate_sounds.py`) and a
+  /// moment for its ring to leave the room before a session calibrates.
+  static const _chimeHold = Duration(milliseconds: 750);
+
+  /// The correct chime, played so that no microphone session records it.
+  ///
+  /// Where the loudspeaker reaches the microphone, the open session is closed
+  /// first and re-opened once the chime has faded. That is one session per
+  /// correct answer — but it lands just after a word was said and while the
+  /// next clue is being read, the one moment nobody is speaking.
+  Future<void> _playCorrect(GameFeedbackApi feedback) async {
+    final mic = _mic;
+    if (_speakerReachesMic &&
+        !feedback.isMuted &&
+        mic != null &&
+        mic.state.status == MicStatus.listening) {
+      await mic.dispatch(const MicCueing(length: _chimeHold));
+    }
+    await feedback.correct();
+  }
+
   @override
   Widget build(BuildContext context) {
     // The whole round is drawn in the level's colour — the same one its card
     // wore on the picker — so every accented thing below follows with no
     // colour named anywhere else.
-    return AppAccentScope(accent: level.accent, child: _providers(context));
+    return AppAccentScope(
+      accent: widget.level.accent,
+      child: _providers(context),
+    );
   }
 
   Widget _providers(BuildContext context) {
     return AppStateProvider(
       create: () => RoscoController(
-        level: level,
+        level: widget.level,
         repository: context.locator<WordBankRepository>(),
       ),
       onEffect: _onRoscoEffect,
       // Inside the round's provider, so the bridge below can reach the round.
       child: AppStateProvider(
-        create: () => MicController(
-          recognizer: context.locator<SpeechRecognizerApi>(),
-          // Long enough that the microphone is rarely reopened, short enough
-          // that the platform stays in the mode the plugin can hear. See
-          // `kMicSessionSeconds` for the measurements behind the number.
-          sessionLength: const Duration(seconds: kMicSessionSeconds),
-        ),
+        create: () {
+          final mic = MicController(
+            recognizer: context.locator<SpeechRecognizerApi>(),
+            // Long enough that the microphone is rarely reopened, short
+            // enough that the platform stays in the mode the plugin can hear.
+            // See `kMicSessionSeconds` for the measurements behind it.
+            sessionLength: const Duration(seconds: kMicSessionSeconds),
+          );
+          _mic = mic;
+          return mic;
+        },
         onEffect: _onMicEffect,
         child: const _RoscoView(),
       ),
@@ -69,11 +127,14 @@ class const RoscoScreen({required final CefrLevel level, super.key})
 
     switch (effect) {
       case RoscoAccepted():
-        unawaited(feedback.correct());
+        unawaited(_playCorrect(feedback));
       case RoscoRejected():
         unawaited(feedback.rejected());
       case RoscoTimedOut():
-        unawaited(feedback.wrong());
+        // Silent while listening on Android, and deliberately not given the
+        // chime's treatment: time runs out while a player may still be
+        // mid-word, and closing the microphone then would lose the word.
+        unawaited(feedback.wrong(audible: _audible));
       case RoscoFinished(:final score, :final setId, :final marks):
         unawaited(feedback.finished());
         // Replacing, not pushing: a finished round has a stopped clock and no
@@ -83,9 +144,9 @@ class const RoscoScreen({required final CefrLevel level, super.key})
           context.navigation.replaceRoute(
             AppRouteRequest(
               routeInfo: RoscoRouteInfo.result,
-              pathParameters: {'level': level.id},
+              pathParameters: {'level': widget.level.id},
               queryParameters: RoscoResultArgs(
-                level: level,
+                level: widget.level,
                 score: score,
                 setId: setId,
                 marks: marks,

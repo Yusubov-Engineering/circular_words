@@ -226,13 +226,23 @@ screen leaks more visibly than most.
 ### Analytics
 
 `analytics` (own repo, git dependency) gives every screen `AnalyticsApi` and
-`CrashReporterApi`. `AnalyticsModule` picks the backend per flavor in
-`dependency_injection_configuration.dart`: Firebase (Analytics + Crashlytics)
-when `ENVIRONMENT` is `prod`, the logger everywhere else, so development play
-never counts. It sits straight after `LoggerModule`, which it writes to.
-`AnalyticsRouteObserver`, handed to the router in
-`router_configuration.dart`, turns every page into a screen view named by its
-route name.
+`CrashReporterApi`, over Firebase Analytics and Crashlytics. **Each flavor has
+its own Firebase project** — `circular-words-dev` and `circular-words-prod` —
+so development play never reaches the real numbers.
+`dependency_injection_configuration.dart` hands `AnalyticsModule` the
+flavor's `DefaultFirebaseOptions`; it sits straight after `LoggerModule`.
+`AnalyticsRouteObserver`, handed to the router in `router_configuration.dart`,
+turns every page into a screen view named by its route name.
+
+| | dev | prod |
+| - | - | - |
+| Firebase project | `circular-words-dev` | `circular-words-prod` |
+| Android / iOS id | `com.yusubov.circularwords.dev` | `com.yusubov.circularwords` |
+| Dart options | `lib/firebase_options_dev.dart` | `lib/firebase_options_prod.dart` |
+| Android config | `android/app/src/dev/google-services.json` | `android/app/src/prod/google-services.json` |
+| iOS config (reference) | `ios/flavors/dev/GoogleService-Info.plist` | `ios/flavors/prod/GoogleService-Info.plist` |
+
+These are client configuration, not secrets — every shipped app contains them.
 
 - **Events belong to the feature that fires them**, as `…Event` subclasses of
   `AnalyticsEvent` in `lib/src/analytics/` (`rosco_analytics_events.dart`,
@@ -529,6 +539,23 @@ schema itself.
   there, silently — feedback swallows errors by design — so the game had no
   sound on Android at all. `AudioPlayersSounds.restart` rewinds with `stop`;
   `sound_restart_test.dart` fakes a SoundPool-like platform to keep it so.
+- **Firebase is initialised from Dart, with explicit options.** Re-running
+  `flutterfire configure` is Android-only here (`--platforms=android`, one
+  run per flavor with `--android-out=android/app/src/<flavor>/...`): its iOS
+  step needs Ruby's `xcodeproj` gem and rewrites the Xcode project, and the
+  app does not need it. The iOS apps were registered with `firebase
+  apps:create IOS`; their options are copied into the generated Dart files by
+  hand, from the plists in `ios/flavors/`. Re-running the CLI regenerates
+  those files and **drops the `ios` block** — put it back.
+- **The Crashlytics Gradle plugin is added by hand.** Crashlytics reaches the
+  app through `analytics_impl`, not the app's pubspec, so the FlutterFire CLI
+  never adds `com.google.firebase.crashlytics` — and re-running it rewrites
+  the plugin blocks. Check both `settings.gradle.kts` and
+  `app/build.gradle.kts` still apply it afterwards.
+- **Watching events live.** Android: `adb shell setprop
+  debug.firebase.analytics.app com.yusubov.circularwords.dev`, restart the
+  app, then open DebugView in the dev project's console. Crashlytics sends a
+  report on the launch *after* the error, so restart once after a test crash.
 - **Brand assets are rendered, not drawn by hand.** `AppLogoPainter` is the
   logo. `cd core/design_system && flutter test tool/render_brand_assets.dart`
   writes `app/assets/brand/`, including the Play Store icon and feature

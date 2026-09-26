@@ -3,6 +3,8 @@ import 'package:app/bootstrap/adapters/app_locale_header_adapter.dart';
 import 'package:app/bootstrap/adapters/app_locale_storage_adapter.dart';
 import 'package:app/bootstrap/composition_root.dart';
 import 'package:app/bootstrap/flavor/app_config.dart';
+import 'package:app/firebase_options_dev.dart' as firebase_dev;
+import 'package:app/firebase_options_prod.dart' as firebase_prod;
 import 'package:app_localization/app_localization.dart';
 import 'package:app_network_contract/app_network_contract.dart';
 import 'package:biometric_auth_impl/biometric_auth_impl.dart';
@@ -31,9 +33,11 @@ final class DependencyInjectionConfiguration._() {
         // ── Core ──────────────────────────────────────────────────────────
         LoggerModule(),
         AnalyticsModule(
-          backend: AppConfig.isProd
-              ? const FirebaseAnalyticsBackend()
-              : const LoggingAnalyticsBackend(),
+          backend: FirebaseAnalyticsBackend(
+            options: AppConfig.isProd
+                ? firebase_prod.DefaultFirebaseOptions.currentPlatform
+                : firebase_dev.DefaultFirebaseOptions.currentPlatform,
+          ),
         ),
         StorageModule(),
         AppLocalizationModule(

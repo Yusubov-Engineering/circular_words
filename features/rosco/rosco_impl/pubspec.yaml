@@ -12,6 +12,11 @@ dependencies:
   flutter:
     sdk: flutter
   rosco_api:
+  analytics_api:
+    git:
+      url: https://github.com/Yusubov-Engineering/analytics.git
+      path: analytics_api
+      ref: v1.0.0
   dependency_injection_api:
     git:
       url: https://github.com/Yusubov-Engineering/dependency_injection.git

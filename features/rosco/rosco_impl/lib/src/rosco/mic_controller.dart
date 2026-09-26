@@ -1,7 +1,10 @@
 import 'dart:async';
 
+import 'package:analytics_api/analytics_api.dart';
 import 'package:speech_api/speech_api.dart';
 import 'package:state_manager/state_manager.dart';
+
+import '../analytics/rosco_analytics_events.dart';
 
 /// How long to wait before opening the next session after one closes.
 ///
@@ -164,11 +167,16 @@ final class MicController
   /// {@macro mic_controller}
   MicController({
     required this._recognizer,
+    required this._analytics,
     required this._sessionLength,
     this._restartDelay = _defaultRestartDelay,
   }) : super(const MicState());
 
   final SpeechRecognizerApi _recognizer;
+
+  /// Told when speech fails, which is otherwise invisible from the field —
+  /// the round simply carries on with the keyboard.
+  final AnalyticsApi _analytics;
 
   /// How long one session may stay open — and, just as importantly, how much
   /// silence it tolerates before the platform gives up.
@@ -285,6 +293,11 @@ final class MicController
     switch (availability) {
       case SpeechUnavailable(:final reason):
         // Not an error. The text field below is a complete way to play.
+        unawaited(
+          _analytics.logEvent(
+            SpeechUnavailableEvent(reason: reason, midRound: false),
+          ),
+        );
         emit(
           state.copyWith(
             enabled: false,
@@ -436,6 +449,9 @@ final class MicController
       // microphone that had already stopped. It took two taps to get a
       // microphone back, and the first one appeared to do nothing.
       emit(state.copyWith(enabled: false, status: MicStatus.idle));
+      unawaited(
+        _analytics.logEvent(MicGaveUpEvent(sessions: _sessionsForPrompt)),
+      );
       return;
     }
 
@@ -454,14 +470,20 @@ final class MicController
     _restart?.cancel();
     _restart = null;
 
+    final reason = error is SpeechUnavailable
+        ? error.reason
+        : SpeechUnavailableReason.unknown;
     emit(
       state.copyWith(
         enabled: false,
         status: MicStatus.unavailable,
-        reason: error is SpeechUnavailable
-            ? error.reason
-            : SpeechUnavailableReason.unknown,
+        reason: reason,
         heard: '',
+      ),
+    );
+    unawaited(
+      _analytics.logEvent(
+        SpeechUnavailableEvent(reason: reason, midRound: true),
       ),
     );
   }

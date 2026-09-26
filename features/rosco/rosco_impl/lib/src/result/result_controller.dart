@@ -1,6 +1,10 @@
+import 'dart:async';
+
+import 'package:analytics_api/analytics_api.dart';
 import 'package:rosco_api/rosco_api.dart';
 import 'package:state_manager/state_manager.dart';
 
+import '../analytics/rosco_analytics_events.dart';
 import '../domain/rosco_failure.dart';
 import '../domain/word_bank_repository.dart';
 import '../domain/word_entry.dart';
@@ -109,6 +113,7 @@ final class ResultController
   /// {@macro result_controller}
   ResultController({
     required this._scoreboard,
+    required this._analytics,
     required CefrLevel level,
     required LevelScore score,
     this._repository,
@@ -117,6 +122,7 @@ final class ResultController
   }) : super(ResultState(level: level, score: score));
 
   final RoscoScoreboard _scoreboard;
+  final AnalyticsApi _analytics;
   final WordBankRepository? _repository;
   final String? _setId;
   final List<bool>? _marks;
@@ -134,10 +140,16 @@ final class ResultController
       case ResultRefreshed():
         await _save();
       case ResultReplayed():
+        unawaited(_analytics.logEvent(RoundReplayedEvent(level: state.level)));
         emitEffect(ReplayRound(level: state.level));
       case ResultDismissed():
         emitEffect(const LeaveResult());
       case ResultShared():
+        unawaited(
+          _analytics.logEvent(
+            ResultSharedEvent(level: state.level, score: state.score),
+          ),
+        );
         emitEffect(ShareOutcome(result: state));
     }
   }

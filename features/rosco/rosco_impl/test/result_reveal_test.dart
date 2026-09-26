@@ -13,6 +13,8 @@ import 'package:rosco_impl/src/router/rosco_result_args.dart';
 import 'package:rosco_impl/src/share/result_card.dart';
 import 'package:router_api/router_api.dart';
 
+import 'recording_analytics.dart';
+
 import 'result_controller_test.dart' show FakeScoreboard, score;
 
 WordSet alphabetSet(String id) => WordSet(
@@ -56,6 +58,7 @@ Future<ResultState> reveal({
 }) async {
   final controller = ResultController(
     scoreboard: FakeScoreboard(),
+    analytics: RecordingAnalytics(),
     repository:
         repository ??
         SetsRepository([alphabetSet('b1-1'), alphabetSet('b1-2')]),

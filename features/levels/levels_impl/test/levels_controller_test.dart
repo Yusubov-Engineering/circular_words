@@ -2,6 +2,8 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:levels_impl/src/levels/levels_controller.dart';
 import 'package:rosco_api/rosco_api.dart';
 
+import 'recording_analytics.dart';
+
 final class _FakeScoreboard implements RoscoScoreboard {
   _FakeScoreboard([this._scores = const {}]);
 
@@ -26,6 +28,7 @@ final class _FakeScoreboard implements RoscoScoreboard {
 void main() {
   test('onInit lists every level, played or not', () async {
     final controller = LevelsController(
+      analytics: RecordingAnalytics(),
       scoreboard: _FakeScoreboard(const {
         CefrLevel.b1: LevelScore(correct: 14, total: 26, secondsRemaining: 22),
       }),
@@ -57,7 +60,10 @@ void main() {
 
   test('unreadable scores still produce a full, playable picker', () async {
     final scoreboard = _FakeScoreboard()..failAll = true;
-    final controller = LevelsController(scoreboard: scoreboard);
+    final controller = LevelsController(
+      scoreboard: scoreboard,
+      analytics: RecordingAnalytics(),
+    );
 
     await controller.onInit();
 
@@ -71,7 +77,11 @@ void main() {
   test(
     'selecting a level asks to start a round rather than navigating',
     () async {
-      final controller = LevelsController(scoreboard: _FakeScoreboard());
+      final analytics = RecordingAnalytics();
+      final controller = LevelsController(
+        scoreboard: _FakeScoreboard(),
+        analytics: analytics,
+      );
       await controller.onInit();
 
       final effects = <LevelsEffect>[];
@@ -81,6 +91,7 @@ void main() {
       await Future<void>.delayed(Duration.zero);
 
       expect(effects, hasLength(1));
+      expect(analytics.single('level_selected').parameters, {'level': 'c1'});
       expect((effects.single as StartRound).level, CefrLevel.c1);
 
       await subscription.cancel();
@@ -92,7 +103,10 @@ void main() {
   // which is why the refresh hangs off the navigation result.
   test('refreshing re-reads the scoreboard', () async {
     final scoreboard = _FakeScoreboard();
-    final controller = LevelsController(scoreboard: scoreboard);
+    final controller = LevelsController(
+      scoreboard: scoreboard,
+      analytics: RecordingAnalytics(),
+    );
 
     await controller.onInit();
     expect(scoreboard.allCalls, 1);

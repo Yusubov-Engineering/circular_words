@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:analytics_api/analytics_api.dart';
 import 'package:app_localization/app_localization.dart';
 import 'package:dependency_injection_api/dependency_injection_api.dart';
 import 'package:design_system/design_system.dart';
@@ -42,6 +43,7 @@ class _LevelsScreenState extends State<LevelsScreen> {
       create: () {
         final controller = LevelsController(
           scoreboard: context.locator<RoscoApi>().scoreboard,
+          analytics: context.locator<AnalyticsApi>(),
         );
         _controller = controller;
         return controller;

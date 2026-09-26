@@ -1,6 +1,7 @@
 analyzer:
   exclude:
     - build/**
+    - "**/build/**"
     - tool/**
     - android/**
     - ios/**

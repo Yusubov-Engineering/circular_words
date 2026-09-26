@@ -78,7 +78,7 @@ Dependencies flow downward: `app` → `features` → `base`/`core`.
 - **`core/`** — infrastructure. `design_system` (+ `design_system/assets`)
   and `feedback` (`feedback_api`/`feedback_impl`) live in-tree. `network`,
   `router`, `logger`, `dependency_injection`, `storage`, `biometric_auth`,
-  `speech` (each an `_api`/`_impl` pair), `state_manager`
+  `speech`, `analytics` (each an `_api`/`_impl` pair), `state_manager`
   and `app_linter` (analysis options only, not a Dart library) each live in
   their own `Yusubov-Engineering/<module>` repo and are pulled in as `git:`
   dependencies pinned to a `vX.Y.Z` tag — see `app/pubspec.yaml`. They are no
@@ -222,6 +222,29 @@ never from a constructor, where nothing is listening yet.
 `RoscoController` starts a `Timer.periodic` and a speech `StreamSubscription`
 in `onInit`, so it **must cancel both in an overridden `dispose()`**. A game
 screen leaks more visibly than most.
+
+### Analytics
+
+`analytics` (own repo, git dependency) gives every screen `AnalyticsApi` and
+`CrashReporterApi`. `AnalyticsModule` picks the backend per flavor in
+`dependency_injection_configuration.dart`: Firebase (Analytics + Crashlytics)
+when `ENVIRONMENT` is `prod`, the logger everywhere else, so development play
+never counts. It sits straight after `LoggerModule`, which it writes to.
+`AnalyticsRouteObserver`, handed to the router in
+`router_configuration.dart`, turns every page into a screen view named by its
+route name.
+
+- **Events belong to the feature that fires them**, as `…Event` subclasses of
+  `AnalyticsEvent` in `lib/src/analytics/` (`rosco_analytics_events.dart`,
+  `levels_analytics_events.dart`). The shared package knows no event names.
+- **Controllers take `AnalyticsApi` in** like any other dependency, and fire
+  with `unawaited`: it never throws and is never waited on. Tests pass a
+  `RecordingAnalytics` fake and assert on what was reported.
+- **Never report what the player said or typed.** Events carry the level,
+  the letter, the lap and the outcome — never a transcript or an answer. A
+  rejected try is not reported at all. `rosco_controller_test` checks this.
+- **Route names are the screen names**, so they must stay fixed strings
+  (`rosco-game`) — a path would leak the level, or worse, into analytics.
 
 ### Design system
 

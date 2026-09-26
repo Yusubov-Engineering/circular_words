@@ -1,9 +1,11 @@
 import 'dart:async';
 import 'dart:math';
 
+import 'package:analytics_api/analytics_api.dart';
 import 'package:rosco_api/rosco_api.dart';
 import 'package:state_manager/state_manager.dart';
 
+import '../analytics/rosco_analytics_events.dart';
 import '../domain/answer_validator.dart';
 import '../domain/letter_slot.dart';
 import '../domain/rosco_failure.dart';
@@ -194,11 +196,15 @@ final class RoscoController
   RoscoController({
     required CefrLevel level,
     required this._repository,
+    required this._analytics,
     this._validator = const AnswerValidator(),
     this._tickSource = _realTicks,
   }) : super(RoscoState(level: level));
 
   final WordBankRepository _repository;
+
+  /// Told what happened in the round — never what the player said.
+  final AnalyticsApi _analytics;
   final AnswerValidator _validator;
   final TickSource _tickSource;
 
@@ -248,10 +254,12 @@ final class RoscoController
 
       _activate(0);
       _startClock();
+      _track(RoundStartedEvent(level: state.level, setId: wordSet.id));
     } on RoscoFailure catch (failure) {
       // The repository throws `RoscoFailure` and nothing else, so this is
       // exhaustive over everything that can go wrong below.
       emit(state.copyWith(failure: failure, isLoading: false));
+      _track(RoundLoadFailedEvent(level: state.level, failure: failure));
     }
   }
 
@@ -283,6 +291,7 @@ final class RoscoController
       // letter goes round again on the next lap. Treating it as final instead
       // meant a player who never pressed Pass decided all 26 letters on the
       // first lap, and the round ended there with time still in the pool.
+      _trackPass(timedOut: true);
       _resolveCurrent(LetterStatus.passed);
       emitEffect(const RoscoTimedOut());
       _advance();
@@ -297,6 +306,13 @@ final class RoscoController
     // not the same thing as being the word the clue wanted.
     for (final candidate in event.candidates) {
       if (_validator.accepts(entry: current.entry, spoken: candidate)) {
+        _track(
+          AnswerCorrectEvent(
+            level: state.level,
+            letter: current.entry.letter,
+            lap: state.lap,
+          ),
+        );
         _resolveCurrent(LetterStatus.correct);
         emitEffect(const RoscoAccepted());
         _advance();
@@ -319,9 +335,23 @@ final class RoscoController
   void _pass() {
     if (state.isOver || state.current == null) return;
 
+    _trackPass(timedOut: false);
     _resolveCurrent(LetterStatus.passed);
     _advance();
   }
+
+  void _trackPass({required bool timedOut}) => _track(
+    LetterPassedEvent(
+      level: state.level,
+      letter: state.current!.entry.letter,
+      lap: state.lap,
+      timedOut: timedOut,
+    ),
+  );
+
+  // Analytics never throws and is never waited on: a round must not slow
+  // down, let alone fail, because an event could not be sent.
+  void _track(AnalyticsEvent event) => unawaited(_analytics.logEvent(event));
 
   void _resolveCurrent(LetterStatus status) {
     final slots = [...state.slots];
@@ -384,6 +414,13 @@ final class RoscoController
             : slot.copyWith(status: LetterStatus.wrong),
     ];
     emit(state.copyWith(slots: slots, isOver: true));
+    _track(
+      RoundFinishedEvent(
+        level: state.level,
+        score: state.score,
+        laps: state.lap,
+      ),
+    );
     emitEffect(
       RoscoFinished(
         score: state.score,

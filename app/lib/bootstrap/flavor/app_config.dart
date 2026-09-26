@@ -5,4 +5,6 @@ abstract class AppConfig {
     'ENABLE_LOGS',
     defaultValue: false,
   );
+
+  static bool get isProd => environment == 'prod';
 }

@@ -9,6 +9,8 @@ import 'package:rosco_impl/src/domain/word_entry.dart';
 import 'package:rosco_impl/src/domain/word_set.dart';
 import 'package:rosco_impl/src/rosco/rosco_controller.dart';
 
+import 'recording_analytics.dart';
+
 /// A full A-Z set whose answers are trivially predictable, so a test can say
 /// "answer C correctly" without caring what a C word is.
 WordSet fakeSet({CefrLevel level = CefrLevel.a1, String id = 'fake-1'}) =>
@@ -66,9 +68,16 @@ final class ManualClock {
 
 /// A started round, plus the effects it has emitted.
 final class Round {
-  Round(this.controller, this.clock, this.effects, this._subscription);
+  Round(
+    this.controller,
+    this.clock,
+    this.effects,
+    this._subscription,
+    this.analytics,
+  );
 
   final RoscoController controller;
+  final RecordingAnalytics analytics;
   final ManualClock clock;
   final List<RoscoEffect> effects;
   final StreamSubscription<RoscoEffect> _subscription;
@@ -118,9 +127,11 @@ Future<Round> startRound({
   CefrLevel level = CefrLevel.a1,
 }) async {
   final clock = ManualClock();
+  final analytics = RecordingAnalytics();
   final controller = RoscoController(
     level: level,
     repository: FakeRepository(set: set, failure: failure),
+    analytics: analytics,
     tickSource: clock.source,
   );
 
@@ -132,7 +143,7 @@ Future<Round> startRound({
   await controller.onInit();
   await Future<void>.delayed(Duration.zero);
 
-  return Round(controller, clock, effects, subscription);
+  return Round(controller, clock, effects, subscription, analytics);
 }
 
 void main() {
@@ -571,6 +582,73 @@ void main() {
       // "Ubuntu" is noise from the recogniser. Showing it back would read as
       // the game mishearing rather than the player missing.
       expect(round.state.lastRejected, 'a bun dance');
+      await round.dispose();
+    });
+  });
+
+  group('analytics', () {
+    test('a round reports how it went, and never what was said', () async {
+      final round = await startRound();
+
+      await round.answer('nonsense');
+      await round.answerCurrent();
+      await round.pass();
+      await round.clock.tick(kLetterCapSeconds);
+
+      final analytics = round.analytics;
+      // The rejected try is not an event: it is noise, and it is speech.
+      expect(analytics.names, [
+        'round_started',
+        'answer_correct',
+        'letter_passed',
+        'letter_passed',
+      ]);
+      expect(analytics.events[1].parameters, {
+        'level': 'a1',
+        'letter': 'A',
+        'lap': 1,
+      });
+      expect(analytics.events[2].parameters['letter'], 'B');
+      expect(analytics.events[2].parameters['timed_out'], isFalse);
+      expect(analytics.events[3].parameters['letter'], 'C');
+      expect(analytics.events[3].parameters['timed_out'], isTrue);
+
+      final said = {'nonsense', answerFor('A')};
+      for (final event in analytics.events) {
+        expect(event.parameters.values.toSet().intersection(said), isEmpty);
+      }
+
+      await round.dispose();
+    });
+
+    test('a finished round reports its score and laps', () async {
+      final round = await startRound();
+
+      for (var i = 0; i < WordSet.letterCount; i++) {
+        await round.answerCurrent();
+      }
+
+      expect(round.analytics.single('round_finished').parameters, {
+        'level': 'a1',
+        'score': WordSet.letterCount,
+        'seconds_left': kPoolSeconds,
+        'laps': 1,
+      });
+
+      await round.dispose();
+    });
+
+    test('a round that cannot load says why', () async {
+      final round = await startRound(
+        failure: const RoscoLevelUnavailable(levelId: 'a1'),
+      );
+
+      expect(round.analytics.names, ['round_load_failed']);
+      expect(
+        round.analytics.events.single.parameters['failure'],
+        'unavailable',
+      );
+
       await round.dispose();
     });
   });

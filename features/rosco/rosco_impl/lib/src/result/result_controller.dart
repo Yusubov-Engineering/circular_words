@@ -193,9 +193,13 @@ final class ResultController
     // The scoreboard swallows its own storage failures and reports `false`,
     // so a lost write reads here as "not a new best" — the round still shows
     // its score, which is the part the player is waiting for.
-    final isNewBest = await _scoreboard.record(state.level, state.score);
+    final recorded = await _scoreboard.record(state.level, state.score);
     final best = await _scoreboard.best(state.level);
 
+    // A first round is always recorded — it is what marks the level as
+    // played — but one with nothing right is not worth celebrating. "New
+    // best!" over 0/26 read as mockery.
+    final isNewBest = recorded && state.score.correct > 0;
     emit(state.copyWith(isNewBest: isNewBest, best: best, isSaving: false));
   }
 }

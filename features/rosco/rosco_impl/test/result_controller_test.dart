@@ -73,6 +73,13 @@ void main() {
       expect(controller.state.isSaving, isFalse);
     });
 
+    test('a first round with nothing right is kept, not celebrated', () async {
+      await build(earned: score(0));
+
+      expect(scoreboard.stored?.correct, 0);
+      expect(controller.state.isNewBest, isFalse);
+    });
+
     test('a worse round is recorded but does not claim the crown', () async {
       await build(stored: score(20), earned: score(12));
 

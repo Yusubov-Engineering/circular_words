@@ -531,7 +531,8 @@ schema itself.
   `sound_restart_test.dart` fakes a SoundPool-like platform to keep it so.
 - **Brand assets are rendered, not drawn by hand.** `AppLogoPainter` is the
   logo. `cd core/design_system && flutter test tool/render_brand_assets.dart`
-  writes `app/assets/brand/`; then, in `app/`,
+  writes `app/assets/brand/`, including the Play Store icon and feature
+  graphic (their text is set in the Roboto that ships with Flutter); then, in `app/`,
   `dart pub global run flutter_launcher_icons -f flutter_launcher_icons.yaml`
   and `dart run flutter_native_splash:create --path=flutter_native_splash.yaml`.
   `flutter_launcher_icons` cannot be a workspace dependency (its `cli_util`
@@ -539,6 +540,20 @@ schema itself.
   `project.pbxproj`**: its icon-name rewrite also sets
   `ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS` to `AppIcon`,
   which must be YES or NO.
+- **The Play Store id is `com.yusubov.circularwords`, and it is permanent.**
+  The prod flavor ships under it unsuffixed, matching iOS; only dev adds
+  `.dev`. Never give prod a suffix again — a published app cannot change its
+  id, and a new one is a new app with no installs.
+- **Release builds sign with the upload key, read from
+  `app/android/key.properties`** (gitignored; template in
+  `key.properties.example`). The keystore lives outside the repo, in
+  `~/Keystores/circular_words/`. Without `key.properties` a release build
+  silently falls back to the debug key, which Play rejects on upload — so a
+  bundle that uploads is one signed correctly. Store listing text, the Data
+  safety answers and the release checklist are in
+  `docs/store/play-store-listing.md`; the privacy policy is
+  `docs/privacy-policy.md`. Change them in the same commit as any feature or
+  data flow they describe.
 - **The native splash is held, then handed over.** `initializer()` calls
   `FlutterNativeSplash.preserve`, and `AppLaunchIntro` removes it after its
   first frame — which is drawn to match the splash exactly. Remove it any

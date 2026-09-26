@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:analytics_api/analytics_api.dart';
 import 'package:app_localization/app_localization.dart';
 import 'package:dependency_injection_api/dependency_injection_api.dart';
 import 'package:design_system/design_system.dart';
@@ -99,6 +100,7 @@ class _RoscoScreenState extends State<RoscoScreen> {
       create: () => RoscoController(
         level: widget.level,
         repository: context.locator<WordBankRepository>(),
+        analytics: context.locator<AnalyticsApi>(),
       ),
       onEffect: _onRoscoEffect,
       // Inside the round's provider, so the bridge below can reach the round.
@@ -106,6 +108,7 @@ class _RoscoScreenState extends State<RoscoScreen> {
         create: () {
           final mic = MicController(
             recognizer: context.locator<SpeechRecognizerApi>(),
+            analytics: context.locator<AnalyticsApi>(),
             // Long enough that the microphone is rarely reopened, short
             // enough that the platform stays in the mode the plugin can hear.
             // See `kMicSessionSeconds` for the measurements behind it.

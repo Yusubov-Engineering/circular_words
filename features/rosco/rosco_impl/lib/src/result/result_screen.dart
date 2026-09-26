@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:analytics_api/analytics_api.dart';
 import 'package:app_localization/app_localization.dart';
 import 'package:dependency_injection_api/dependency_injection_api.dart';
 import 'package:design_system/design_system.dart';
@@ -33,6 +34,7 @@ class const ResultScreen({required final RoscoResultArgs args, super.key})
       child: AppStateProvider(
         create: () => ResultController(
           scoreboard: context.locator<RoscoScoreboard>(),
+          analytics: context.locator<AnalyticsApi>(),
           repository: context.locator<WordBankRepository>(),
           level: args.level,
           score: args.score,

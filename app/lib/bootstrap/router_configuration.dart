@@ -1,3 +1,5 @@
+import 'package:analytics_api/analytics_api.dart';
+import 'package:analytics_impl/analytics_impl.dart';
 import 'package:dependency_injection_api/dependency_injection_api.dart';
 import 'package:design_system/design_system.dart';
 import 'package:levels_api/levels_api.dart';
@@ -19,8 +21,7 @@ final class RouterConfiguration._() {
 
     final config = AppGoRouterConfig(
       initialLocation: levels.launcher.root().routeInfo,
-      // Set once here rather than per route: every screen arrives the same
-      // way, and a route overrides it only if it has a reason to differ.
+      observers: [AnalyticsRouteObserver(analytics: container<AnalyticsApi>())],
       defaultPresentationMode: const CustomPresentationMode(
         transitionsBuilder: appFadeThrough,
         transitionDuration: appFadeThroughDuration,

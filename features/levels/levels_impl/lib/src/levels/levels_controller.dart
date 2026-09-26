@@ -1,5 +1,10 @@
+import 'dart:async';
+
+import 'package:analytics_api/analytics_api.dart';
 import 'package:rosco_api/rosco_api.dart';
 import 'package:state_manager/state_manager.dart';
+
+import '../analytics/levels_analytics_events.dart';
 
 /// One row on the picker: a level and whatever the player has managed on it.
 final class const LevelEntry({
@@ -55,9 +60,11 @@ final class const StartRound({required final CefrLevel level})
 final class LevelsController
     extends AppStateController<LevelsState, LevelsEvent, LevelsEffect> {
   /// {@macro levels_controller}
-  LevelsController({required this._scoreboard}) : super(const LevelsState());
+  LevelsController({required this._scoreboard, required this._analytics})
+    : super(const LevelsState());
 
   final RoscoScoreboard _scoreboard;
+  final AnalyticsApi _analytics;
 
   @override
   Future<void> onInit() => _load();
@@ -68,6 +75,7 @@ final class LevelsController
       case LevelsRefreshed():
         await _load();
       case LevelSelected(:final level):
+        unawaited(_analytics.logEvent(LevelSelectedEvent(level: level)));
         emitEffect(StartRound(level: level));
     }
   }

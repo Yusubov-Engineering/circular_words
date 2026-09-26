@@ -4,6 +4,8 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:rosco_impl/src/rosco/mic_controller.dart';
 import 'package:speech_api/speech_api.dart';
 
+import 'recording_analytics.dart';
+
 /// One listening session, driven by hand.
 ///
 /// The point of these tests is what happens *between* sessions, so a test has
@@ -90,11 +92,14 @@ void main() {
   late MicController controller;
   late List<MicEffect> effects;
   late StreamSubscription<MicEffect> subscription;
+  late RecordingAnalytics analytics;
 
   void build({SpeechAvailability availability = const SpeechReady()}) {
     recognizer = FakeRecognizer(availability: availability);
+    analytics = RecordingAnalytics();
     controller = MicController(
       recognizer: recognizer,
+      analytics: analytics,
       sessionLength: const Duration(seconds: kMicSessionSeconds),
       restartDelay: Duration.zero,
     );
@@ -133,6 +138,10 @@ void main() {
       expect(controller.state.enabled, isFalse);
       // Nothing was opened, so there is nothing to close.
       expect(recognizer.sessions, isEmpty);
+      expect(analytics.single('speech_unavailable').parameters, {
+        'reason': 'permissionDenied',
+        'mid_round': false,
+      });
     });
 
     test('asking twice does not open a second session', () async {
@@ -355,6 +364,11 @@ void main() {
       // A letter changing does not install a speech recogniser.
       expect(controller.state.status, MicStatus.unavailable);
       expect(recognizer.sessions, hasLength(1));
+      // Lost part-way through, which is the case that points at a bug.
+      expect(analytics.single('speech_unavailable').parameters, {
+        'reason': 'noRecognizer',
+        'mid_round': true,
+      });
     });
 
     test(
@@ -370,6 +384,7 @@ void main() {
         // Bounded, and stopped in a state the next letter can recover from.
         expect(recognizer.sessions.length, lessThanOrEqualTo(6));
         expect(controller.state.status, MicStatus.idle);
+        expect(analytics.names, ['mic_gave_up']);
       },
     );
 

@@ -4,6 +4,8 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:rosco_api/rosco_api.dart';
 import 'package:rosco_impl/src/result/result_controller.dart';
 
+import 'recording_analytics.dart';
+
 final class FakeScoreboard implements RoscoScoreboard {
   FakeScoreboard({this.stored});
 
@@ -40,11 +42,14 @@ void main() {
   late ResultController controller;
   late List<ResultEffect> effects;
   late StreamSubscription<ResultEffect> subscription;
+  late RecordingAnalytics analytics;
 
   Future<void> build({LevelScore? stored, LevelScore? earned}) async {
     scoreboard = FakeScoreboard(stored: stored);
+    analytics = RecordingAnalytics();
     controller = ResultController(
       scoreboard: scoreboard,
+      analytics: analytics,
       level: CefrLevel.a1,
       score: earned ?? score(12),
     );
@@ -68,6 +73,13 @@ void main() {
       expect(controller.state.isSaving, isFalse);
     });
 
+    test('a first round with nothing right is kept, not celebrated', () async {
+      await build(earned: score(0));
+
+      expect(scoreboard.stored?.correct, 0);
+      expect(controller.state.isNewBest, isFalse);
+    });
+
     test('a worse round is recorded but does not claim the crown', () async {
       await build(stored: score(20), earned: score(12));
 
@@ -88,8 +100,10 @@ void main() {
     // failure must not turn that into an error state.
     test('a refused write still shows the round', () async {
       scoreboard = FakeScoreboard()..refuseWrites = true;
+      analytics = RecordingAnalytics();
       controller = ResultController(
         scoreboard: scoreboard,
+        analytics: analytics,
         level: CefrLevel.a1,
         score: score(9),
       );
@@ -120,6 +134,7 @@ void main() {
 
       expect(effects, [isA<ReplayRound>()]);
       expect((effects.single as ReplayRound).level, CefrLevel.a1);
+      expect(analytics.single('round_replayed').parameters, {'level': 'a1'});
     });
 
     test('dismissing asks to leave', () async {
@@ -127,6 +142,17 @@ void main() {
       await controller.dispatch(const ResultDismissed());
 
       expect(effects, [isA<LeaveResult>()]);
+    });
+  });
+
+  test('sharing is reported with the level and the score', () async {
+    await build(earned: score(21));
+    await controller.dispatch(const ResultShared());
+
+    expect(effects, [isA<ShareOutcome>()]);
+    expect(analytics.single('result_shared').parameters, {
+      'level': 'a1',
+      'score': 21,
     });
   });
 }

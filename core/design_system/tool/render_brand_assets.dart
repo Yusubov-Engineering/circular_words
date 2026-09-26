@@ -12,9 +12,11 @@
 // splash and the in-app intro cannot drift apart. It lives in `tool/`, not
 // `test/`, so `melos test` never runs it — it writes files.
 import 'dart:io';
+import 'dart:typed_data';
 import 'dart:ui' as ui;
 
 import 'package:design_system/design_system.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -24,22 +26,140 @@ Future<void> _render(
   String name,
   int pixels,
   void Function(Canvas canvas, Size size) paint,
+) => _renderRect(name, pixels, pixels, paint);
+
+Future<void> _renderRect(
+  String name,
+  int width,
+  int height,
+  void Function(Canvas canvas, Size size) paint,
 ) async {
-  final size = Size.square(pixels.toDouble());
+  final size = Size(width.toDouble(), height.toDouble());
+  final pixels = width;
   final recorder = ui.PictureRecorder();
   paint(Canvas(recorder, Offset.zero & size), size);
   final picture = recorder.endRecording();
-  final image = await picture.toImage(pixels, pixels);
+  final image = await picture.toImage(width, height);
   final bytes = await image.toByteData(format: ui.ImageByteFormat.png);
   File('${_out.path}/$name').writeAsBytesSync(bytes!.buffer.asUint8List());
   // ignore: avoid_print
   print('wrote $name ($pixels px)');
 }
 
+/// Loads the Roboto that ships with Flutter, so text renders as text rather
+/// than the test renderer's placeholder boxes. Apache-licensed, which is
+/// what makes it fit for a store graphic.
+Future<void> _loadRoboto() async {
+  final fonts =
+      '${Platform.environment['FLUTTER_ROOT']}'
+      '/bin/cache/artifacts/material_fonts';
+  final loader = FontLoader('Roboto');
+  for (final weight in ['Bold', 'Medium', 'Black']) {
+    final bytes = File('$fonts/Roboto-$weight.ttf').readAsBytesSync();
+    loader.addFont(Future.value(ByteData.sublistView(bytes)));
+  }
+  await loader.load();
+}
+
+void _text(
+  Canvas canvas,
+  String text,
+  Offset topLeft, {
+  required double size,
+  required FontWeight weight,
+  required Color color,
+}) {
+  TextPainter(
+      text: TextSpan(
+        text: text,
+        style: TextStyle(
+          fontFamily: 'Roboto',
+          fontSize: size,
+          fontWeight: weight,
+          color: color,
+          height: 1,
+        ),
+      ),
+      textDirection: TextDirection.ltr,
+    )
+    ..layout()
+    ..paint(canvas, topLeft);
+}
+
+/// Play's 1024 x 500 feature graphic: the mark beside the name, on the
+/// brand ground, with the level accents glowing behind.
+void _paintFeatureGraphic(Canvas canvas, Size size) {
+  final rect = Offset.zero & size;
+  canvas.drawRect(
+    rect,
+    Paint()
+      ..shader = const LinearGradient(
+        begin: Alignment.topLeft,
+        end: Alignment.bottomRight,
+        colors: [Color(0xFF160C33), appLogoGround, Color(0xFF53389E)],
+        stops: [0, 0.55, 1],
+      ).createShader(rect),
+  );
+  for (final (center, radius, color) in [
+    (const Offset(120, 60), 320.0, const Color(0xFF2ED3B7)),
+    (const Offset(980, 80), 300.0, const Color(0xFFE478FA)),
+    (const Offset(900, 520), 340.0, const Color(0xFFF38744)),
+    (const Offset(260, 520), 300.0, const Color(0xFF53B1FD)),
+  ]) {
+    canvas.drawCircle(
+      center,
+      radius,
+      Paint()
+        ..shader = RadialGradient(
+          colors: [color.withValues(alpha: 0.30), color.withValues(alpha: 0)],
+        ).createShader(Rect.fromCircle(center: center, radius: radius)),
+    );
+  }
+
+  canvas
+    ..save()
+    ..translate(60, 70);
+  AppLogoPainter().paint(canvas, const Size.square(360));
+  canvas.restore();
+
+  _text(
+    canvas,
+    'Circular Words',
+    const Offset(450, 168),
+    size: 76,
+    weight: FontWeight.w900,
+    color: const Color(0xFFFFFFFF),
+  );
+  _text(
+    canvas,
+    'Say the word. Beat the circle.',
+    const Offset(454, 262),
+    size: 34,
+    weight: FontWeight.w500,
+    color: const Color(0xFFD6CCF5),
+  );
+}
+
 void main() {
   testWidgets('render brand assets', (tester) async {
     await tester.runAsync(() async {
       _out.createSync(recursive: true);
+      await _loadRoboto();
+
+      // Play Store icon: 512 px, full bleed and opaque; Play rounds it.
+      await _render(
+        'play_icon_512.png',
+        512,
+        AppLogoPainter(withGround: true, markScale: 0.82).paint,
+      );
+
+      // Play Store feature graphic, shown above the listing.
+      await _renderRect(
+        'play_feature_graphic.png',
+        1024,
+        500,
+        _paintFeatureGraphic,
+      );
 
       // iOS app icon: full bleed and opaque. The platform rounds it.
       await _render(

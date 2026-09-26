@@ -78,7 +78,7 @@ Dependencies flow downward: `app` → `features` → `base`/`core`.
 - **`core/`** — infrastructure. `design_system` (+ `design_system/assets`)
   and `feedback` (`feedback_api`/`feedback_impl`) live in-tree. `network`,
   `router`, `logger`, `dependency_injection`, `storage`, `biometric_auth`,
-  `speech` (each an `_api`/`_impl` pair), `state_manager`
+  `speech`, `analytics` (each an `_api`/`_impl` pair), `state_manager`
   and `app_linter` (analysis options only, not a Dart library) each live in
   their own `Yusubov-Engineering/<module>` repo and are pulled in as `git:`
   dependencies pinned to a `vX.Y.Z` tag — see `app/pubspec.yaml`. They are no
@@ -222,6 +222,29 @@ never from a constructor, where nothing is listening yet.
 `RoscoController` starts a `Timer.periodic` and a speech `StreamSubscription`
 in `onInit`, so it **must cancel both in an overridden `dispose()`**. A game
 screen leaks more visibly than most.
+
+### Analytics
+
+`analytics` (own repo, git dependency) gives every screen `AnalyticsApi` and
+`CrashReporterApi`. `AnalyticsModule` picks the backend per flavor in
+`dependency_injection_configuration.dart`: Firebase (Analytics + Crashlytics)
+when `ENVIRONMENT` is `prod`, the logger everywhere else, so development play
+never counts. It sits straight after `LoggerModule`, which it writes to.
+`AnalyticsRouteObserver`, handed to the router in
+`router_configuration.dart`, turns every page into a screen view named by its
+route name.
+
+- **Events belong to the feature that fires them**, as `…Event` subclasses of
+  `AnalyticsEvent` in `lib/src/analytics/` (`rosco_analytics_events.dart`,
+  `levels_analytics_events.dart`). The shared package knows no event names.
+- **Controllers take `AnalyticsApi` in** like any other dependency, and fire
+  with `unawaited`: it never throws and is never waited on. Tests pass a
+  `RecordingAnalytics` fake and assert on what was reported.
+- **Never report what the player said or typed.** Events carry the level,
+  the letter, the lap and the outcome — never a transcript or an answer. A
+  rejected try is not reported at all. `rosco_controller_test` checks this.
+- **Route names are the screen names**, so they must stay fixed strings
+  (`rosco-game`) — a path would leak the level, or worse, into analytics.
 
 ### Design system
 
@@ -508,7 +531,8 @@ schema itself.
   `sound_restart_test.dart` fakes a SoundPool-like platform to keep it so.
 - **Brand assets are rendered, not drawn by hand.** `AppLogoPainter` is the
   logo. `cd core/design_system && flutter test tool/render_brand_assets.dart`
-  writes `app/assets/brand/`; then, in `app/`,
+  writes `app/assets/brand/`, including the Play Store icon and feature
+  graphic (their text is set in the Roboto that ships with Flutter); then, in `app/`,
   `dart pub global run flutter_launcher_icons -f flutter_launcher_icons.yaml`
   and `dart run flutter_native_splash:create --path=flutter_native_splash.yaml`.
   `flutter_launcher_icons` cannot be a workspace dependency (its `cli_util`
@@ -516,6 +540,20 @@ schema itself.
   `project.pbxproj`**: its icon-name rewrite also sets
   `ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS` to `AppIcon`,
   which must be YES or NO.
+- **The Play Store id is `com.yusubov.circularwords`, and it is permanent.**
+  The prod flavor ships under it unsuffixed, matching iOS; only dev adds
+  `.dev`. Never give prod a suffix again — a published app cannot change its
+  id, and a new one is a new app with no installs.
+- **Release builds sign with the upload key, read from
+  `app/android/key.properties`** (gitignored; template in
+  `key.properties.example`). The keystore lives outside the repo, in
+  `~/Keystores/circular_words/`. Without `key.properties` a release build
+  silently falls back to the debug key, which Play rejects on upload — so a
+  bundle that uploads is one signed correctly. Store listing text, the Data
+  safety answers and the release checklist are in
+  `docs/store/play-store-listing.md`; the privacy policy is
+  `docs/privacy-policy.md`. Change them in the same commit as any feature or
+  data flow they describe.
 - **The native splash is held, then handed over.** `initializer()` calls
   `FlutterNativeSplash.preserve`, and `AppLaunchIntro` removes it after its
   first frame — which is drawn to match the splash exactly. Remove it any

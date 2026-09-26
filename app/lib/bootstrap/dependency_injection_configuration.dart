@@ -1,3 +1,4 @@
+import 'package:analytics_impl/analytics_impl.dart';
 import 'package:app/bootstrap/adapters/app_locale_header_adapter.dart';
 import 'package:app/bootstrap/adapters/app_locale_storage_adapter.dart';
 import 'package:app/bootstrap/composition_root.dart';
@@ -29,6 +30,11 @@ final class DependencyInjectionConfiguration._() {
       modules: [
         // ── Core ──────────────────────────────────────────────────────────
         LoggerModule(),
+        AnalyticsModule(
+          backend: AppConfig.isProd
+              ? const FirebaseAnalyticsBackend()
+              : const LoggingAnalyticsBackend(),
+        ),
         StorageModule(),
         AppLocalizationModule(
           storageDelegateBuilder: (locator) =>

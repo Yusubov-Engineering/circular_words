@@ -15,6 +15,16 @@ dependencies:
     sdk: flutter
 
   ### CORE MODULES
+  analytics_api:
+    git:
+      url: https://github.com/Yusubov-Engineering/analytics.git
+      path: analytics_api
+      ref: v1.0.0
+  analytics_impl:
+    git:
+      url: https://github.com/Yusubov-Engineering/analytics.git
+      path: analytics_impl
+      ref: v1.0.0
   network_api:
     git:
       url: https://github.com/Yusubov-Engineering/network.git

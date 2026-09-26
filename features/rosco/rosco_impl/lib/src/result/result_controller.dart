@@ -1,6 +1,10 @@
+import 'dart:async';
+
+import 'package:analytics_api/analytics_api.dart';
 import 'package:rosco_api/rosco_api.dart';
 import 'package:state_manager/state_manager.dart';
 
+import '../analytics/rosco_analytics_events.dart';
 import '../domain/rosco_failure.dart';
 import '../domain/word_bank_repository.dart';
 import '../domain/word_entry.dart';
@@ -109,6 +113,7 @@ final class ResultController
   /// {@macro result_controller}
   ResultController({
     required this._scoreboard,
+    required this._analytics,
     required CefrLevel level,
     required LevelScore score,
     this._repository,
@@ -117,6 +122,7 @@ final class ResultController
   }) : super(ResultState(level: level, score: score));
 
   final RoscoScoreboard _scoreboard;
+  final AnalyticsApi _analytics;
   final WordBankRepository? _repository;
   final String? _setId;
   final List<bool>? _marks;
@@ -134,10 +140,16 @@ final class ResultController
       case ResultRefreshed():
         await _save();
       case ResultReplayed():
+        unawaited(_analytics.logEvent(RoundReplayedEvent(level: state.level)));
         emitEffect(ReplayRound(level: state.level));
       case ResultDismissed():
         emitEffect(const LeaveResult());
       case ResultShared():
+        unawaited(
+          _analytics.logEvent(
+            ResultSharedEvent(level: state.level, score: state.score),
+          ),
+        );
         emitEffect(ShareOutcome(result: state));
     }
   }
@@ -181,9 +193,13 @@ final class ResultController
     // The scoreboard swallows its own storage failures and reports `false`,
     // so a lost write reads here as "not a new best" — the round still shows
     // its score, which is the part the player is waiting for.
-    final isNewBest = await _scoreboard.record(state.level, state.score);
+    final recorded = await _scoreboard.record(state.level, state.score);
     final best = await _scoreboard.best(state.level);
 
+    // A first round is always recorded — it is what marks the level as
+    // played — but one with nothing right is not worth celebrating. "New
+    // best!" over 0/26 read as mockery.
+    final isNewBest = recorded && state.score.correct > 0;
     emit(state.copyWith(isNewBest: isNewBest, best: best, isSaving: false));
   }
 }

@@ -16,7 +16,7 @@ describes *what is being built with it*. When a decision in PLAN.md stops
 matching the code, update it in the same commit.
 
 Structurally it is a **package-per-capability monorepo** generated from
-[`modular_app_template`](https://github.com/Yusubov-Engineering/modular_app_template).
+[`modular-flutter-template`](https://github.com/Yusubov-Engineering/modular-flutter-template).
 Every capability is two packages: an `_api` package holding the contract, and
 an `_impl` package holding the implementation. It is a Dart/Flutter **native
 pub workspace** (the root `pubspec.yaml` lists every package under
@@ -48,13 +48,14 @@ Before claiming work is done, `flutter analyze`, `dart run melos test` and
 
 ### The CLI
 
-`modular` ships from its own repo,
-[`Yusubov-Engineering/modular_cli`](https://github.com/Yusubov-Engineering/modular_cli) —
-a separate Dart package with its own resolution, versioned and released
-independently of this template. It is **not** part of the workspace.
+`modular` lives in the template repo, at
+[`tool/cli`](https://github.com/Yusubov-Engineering/modular-flutter-template/tree/main/tool/cli) —
+a separate Dart package with its own resolution. It is **not** part of this
+workspace. CI pins it to a template commit (`MODULAR_CLI_REF` in
+`.github/workflows/verify.yml`).
 
 ```bash
-dart pub global activate --source git https://github.com/Yusubov-Engineering/modular_cli.git --git-ref v1.0.0
+dart pub global activate --source git https://github.com/Yusubov-Engineering/modular-flutter-template.git --git-path tool/cli
 modular new feature <name>       # _api + _impl pair, fully wired
 modular doctor                   # check the architecture rules
 modular gen assets               # regenerate asset definitions
@@ -75,19 +76,19 @@ Dependencies flow downward: `app` → `features` → `base`/`core`.
   [Routing](#routing).
 - **`base/`** — cross-feature primitives: `app_localization` (ARB translations,
   locale scope), `app_network_contract` (`AppResponse` and its parser).
-- **`core/`** — infrastructure. `design_system` (+ `design_system/assets`)
-  and `feedback` (`feedback_api`/`feedback_impl`) live in-tree. `network`,
+- **`core/`** — infrastructure, all of it in-tree as workspace members,
+  depended on by bare name. `design_system` (+ `design_system/assets`) and
+  `feedback` (`feedback_api`/`feedback_impl`) are this app's own. `network`,
   `router`, `logger`, `dependency_injection`, `storage`, `biometric_auth`,
   `speech`, `analytics` (each an `_api`/`_impl` pair), `state_manager`
-  and `app_linter` (analysis options only, not a Dart library) each live in
-  their own `Yusubov-Engineering/<module>` repo and are pulled in as `git:`
-  dependencies pinned to a `vX.Y.Z` tag — see `app/pubspec.yaml`. They are no
-  longer pub workspace members: bumping one means cutting a new tag in its
-  repo and moving every consumer's `ref:`, not editing a local path.
+  and `app_linter` (analysis options only, not a Dart library) were copied
+  from the template, and are owned here now: change them in place, and port
+  template fixes by hand. (They briefly lived in separate repos as tagged
+  `git:` dependencies; that is over.)
   `speech` (wrapping `speech_to_text`) is infrastructure rather than domain,
   which is why it gets the `_api`/`_impl` split and the game feature can fake
-  it in tests; its behavioural traps below still apply, but the code they
-  describe now lives in `Yusubov-Engineering/speech`.
+  it in tests; the code behind its behavioural traps below is in
+  `core/speech/speech_impl`.
 
 ### The `_api` / `_impl` rule
 
@@ -167,7 +168,7 @@ declaration between modules, so keep new entries below what they depend on.
 
 ### State management
 
-`state_manager` (own repo, git dependency) is a from-scratch State/Event/Effect implementation with no
+`state_manager` (`core/state_manager`) is a from-scratch State/Event/Effect implementation with no
 third-party dependency. A controller extends
 `AppStateController<S, E, F>`: `emit` for state, `emitEffect` for one-shot
 effects, `onInit` for the screen's initial load. **Navigation is an effect**,
@@ -225,7 +226,7 @@ screen leaks more visibly than most.
 
 ### Analytics
 
-`analytics` (own repo, git dependency) gives every screen `AnalyticsApi` and
+`analytics` (`core/analytics`) gives every screen `AnalyticsApi` and
 `CrashReporterApi`, over Firebase Analytics and Crashlytics. **Each flavor has
 its own Firebase project** — `circular-words-dev` and `circular-words-prod` —
 so development play never reaches the real numbers.
@@ -369,7 +370,7 @@ schema itself.
   rather than a classic constructor body. Follow this in new classes.
 - **`abstract interface class`** for protocols in `_api` packages, not
   `abstract class`.
-- **Lint rules change only in the separate `app_linter` repo** (Yusubov-Engineering/app_linter), never per package. The ruleset
+- **Lint rules change only in `core/app_linter`**, never per package. The ruleset
   is strict: `strict-casts`, `strict-inference`, `strict-raw-types`,
   `require_trailing_commas`, `prefer_relative_imports`, `sort_constructors_first`,
   `directives_ordering`.

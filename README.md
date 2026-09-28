@@ -5,7 +5,7 @@ around a circle of 26 letters: each letter shows a definition, and you **speak**
 the word that matches it and starts with that letter.
 
 Built on
-[`modular_app_template`](https://github.com/Yusubov-Engineering/modular_app_template) —
+[`modular-flutter-template`](https://github.com/Yusubov-Engineering/modular-flutter-template) —
 a package-per-capability Flutter monorepo where every capability is an `_api`
 package holding the contract and an `_impl` package holding the implementation.
 
@@ -81,13 +81,13 @@ genuinely unreachable from outside it.
 
 Core infrastructure — `network`, `router`, `logger`, `storage`,
 `dependency_injection`, `biometric_auth`, `speech`, `state_manager`, `app_linter` — lives
-in its own `Yusubov-Engineering/<module>` repo and is pulled in as a `git:`
-dependency pinned to a tag. See `app/pubspec.yaml`.
+in-tree under `core/` as ordinary workspace members, copied from the template
+and owned by this project from then on. Template fixes are ported by hand.
 
 ## The CLI
 
 ```bash
-dart pub global activate --source git https://github.com/Yusubov-Engineering/modular_cli.git --git-ref v1.0.0
+dart pub global activate --source git https://github.com/Yusubov-Engineering/modular-flutter-template.git --git-path tool/cli
 
 modular new feature <name>    # _api + _impl pair, wired into the app
 modular doctor                # check the architecture rules

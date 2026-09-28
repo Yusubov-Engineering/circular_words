@@ -1,0 +1,12 @@
+name: network_api
+description: "Api Protocols of Network Module"
+version: 1.0.0
+publish_to: none
+
+resolution: workspace
+
+environment:
+  sdk: ^3.13.0
+
+dev_dependencies:
+  app_linter:

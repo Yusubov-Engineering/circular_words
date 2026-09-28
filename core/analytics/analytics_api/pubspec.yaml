@@ -1,0 +1,13 @@
+name: analytics_api
+description: "Api protocols of the Analytics module"
+version: 1.0.0
+publish_to: none
+
+resolution: workspace
+
+environment:
+  sdk: ^3.13.0
+
+dev_dependencies:
+  app_linter:
+  test: ^1.31.1

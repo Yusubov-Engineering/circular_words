@@ -1,0 +1,22 @@
+name: network_impl
+description: "Implementation details of the Network Module"
+version: 1.0.0
+publish_to: none
+
+resolution: workspace
+
+environment:
+  sdk: ^3.13.0
+  flutter: ">=1.17.0"
+
+dependencies:
+  meta: ^1.19.0
+  dio: ^5.11.0
+  network_api:
+  dependency_injection_api:
+  logger_api:
+  talker: ^5.1.20
+  talker_dio_logger: ^5.1.20
+
+dev_dependencies:
+  app_linter:

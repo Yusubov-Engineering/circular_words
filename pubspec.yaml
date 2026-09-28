@@ -11,10 +11,15 @@ workspace:
   - app
 
   # core modules
-  # network, router, logger, biometric_auth, storage, dependency_injection and
-  # speech
-  # each moved to their own repo (see README) and are now git dependencies,
-  # not workspace members.
+  - core/analytics/*
+  - core/biometric_auth/*
+  - core/dependency_injection/*
+  - core/logger/*
+  - core/network/*
+  - core/router/*
+  - core/speech/*
+  - core/storage/*
+  - core/state_manager
   - core/design_system
   - core/design_system/assets
   - core/feedback/feedback_api
@@ -29,15 +34,12 @@ workspace:
   - features/rosco/*
   # <generated:feature-packages>
 
+  # dev tools
+  - core/app_linter
+
 dev_dependencies:
   melos: ^8.3.0
-  # Extracted alongside the core modules above; the ruleset itself now lives
-  # at github.com/Yusubov-Engineering/app_linter.
   app_linter:
-    git:
-      url: https://github.com/Yusubov-Engineering/app_linter.git
-      path: .
-      ref: v1.0.0
 
 # Melos 8 reads its config from here, not from a melos.yaml. `analyze`,
 # `format` and `test` are built-in commands, so only `verify` needs defining.

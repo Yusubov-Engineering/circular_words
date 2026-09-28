@@ -12,7 +12,7 @@ modular doctor
 
 All five must pass — `modular` here is the globally-activated CLI (see
 [The CLI](README.md#the-cli)); CI installs it from
-[modular_cli](https://github.com/Yusubov-Engineering/modular_cli) the same way.
+[the template's `tool/cli`](https://github.com/Yusubov-Engineering/modular-flutter-template/tree/main/tool/cli) the same way.
 
 ## Where the work is planned
 

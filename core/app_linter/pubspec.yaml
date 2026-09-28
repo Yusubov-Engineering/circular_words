@@ -1,0 +1,10 @@
+name: app_linter
+description: "Linter rules collected package for whole app workspace"
+version: 1.0.0
+publish_to: none
+
+resolution: workspace
+topics: [lints, analyzer, analysis]
+
+environment:
+  sdk: ^3.13.0

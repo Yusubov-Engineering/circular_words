@@ -1,0 +1,19 @@
+name: state_manager
+description: "From-scratch State/Event/Effect state management, no third-party dependency"
+version: 1.0.0
+publish_to: none
+
+resolution: workspace
+
+environment:
+  sdk: ^3.13.0
+  flutter: ">=1.17.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+dev_dependencies:
+  app_linter:
+  flutter_test:
+    sdk: flutter

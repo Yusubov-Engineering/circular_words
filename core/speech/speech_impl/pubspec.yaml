@@ -1,0 +1,21 @@
+name: speech_impl
+description: "Implementation details of the Speech recognition module"
+version: 1.0.0
+publish_to: none
+
+resolution: workspace
+
+environment:
+  sdk: ^3.13.0
+
+dependencies:
+  flutter:
+    sdk: flutter
+  speech_to_text: ^7.3.0
+  dependency_injection_api:
+  speech_api:
+
+dev_dependencies:
+  app_linter:
+  flutter_test:
+    sdk: flutter

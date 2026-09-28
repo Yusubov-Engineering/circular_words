@@ -1,0 +1,1 @@
+enum BiometricAuthType { touchId, faceId }

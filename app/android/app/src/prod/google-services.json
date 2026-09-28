@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1030077587671",
+    "project_id": "circular-words-prod",
+    "storage_bucket": "circular-words-prod.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1030077587671:android:ea86e01f5215d565dc9092",
+        "android_client_info": {
+          "package_name": "com.yusubov.circularwords"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCzj1uaAfbvPgFz7ui27fZ8hZDThMg2qLM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

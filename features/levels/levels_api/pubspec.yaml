@@ -12,7 +12,3 @@ dependencies:
   flutter:
     sdk: flutter
   router_api:
-    git:
-      url: https://github.com/Yusubov-Engineering/router.git
-      path: router_api
-      ref: v1.1.0

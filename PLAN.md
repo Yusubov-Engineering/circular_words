@@ -123,7 +123,7 @@ Pasapalabra allows.
 ## 2. Where this came from
 
 Generated from
-[`modular_app_template`](https://github.com/Yusubov-Engineering/modular_app_template),
+[`modular-flutter-template`](https://github.com/Yusubov-Engineering/modular-flutter-template) (then called `modular_app_template`),
 then renamed and stripped of its `counter` and `posts` demo features. The
 architecture — package-per-capability, `_api`/`_impl`, DI modules, module
 routers, `state_manager` — is inherited wholesale and is documented in
@@ -132,14 +132,21 @@ routers, `state_manager` — is inherited wholesale and is documented in
 Once generated, this project no longer receives template fixes. That is the
 accepted trade-off.
 
+The core modules took a detour. For a while each lived in its own
+`Yusubov-Engineering/<module>` repo and was pulled in as a `git:` dependency
+pinned to a tag; the template then folded them back into one monorepo, and
+they were copied in here under `core/`, at the tags this project had pinned.
+They are now ordinary workspace members: changing one is an edit here, not a
+release elsewhere.
+
 ---
 
 ## 3. Package map
 
 | Package | Status | Holds |
 | ------- | ------ | ----- |
-| `speech_api` ([own repo](https://github.com/Yusubov-Engineering/speech), `v1.0.0`) | built | `SpeechRecognizerApi`, sealed `SpeechAvailability`, `SpeechResult` |
-| `speech_impl` ([own repo](https://github.com/Yusubov-Engineering/speech), `v1.0.0`) | built | `speech_to_text` ^7.3.0 wrapper, `SpeechModule` |
+| `core/speech/speech_api` | built | `SpeechRecognizerApi`, sealed `SpeechAvailability`, `SpeechResult` |
+| `core/speech/speech_impl` | built | `speech_to_text` ^7.3.0 wrapper, `SpeechModule` |
 | `features/levels/levels_{api,impl}` | built | level picker, best scores, entry route |
 | `features/rosco/rosco_{api,impl}` | in progress | `CefrLevel`, `LevelScore`, `RoscoScoreboard`, `/rosco/:level`; the round itself is milestones 5–7 |
 
@@ -149,9 +156,8 @@ Speech recognition is infrastructure, not domain. It gets the same `_api`/`_impl
 split every other core capability has, so the game feature depends on an
 interface it can fake in tests and never on a platform plugin. It lived
 in-tree as a workspace member until it had proven itself on hardware
-(milestones 2 and 9); it now lives in `Yusubov-Engineering/speech` like the
-other core modules, pulled in as a `git:` dependency pinned to `v1.0.0`.
-Changing it means a new tag there and a `ref:` bump in `app` and `rosco_impl`.
+(milestones 2 and 9); it then moved to its own repo with the other core
+modules, and came back in-tree with them: it lives in `core/speech`.
 
 ### `CefrLevel` lives in `rosco_api`, not `levels_api`
 
@@ -718,7 +724,8 @@ looks arbitrary later can be traced to the reasoning that produced it.
 | Rare letters (X, Z) | **Always A–Z.** No relaxed pool | [§1](#always-az) |
 | Unproductive lap | **Run the pool down.** Only an empty pool or an all-terminal board ends it | [§1](#nothing-ends-the-round-early) |
 | Word-bank size | **Five sets per level, as a floor** (780 entries). CI fails below five and on any word repeated across a level's sets | `rosco_impl/test/word_bank_assets_test.dart` |
-| Speech in-tree or its own repo | **Own repo** (`Yusubov-Engineering/speech`), once proven on hardware | [§3](#why-speech-is-a-core-module-not-part-of-the-game) |
+| Speech in-tree or its own repo | **A core module**, split out of the game once proven on hardware; briefly its own repo, now in `core/speech` | [§3](#why-speech-is-a-core-module-not-part-of-the-game) |
+| Core modules as `git:` dependencies or in-tree | **In-tree.** Eleven repos pinned by tag meant a release for every change; once the template folded them into one monorepo, they were copied in here. Template fixes are still ported by hand | [§2](#2-where-this-came-from) |
 | What colour means | **Accents say where, status says what.** Each CEFR level has a hue (`CefrLevel.accent`) that tints its card, its round and its result; success/danger/warning keep one meaning everywhere | `rosco_api/lib/src/cefr_level_accent.dart` |
 | How much motion | **Lively but calm.** Press feedback, a gliding highlight, a pop on each decided letter, a count-up on the score; nothing loops but the listening pulse, and all of it yields to the OS reduce-motion setting | `core/design_system/lib/src/tokens/motion/` |
 | Page transitions | **Fade-through, set once** as the router's default (router `v1.1.0` added `CustomPresentationMode`); the three screens are not spatially related, so a slide would imply a direction that does not exist | `app/lib/bootstrap/router_configuration.dart` |

@@ -1,0 +1,12 @@
+name: biometric_auth_api
+description: "Api protocols of Biometric Auth Module"
+version: 1.0.0
+publish_to: none
+
+resolution: workspace
+
+environment:
+  sdk: ^3.13.0
+
+dev_dependencies:
+  app_linter:

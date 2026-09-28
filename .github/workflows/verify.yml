@@ -15,10 +15,10 @@ env:
   # usable on later releases, but setup-flutter cannot resolve a range — it
   # needs one exact version to download. This is the floor of that range.
   FLUTTER_VERSION: 3.47.0
-  # The CLI (github.com/Yusubov-Engineering/modular_cli) is released and
-  # versioned independently of this template — bump this alongside the
-  # `ref:`/`--git-ref` used everywhere else it's installed.
-  MODULAR_CLI_REF: v1.0.0
+  # The CLI lives in the template monorepo, at tool/cli. Pinned to a commit
+  # there, since the monorepo has no per-package tags; move it forward
+  # deliberately, the same way template fixes are ported.
+  MODULAR_CLI_REF: 8473dc607ac9ac2db30385e2a631f490ebf7ff56
 
 jobs:
   verify:
@@ -31,16 +31,6 @@ jobs:
           flutter-version: ${{ env.FLUTTER_VERSION }}
           channel: stable
           cache: true
-
-      # Core modules (network, router, logger, ...) plus modular_cli itself
-      # live in their own private repos and are pulled in as
-      # `https://github.com/...` git dependencies / git-activated packages.
-      # The runner has no credential helper, so anonymous HTTPS gets rejected
-      # the same way SSH does without a deployed key — inject a PAT here and
-      # every `pub get`/`pub global activate` below picks it up transparently.
-      - name: Authenticate git for private module repos
-        run: |
-          git config --global url."https://x-access-token:${{ secrets.MODULES_PAT }}@github.com/".insteadOf "https://github.com/"
 
       # `dart format` picks its line-splitting style from each package's
       # language version, which it reads out of .dart_tool/package_config.json.
@@ -60,11 +50,10 @@ jobs:
       - name: Test
         run: dart run melos test
 
-      # The CLI is a separate repo/package now (modular_cli), installed the
-      # same way a consumer would install it rather than run from source.
+      # Installed the same way a developer installs it, from the template repo.
       - name: Install the modular CLI
         run: |
-          dart pub global activate --source git https://github.com/Yusubov-Engineering/modular_cli.git --git-ref ${{ env.MODULAR_CLI_REF }}
+          dart pub global activate --source git https://github.com/Yusubov-Engineering/modular-flutter-template.git --git-path tool/cli --git-ref ${{ env.MODULAR_CLI_REF }}
           echo "$HOME/.pub-cache/bin" >> "$GITHUB_PATH"
 
       # Rules the analyzer cannot see: unregistered modules, _impl→_impl

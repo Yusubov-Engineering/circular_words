@@ -16,7 +16,7 @@ describes *what is being built with it*. When a decision in PLAN.md stops
 matching the code, update it in the same commit.
 
 Structurally it is a **package-per-capability monorepo** generated from
-[`modular_app_template`](https://github.com/Yusubov-Engineering/modular_app_template).
+[`modular-flutter-template`](https://github.com/Yusubov-Engineering/modular-flutter-template).
 Every capability is two packages: an `_api` package holding the contract, and
 an `_impl` package holding the implementation. It is a Dart/Flutter **native
 pub workspace** (the root `pubspec.yaml` lists every package under
@@ -48,13 +48,14 @@ Before claiming work is done, `flutter analyze`, `dart run melos test` and
 
 ### The CLI
 
-`modular` ships from its own repo,
-[`Yusubov-Engineering/modular_cli`](https://github.com/Yusubov-Engineering/modular_cli) —
-a separate Dart package with its own resolution, versioned and released
-independently of this template. It is **not** part of the workspace.
+`modular` lives in the template repo, at
+[`tool/cli`](https://github.com/Yusubov-Engineering/modular-flutter-template/tree/main/tool/cli) —
+a separate Dart package with its own resolution. It is **not** part of this
+workspace. CI pins it to a template commit (`MODULAR_CLI_REF` in
+`.github/workflows/verify.yml`).
 
 ```bash
-dart pub global activate --source git https://github.com/Yusubov-Engineering/modular_cli.git --git-ref v1.0.0
+dart pub global activate --source git https://github.com/Yusubov-Engineering/modular-flutter-template.git --git-path tool/cli
 modular new feature <name>       # _api + _impl pair, fully wired
 modular doctor                   # check the architecture rules
 modular gen assets               # regenerate asset definitions
@@ -75,19 +76,19 @@ Dependencies flow downward: `app` → `features` → `base`/`core`.
   [Routing](#routing).
 - **`base/`** — cross-feature primitives: `app_localization` (ARB translations,
   locale scope), `app_network_contract` (`AppResponse` and its parser).
-- **`core/`** — infrastructure. `design_system` (+ `design_system/assets`)
-  and `feedback` (`feedback_api`/`feedback_impl`) live in-tree. `network`,
+- **`core/`** — infrastructure, all of it in-tree as workspace members,
+  depended on by bare name. `design_system` (+ `design_system/assets`) and
+  `feedback` (`feedback_api`/`feedback_impl`) are this app's own. `network`,
   `router`, `logger`, `dependency_injection`, `storage`, `biometric_auth`,
   `speech`, `analytics` (each an `_api`/`_impl` pair), `state_manager`
-  and `app_linter` (analysis options only, not a Dart library) each live in
-  their own `Yusubov-Engineering/<module>` repo and are pulled in as `git:`
-  dependencies pinned to a `vX.Y.Z` tag — see `app/pubspec.yaml`. They are no
-  longer pub workspace members: bumping one means cutting a new tag in its
-  repo and moving every consumer's `ref:`, not editing a local path.
+  and `app_linter` (analysis options only, not a Dart library) were copied
+  from the template, and are owned here now: change them in place, and port
+  template fixes by hand. (They briefly lived in separate repos as tagged
+  `git:` dependencies; that is over.)
   `speech` (wrapping `speech_to_text`) is infrastructure rather than domain,
   which is why it gets the `_api`/`_impl` split and the game feature can fake
-  it in tests; its behavioural traps below still apply, but the code they
-  describe now lives in `Yusubov-Engineering/speech`.
+  it in tests; the code behind its behavioural traps below is in
+  `core/speech/speech_impl`.
 
 ### The `_api` / `_impl` rule
 
@@ -167,7 +168,7 @@ declaration between modules, so keep new entries below what they depend on.
 
 ### State management
 
-`state_manager` (own repo, git dependency) is a from-scratch State/Event/Effect implementation with no
+`state_manager` (`core/state_manager`) is a from-scratch State/Event/Effect implementation with no
 third-party dependency. A controller extends
 `AppStateController<S, E, F>`: `emit` for state, `emitEffect` for one-shot
 effects, `onInit` for the screen's initial load. **Navigation is an effect**,
@@ -225,14 +226,24 @@ screen leaks more visibly than most.
 
 ### Analytics
 
-`analytics` (own repo, git dependency) gives every screen `AnalyticsApi` and
-`CrashReporterApi`. `AnalyticsModule` picks the backend per flavor in
-`dependency_injection_configuration.dart`: Firebase (Analytics + Crashlytics)
-when `ENVIRONMENT` is `prod`, the logger everywhere else, so development play
-never counts. It sits straight after `LoggerModule`, which it writes to.
-`AnalyticsRouteObserver`, handed to the router in
-`router_configuration.dart`, turns every page into a screen view named by its
-route name.
+`analytics` (`core/analytics`) gives every screen `AnalyticsApi` and
+`CrashReporterApi`, over Firebase Analytics and Crashlytics. **Each flavor has
+its own Firebase project** — `circular-words-dev` and `circular-words-prod` —
+so development play never reaches the real numbers.
+`dependency_injection_configuration.dart` hands `AnalyticsModule` the
+flavor's `DefaultFirebaseOptions`; it sits straight after `LoggerModule`.
+`AnalyticsRouteObserver`, handed to the router in `router_configuration.dart`,
+turns every page into a screen view named by its route name.
+
+| | dev | prod |
+| - | - | - |
+| Firebase project | `circular-words-dev` | `circular-words-prod` |
+| Android / iOS id | `com.yusubov.circularwords.dev` | `com.yusubov.circularwords` |
+| Dart options | `lib/firebase_options_dev.dart` | `lib/firebase_options_prod.dart` |
+| Android config | `android/app/src/dev/google-services.json` | `android/app/src/prod/google-services.json` |
+| iOS config (reference) | `ios/flavors/dev/GoogleService-Info.plist` | `ios/flavors/prod/GoogleService-Info.plist` |
+
+These are client configuration, not secrets — every shipped app contains them.
 
 - **Events belong to the feature that fires them**, as `…Event` subclasses of
   `AnalyticsEvent` in `lib/src/analytics/` (`rosco_analytics_events.dart`,
@@ -359,7 +370,7 @@ schema itself.
   rather than a classic constructor body. Follow this in new classes.
 - **`abstract interface class`** for protocols in `_api` packages, not
   `abstract class`.
-- **Lint rules change only in the separate `app_linter` repo** (Yusubov-Engineering/app_linter), never per package. The ruleset
+- **Lint rules change only in `core/app_linter`**, never per package. The ruleset
   is strict: `strict-casts`, `strict-inference`, `strict-raw-types`,
   `require_trailing_commas`, `prefer_relative_imports`, `sort_constructors_first`,
   `directives_ordering`.
@@ -529,6 +540,23 @@ schema itself.
   there, silently — feedback swallows errors by design — so the game had no
   sound on Android at all. `AudioPlayersSounds.restart` rewinds with `stop`;
   `sound_restart_test.dart` fakes a SoundPool-like platform to keep it so.
+- **Firebase is initialised from Dart, with explicit options.** Re-running
+  `flutterfire configure` is Android-only here (`--platforms=android`, one
+  run per flavor with `--android-out=android/app/src/<flavor>/...`): its iOS
+  step needs Ruby's `xcodeproj` gem and rewrites the Xcode project, and the
+  app does not need it. The iOS apps were registered with `firebase
+  apps:create IOS`; their options are copied into the generated Dart files by
+  hand, from the plists in `ios/flavors/`. Re-running the CLI regenerates
+  those files and **drops the `ios` block** — put it back.
+- **The Crashlytics Gradle plugin is added by hand.** Crashlytics reaches the
+  app through `analytics_impl`, not the app's pubspec, so the FlutterFire CLI
+  never adds `com.google.firebase.crashlytics` — and re-running it rewrites
+  the plugin blocks. Check both `settings.gradle.kts` and
+  `app/build.gradle.kts` still apply it afterwards.
+- **Watching events live.** Android: `adb shell setprop
+  debug.firebase.analytics.app com.yusubov.circularwords.dev`, restart the
+  app, then open DebugView in the dev project's console. Crashlytics sends a
+  report on the launch *after* the error, so restart once after a test crash.
 - **Brand assets are rendered, not drawn by hand.** `AppLogoPainter` is the
   logo. `cd core/design_system && flutter test tool/render_brand_assets.dart`
   writes `app/assets/brand/`, including the Play Store icon and feature

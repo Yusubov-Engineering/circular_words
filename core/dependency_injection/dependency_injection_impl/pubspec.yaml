@@ -1,0 +1,19 @@
+name: dependency_injection_impl
+description: "Implementation details of Dependency Injection Module"
+version: 1.0.0
+publish_to: none
+
+resolution: workspace
+
+environment:
+  sdk: ^3.13.0
+  flutter: ">=1.17.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  dependency_injection_api:
+  get_it: ^9.2.1
+
+dev_dependencies:
+  app_linter:

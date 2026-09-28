@@ -20,6 +20,12 @@ pluginManagement {
 plugins {
     id("dev.flutter.flutter-plugin-loader") version "1.0.0"
     id("com.android.application") version "9.1.0" apply false
+    // Reads each flavor's google-services.json (src/dev, src/prod).
+    id("com.google.gms.google-services") version("4.4.4") apply false
+    // Crashlytics comes in through analytics_impl, not this pubspec, so the
+    // FlutterFire CLI does not add its plugin. It stamps each build with the
+    // id Crashlytics needs, and uploads the R8 mapping for release builds.
+    id("com.google.firebase.crashlytics") version("3.0.8") apply false
     id("org.jetbrains.kotlin.android") version "2.4.0" apply false
 }
 
